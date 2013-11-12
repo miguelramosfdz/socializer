@@ -1,0 +1,35 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node start.js"
+  },
+  "dependencies": {
+    "express": "3.4.0",
+    "jade": "*",
+    "less-middleware": "*",
+    "passport": "~0.1.17",
+    "passport-local": "~0.1.6",
+    "bcrypt": "~0.7.7",
+    "grunt-contrib-sass": "~0.5.0"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*",
+    "sinon": "*",
+    "connect-livereload": "~0.3.0",
+    "request": "*",
+    "matchdep": "~0.3.0",
+    "grunt": "~0.4.1",
+    "time-grunt": "*",
+    "grunt-open": "~0.2.2",
+    "load-grunt-tasks": "*",
+    "grunt-express": "~1.2.1",
+    "grunt-contrib-less": "~0.8.1",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-connect": "~0.5.0",
+    "grunt-mocha-test": "~0.7.0",
+    "grunt-contrib-concat": "~0.3.0"
+  }
+}

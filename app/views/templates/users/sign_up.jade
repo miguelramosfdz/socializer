@@ -1,0 +1,13 @@
+link(rel='stylesheet', href='/styles/sign_up.css')
+
+.sign_up(ng-controller='SignUpCtrl')
+
+  input(type='text', ng-model='user.username', placeholder=' Username')
+  br
+  input(type='text', ng-model='user.email', placeholder=' Email')
+  br
+  input(type='password', ng-model='user.password', placeholder=' Password')
+  br
+  input(type='password', ng-model='user.password_confirmation', placeholder=' Password Confirmation')
+  br
+  button(ng-click='signUp()') Sign Up

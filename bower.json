@@ -1,0 +1,22 @@
+{
+  "name": "Glow",
+  "version": "0.0.1",
+  "description": "facebook ad management platform",
+  "main": "start.js",
+  "authors": [
+    "cjponti"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "public/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "components": "*",
+    "angular": "*",
+    "jquery": "*"
+  }
+}

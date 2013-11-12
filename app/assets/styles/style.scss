@@ -1,0 +1,76 @@
+
+@import "mixins";
+@import "variables";
+
+html, body {
+  height: 100%; width: 100%;
+  padding: 0; margin: 0;
+  font: $fontsize $font;
+}
+
+body {
+  position: relative;
+}
+
+.content {
+  padding: 50px 15px;
+  height: 80%; width: 100%;
+  overflow: auto;
+}
+
+.navbar {
+  position: absolute;
+  top: 0; left: 0;
+  height: auto; width: 100%;
+  min-height: 30px;
+  border-bottom: 2px solid #ccc;
+
+  a {
+    color: black;
+  }
+
+  .nav-tabs {
+
+    height: 100%; width: 50%;
+    display: inline-block;
+    list-style: none;
+
+    .tab,
+    .nav-brand {
+      display: inline-block;
+      font-size: 1.3rem;
+      float: left;
+      padding: 0.5% 2%;
+      border-right: 1px solid #ccc;
+      &:hover {
+        background-color: #ccc;
+      }
+    }
+
+    .nav-brand {
+      display: inline-block;
+      font-size: 1.6em;
+      font-weight: 800;
+    }
+
+  }
+
+}
+
+.right {
+  float: right;
+}
+
+
+h1 {
+  font-size: 2em;
+}
+
+h3 {
+  font-size: 1.3em;
+}
+
+a {
+  color: #00B7FF;
+  text-decoration: none;
+}
