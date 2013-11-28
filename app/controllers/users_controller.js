@@ -1,26 +1,31 @@
 var User = require('../models/user'),
-    passport = require('passport');
+    passport = require('passport'),
+    bcrypt = require('bcrypt');
 
 module.exports = {
 
-  sign_up: function ( req, res, next ) {
+  signup: function ( req, res, next ) {
     var new_user = req.body.user;
     if ( new_user.password === new_user.password_confirmation ) {
-      User.sign_up( new_user, function ( err, user ) {
-        if (err) throw err;
-        req.login(user, function (err) {
-          if (err) throw err;
-          return res.send(200, { message: 'User Signed Up' });
-        })
+      bcrypt.hash( new_user.password, 10, function ( err, hash ) {
+        if ( err ) return res.json({ error: err });
+        User.create({
+          username: new_user.username,
+          email: new_user.email,
+          password: hash
+        }, function ( err, user ) {
+          if (err) return res.json({ error: err });
+          return res.json({ message: 'User Signed Up.' });
+        });
       });
     }
   },
 
-  sign_in: function (req, res, info) {
+  signin: function ( req, res, info ) {
     passport.authenticate('local', function (err, user, info) {
       if (err) throw err;
       if (!user) return res.json(400, { message: 'Incorrect username and/or password.'});
-      req.logIn(user, function (err) {
+      req.logIn(user, function ( err ) {
         if (err) throw err;
         return res.json({ message: 'Sign In Successful' });
       });
@@ -31,7 +36,7 @@ module.exports = {
     return res.send( req.isAuthenticated() ? req.user : '0' );
   },
 
-  sign_out: function ( req, res, next ) {
+  signout: function ( req, res, next ) {
     req.logOut();
     return res.json({ message: "You've been logged out." });
   }

@@ -9,23 +9,22 @@ var UserSchema = new mongoose.Schema({
   updated: { type: Date, required: true, default: Date.now }
 });
 
-UserSchema.statics.sign_up = function ( new_user, done ) {
-  // hash & salt password and create User
-  bcrypt.hash( new_user.password, 10, function(err, hash) {
-    User.create({
-      username: new_user.username,
-      email: new_user.email,
-      password: hash
-    }, function (err, user) {
-      if (err) {
-        console.log(err)
-        throw err;
-      }
-      done(null,user);
-    })
-  });
-
-}
+// UserSchema.statics.sign_up = function ( new_user, done ) {
+//   // hash & salt password and create User
+//   bcrypt.hash( new_user.password, 10, function ( err, hash ) {
+//     User.create({
+//       username: new_user.username,
+//       email: new_user.email,
+//       password: hash
+//     }, function (err, user) {
+//       if (err) {
+//         console.log(err)
+//         throw err;
+//       }
+//       done( null, user);
+//     })
+//   });
+// }
 
 UserSchema.statics.isValidPassword = function ( username, password, done ) {
   this.findOne({username: username}, function ( err, user ) {

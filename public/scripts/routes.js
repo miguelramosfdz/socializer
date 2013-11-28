@@ -10,7 +10,7 @@ app.config([ '$routeProvider', '$locationProvider',
       when('/', {
         templateUrl: show('static/home')
       }).
-      when('/sign_up', {
+      when('/signup', {
         templateUrl: show('users/sign_up')
       }).
       otherwise({

@@ -17,15 +17,15 @@ exports.setup = function ( app, passport, express ) {
     res.render('templates/' + req.params.type + '/' + req.params.name);
   });
 
-    // User Creation, Log In, & Log Out
-  app.post('/sign_up', users.sign_up);
-  app.post('/sign_in', users.sign_in);
-  app.post('/sign_out', users.sign_out);
+  // User Creation, Log In, & Log Out
+  app.post('/signup', users.signup);
+  app.post('/signin', users.signin);
+  app.post('/signout', users.signout);
   app.get('/loggedin', users.is_signed_in );
 
   // Serve error page
   app.get('/error', function ( req, res, next ) {
     res.render('static/error');
-  })
+  });
 
 }
