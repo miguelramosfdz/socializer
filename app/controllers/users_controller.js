@@ -14,22 +14,25 @@ module.exports = {
           email: new_user.email,
           password: hash
         }, function ( err, user ) {
-          if (err) return res.json({ error: err });
+          if (err) return res.json(400, { message: 'User could not be signed up:'+err })
           return res.json({ message: 'User Signed Up.' });
         });
       });
     }
   },
 
-  signin: function ( req, res, info ) {
-    passport.authenticate('local', function (err, user, info) {
-      if (err) throw err;
-      if (!user) return res.json(400, { message: 'Incorrect username and/or password.'});
-      req.logIn(user, function ( err ) {
-        if (err) throw err;
-        return res.json({ message: 'Sign In Successful' });
-      });
-    })(req, res, info);
+  signin: function (req, res, next) {
+      passport.authenticate('local', function(err, user, info) {
+        if (err) { return next(err) }
+        if (!user) {
+          req.session.messages =  [info.message];
+          return res.redirect('/login')
+        }
+        req.logIn(user, function(err) {
+          if (err) { return next(err); }
+          return res.redirect('/');
+        });
+      })(req, res, next);
   },
 
   is_signed_in: function ( req, res, next ) {

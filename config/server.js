@@ -9,28 +9,33 @@ var express = require('express'),
     Authentication = require('./authentication'),
     development = require('./envs/dev');
 
-/** Declare app */
-var app = express();
+/** Declare server */
+var server = express();
+
+/**
+ * Declare port for server
+ */
+server.set('port', 5000);
 
 /*
  * Declare views engine & folder
  */
-app.set('view engine', 'jade');
-app.set('views', __dirname + '/../app/views');
+server.set('view engine', 'jade');
+server.set('views', __dirname + '/../server/views');
 
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.set('showStackError', true);
+server.use(express.favicon());
+server.use(express.logger('dev'));
+server.use(express.bodyParser());
+server.use(express.methodOverride());
+server.set('showStackError', true);
 
 /*
  * Add CSRF support
  */
-app.use( express.cookieParser( 'glowmachine' ) );
-app.use( express.cookieSession() );
-app.use( express.csrf({ value: Authentication.csrf }) );
-app.use(function ( req, res, next ) {
+server.use( express.cookieParser( 'glowmachine' ) );
+server.use( express.cookieSession() );
+server.use( express.csrf({ value: Authentication.csrf }) );
+server.use(function ( req, res, next ) {
    res.cookie( 'XSRF-TOKEN', req.csrfToken() );
    next();
 });
@@ -38,8 +43,8 @@ app.use(function ( req, res, next ) {
 /*
  * Setup Passport authentication
  */
-app.use( passport.initialize() );
-app.use( passport.session() );
+server.use( passport.initialize() );
+server.use( passport.session() );
 passport.use(Authentication.localStrategy);
 passport.serializeUser(Authentication.serializeUser);
 passport.deserializeUser(Authentication.deserializeUser);
@@ -47,12 +52,14 @@ passport.deserializeUser(Authentication.deserializeUser);
 /**
  * Declare public folder
  */
-app.use(express.static(__dirname + '/../public'));
+server.use(express.static(__dirname + '/../public'));
 
-development.setup(app, express);
+development.setup(server, express);
 db.setup(mongoose);
-routes.setup(app, passport, express);
+routes.setup(server, passport, express);
 
-app.listen(5000);
+server.listen(server.get('port'), function() {
+  console.log('Express server listening on port ' + server.get('port'));
+});
 
-module.exports = app;
+module.exports = server;

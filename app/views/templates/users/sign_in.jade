@@ -1,7 +1,12 @@
+link(rel='stylesheet', href='/styles/sign_up.css')
 
-.sign_in
-	input(type='text', ng-bind='user.name', placeholder='username')
 
-	input(type='text', ng-bind='user.name', placeholder='username')
+.sign_up(ng-controller='SignInCtrl')
 
-	button Sign In
+	.error(ng-show="message", style='width: 30%;background-color:red;color:white;border-radius:1em')
+		{{ message }}
+	input(type='text', ng-model='user.name', placeholder='username')
+
+	input(type='password', ng-model='user.password', placeholder='password')
+
+	button(ng-click='signIn()') Sign In

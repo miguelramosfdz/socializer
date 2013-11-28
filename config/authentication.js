@@ -6,18 +6,32 @@ module.exports = {
 
   //Serialize sessions
   serializeUser: function(user, done) {
-    done(null, user.id);
+    var createAccessToken = function () {
+      var token = user.generateRandomToken();
+      User.findOne( { accessToken: token }, function (err, existingUser) {
+        if (err) { return done( err ); }
+        if (existingUser) {
+          createAccessToken(); // Run the function again - the token has to be unique!
+        } else {
+          user.set('accessToken', token);
+          user.save( function (err) {
+            if (err) return done(err);
+            return done(null, user.get('accessToken'));
+          })
+        }
+      });
+    }
+
+    if ( user._id ) {
+      createAccessToken();
+    }
   },
 
   // Deserialize sessions
-  deserializeUser: function(id, done) {
-    var user = User.findById(id);
-
-    if (user) {
-      done(null, user);
-    } else {
-      done(null, false);
-    }
+  deserializeUser: function(token, done) {
+    User.findOne( {accessToken: token } , function (err, user) {
+      done(err, user);
+    });
   },
 
   // Create CSRF token
@@ -30,9 +44,19 @@ module.exports = {
   },
 
   //Use local strategy
-  localStrategy: new LocalStrategy(
-    function ( username, password, done ) {
-      User.isValidPassword(username, password, done);
-    }
-  )
+  localStrategy: new LocalStrategy(function (username, password, done) {
+    User.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
+      user.isValidPassword(password, function(err, isMatch) {
+        if (err) return done(err);
+        if(isMatch) {
+          return done(null, user);
+        } else {
+          return done(null, false, { message: 'Invalid password' });
+        }
+      });
+    });
+  })
+
 }

@@ -13,6 +13,9 @@ app.config([ '$routeProvider', '$locationProvider',
       when('/signup', {
         templateUrl: show('users/sign_up')
       }).
+      when('/signin', {
+        templateUrl: show('users/sign_in')
+      }).
       otherwise({
         redirectTo: '/'
       })

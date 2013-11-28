@@ -9,25 +9,8 @@ var UserSchema = new mongoose.Schema({
   updated: { type: Date, required: true, default: Date.now }
 });
 
-// UserSchema.statics.sign_up = function ( new_user, done ) {
-//   // hash & salt password and create User
-//   bcrypt.hash( new_user.password, 10, function ( err, hash ) {
-//     User.create({
-//       username: new_user.username,
-//       email: new_user.email,
-//       password: hash
-//     }, function (err, user) {
-//       if (err) {
-//         console.log(err)
-//         throw err;
-//       }
-//       done( null, user);
-//     })
-//   });
-// }
-
-UserSchema.statics.isValidPassword = function ( username, password, done ) {
-  this.findOne({username: username}, function ( err, user ) {
+UserSchema.methods.isValidPassword = function ( username, password, done ) {
+  User.findOne({ username: username }, function ( err, user ) {
     if (err) return done(err);
     if (!user) return done(null, false, { message: 'Incorrect username' });
     bcrypt.compare(password, user.password, function ( err, result ) {
@@ -36,7 +19,18 @@ UserSchema.statics.isValidPassword = function ( username, password, done ) {
       return done(null, user, { message: 'signup successful'});
     });
   });
-}
+};
+
+UserSchema.methods.generateRandomToken = function () {
+  var user = this,
+      chars = "_!abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+      token = new Date().getTime() + '_';
+  for ( var x = 0; x < 16; x++ ) {
+    var i = Math.floor( Math.random() * 62 );
+    token += chars.charAt( i );
+  }
+  return token;
+};
 
 var User = mongoose.model('User', UserSchema);
 

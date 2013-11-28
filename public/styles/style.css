@@ -27,33 +27,23 @@ body {
   top: 1em;
   left: 1em;
   height: auto;
-  width: 10%;
-  background-color: black; }
-  .navbar a {
-    color: black; }
-  .navbar .nav-tabs {
-    height: 100%;
+  width: 15%;
+  background-color: black;
+  border-radius: 0.3em; }
+  .navbar .tab,
+  .navbar .nav-brand {
     width: 100%;
+    height: 10%;
     display: inline-block;
-    list-style: none;
+    font-size: 1.3rem;
     text-align: center; }
-    .navbar .nav-tabs .tab,
-    .navbar .nav-tabs .nav-brand {
-      width: 100%;
-      height: 10%;
-      display: inline-block;
-      font-size: 1.3rem;
-      float: left; }
-      .navbar .nav-tabs .tab a,
-      .navbar .nav-tabs .nav-brand a {
-        color: white; }
-      .navbar .nav-tabs .tab:hover,
-      .navbar .nav-tabs .nav-brand:hover {
-        background-color: #ccc; }
-    .navbar .nav-tabs .nav-brand {
-      display: inline-block;
-      font-size: 1.6em;
-      font-weight: 800; }
+    .navbar .tab a,
+    .navbar .nav-brand a {
+      color: white; }
+  .navbar .nav-brand {
+    display: inline-block;
+    font-size: 1.6em;
+    font-weight: 800; }
 
 .bigbox {
   background-color: red;
