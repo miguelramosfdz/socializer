@@ -1,2 +1,2 @@
-var app = angular.module('GM', []);
+var app = angular.module('Boiler', ['ngRoute', 'ngResource']);
 
