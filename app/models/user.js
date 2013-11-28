@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
-    bcrypt = require('bcrypt');
+    bcrypt = require('bcrypt'),
+    SALT_WORK_FACTOR = 10;
 
 var UserSchema = new mongoose.Schema({
   username: { type: String, limit: 20, required: true, unique: true, trim: true },
@@ -7,6 +8,22 @@ var UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true, trim: true },
   signedUp: { type: Date, required: true, default: Date.now },
   updated: { type: Date, required: true, default: Date.now }
+});
+
+UserSchema.pre('save', function(next) {
+  var user = this;
+
+  if(!user.isModified('password')) return next();
+
+  bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+    if(err) return next(err);
+
+    bcrypt.hash(user.password, salt, function(err, hash) {
+      if(err) return next(err);
+      user.password = hash;
+      next();
+    });
+  });
 });
 
 UserSchema.methods.isValidPassword = function ( username, password, done ) {

@@ -1,4 +1,4 @@
-exports.setup = function ( app, passport, express ) {
+exports.setup = function ( server ) {
 
   var users = require('../app/controllers/users_controller');
 
@@ -8,23 +8,23 @@ exports.setup = function ( app, passport, express ) {
   };
 
   // Serve home page
-  app.get('/', function ( req, res, next ) {
+  server.get('/', function ( req, res, next ) {
     res.render('layout');
   });
 
   // Serve templates
-  app.get('/templates/:type/:name', function ( req, res, next ) {
+  server.get('/templates/:type/:name', function ( req, res, next ) {
     res.render('templates/' + req.params.type + '/' + req.params.name);
   });
 
   // User Creation, Log In, & Log Out
-  app.post('/signup', users.signup);
-  app.post('/signin', users.signin);
-  app.post('/signout', users.signout);
-  app.get('/loggedin', users.is_signed_in );
+  server.post('/signup', users.signup);
+  server.post('/signin', users.signin);
+  server.post('/signout', users.signout);
+  server.get('/loggedin', users.is_signed_in );
 
   // Serve error page
-  app.get('/error', function ( req, res, next ) {
+  server.get('/error', function ( req, res, next ) {
     res.render('static/error');
   });
 
