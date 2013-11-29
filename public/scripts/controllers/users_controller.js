@@ -8,12 +8,11 @@ app
     		$http
     			.post('/signup', { user: $scope.user })
     			.success(function ( data, status, headers, config ) {
-            console.log(data);
             $rootScope.user = data.user;
     				// $location.path( "#/" );
     			})
     			.error(function ( data, status, headers, config ) {
-    				console.log(data);
+    				debugger;
     			})
     	}
 
@@ -36,7 +35,6 @@ app
           password: $scope.user.password
         })
         .success(function ( data, status, headers, config ) {
-          debugger;
           $rootScope.user = data.user;
           // $location.path( "/main" );
         })
