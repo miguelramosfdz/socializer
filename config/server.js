@@ -4,6 +4,7 @@
 var express = require("express"),
     routes = require("./routes"),
     redis = require("redis"),
+    http = require("http"),
     redisStore = require("connect-redis")(express),
     passport = require("passport"),
     db = require("./db"),
@@ -11,34 +12,36 @@ var express = require("express"),
     Authentication = require("./authentication"),
     development = require("./envs/dev");
 
-/** Declare server */
-var server = express();
+/** Declare app, server, and socket */
+var app = express();
+var server = http.createServer(app);
+var io = require('socket.io').listen(server);
 
 /** Declase redis client */
 var client = redis.createClient();
 
 /**
- * Declare port for server
+ * Declare port for app
  */
-server.set("port", 5000);
+app.set("port", 5000);
 
 /*
  * Declare views engine & folder
  */
-server.set("view engine", "jade");
-server.set("views", __dirname + "/../app/views");
+app.set("view engine", "jade");
+app.set("views", __dirname + "/../app/views");
 
-server.use(express.favicon());
-server.use(express.logger("dev"));
-server.use(express.bodyParser());
-server.use(express.methodOverride());
-server.set("showStackError", true);
+app.use(express.favicon());
+app.use(express.logger("dev"));
+app.use(express.bodyParser());
+app.use(express.methodOverride());
+app.set("showStackError", true);
 
 /*
  * Add CSRF support
  */
-server.use( express.cookieParser() );
-server.use( express.session({
+app.use( express.cookieParser() );
+app.use( express.session({
 	store: new redisStore({client: client}),
 	secret: 'boiler',
 	cookie: {
@@ -49,8 +52,8 @@ server.use( express.session({
 /**
  * Cross-Site Request Forgery
  */
-server.use( express.csrf({ value: Authentication.csrf }) );
-server.use(function ( req, res, next ) {
+app.use( express.csrf({ value: Authentication.csrf }) );
+app.use(function ( req, res, next ) {
    res.cookie( "XSRF-TOKEN", req.csrfToken() );
    next();
 });
@@ -58,8 +61,8 @@ server.use(function ( req, res, next ) {
 /*
  * Setup Passport authentication
  */
-server.use( passport.initialize() );
-server.use( passport.session() );
+app.use( passport.initialize() );
+app.use( passport.session() );
 passport.use(Authentication.localStrategy);
 passport.serializeUser(Authentication.serializeUser);
 passport.deserializeUser(Authentication.deserializeUser);
@@ -67,12 +70,12 @@ passport.deserializeUser(Authentication.deserializeUser);
 /**
  * Declare public folder
  */
-server.use(express.static(__dirname + "/../public"));
+app.use(express.static(__dirname + "/../public"));
 
 /**
  * CORS
  */
-server.use(function (req, res, next) {
+app.use(function (req, res, next) {
 	res.header('Access-Control-Allow-Origin','*');
 	res.header('Access-Control-Allow-Methods','POST, GET, PUT, DELETE, OPTIONS');
 	res.header('Access-Control-Allow-Credentials', 'true');
@@ -80,25 +83,35 @@ server.use(function (req, res, next) {
 	next();
 });
 
-server.options('*', function (req, res) {
+app.options('*', function (req, res) {
 	res.send('');
 });
 
 /**
  *	Enable HTML5 mode for Angular routes to work without needing #
  */
-// server.use(function(req, res) {
+// app.use(function(req, res) {
 //   return res.redirect(req.protocol + '://' + req.get('Host') + '/#' + req.url)
 // });
 
-server.use(server.router);
+app.use(app.router);
 
-development.setup(server, express);
+/** Setup development environment */
+development.setup(app, express);
+
+/** Setup database */
 db.setup(mongoose);
-routes.setup(server);
 
-server.listen(server.get("port"), function() {
-  console.log("Express server listening on port " + server.get("port"));
+/** Setup routes */
+routes.setup(app);
+
+/** Start app */
+server.listen(app.get("port"), function() {
+  console.log("Express app listening on port " + app.get("port"));
 });
 
-module.exports = server;
+io.on('connection', function (socket) {
+	socket.emit('connected', { message: 'You are real time'});
+})
+
+module.exports = app;
