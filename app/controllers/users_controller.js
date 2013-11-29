@@ -8,15 +8,18 @@ module.exports = {
 	signup: function ( req, res, next ) {
 		var new_user = req.body.user;
 		if ( new_user.password === new_user.password_confirmation ) {
-			bcrypt.hash( new_user.password, 10, function ( err, hash ) {
-				if ( err ) return res.json({ error: err });
-				User.create({
-					username: new_user.username,
-					email: new_user.email,
-					password: hash
-				}, function ( err, user ) {
-					if (err) return res.json(400, { message: "User could not be signed up:"+err });
-					return res.json({ message: "User Signed Up." });
+			User.create({
+				username: new_user.username,
+				email: new_user.email,
+				password: new_user.password
+			}, function ( err, user ) {
+				if (err) return res.json(400, { message: "User could not be signed up:"+err });
+				return res.json({
+					message: "User Signed Up.",
+					user: {
+						username: user.username,
+						accessToken: user.accessToken
+					}
 				});
 			});
 		}
@@ -24,11 +27,12 @@ module.exports = {
 
 	signin: function (req, res, next) {
 		passport.authenticate("local", function(err, user, info) {
+			var user = user;
 			if (err) { return next(err); }
 			if (!user) { return res.json(403, { message: "Unknown user: "+user}); }
 			req.logIn(user, function(err) {
 				if (err) { return next(err); }
-				return res.redirect("/");
+				return res.json(200, { message: 'User signed in.', user: user });
 			});
 		})(req, res, next);
 	},

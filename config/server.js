@@ -54,6 +54,8 @@ passport.deserializeUser(Authentication.deserializeUser);
  */
 server.use(express.static(__dirname + "/../public"));
 
+server.use(server.router);
+
 development.setup(server, express);
 db.setup(mongoose);
 routes.setup(server);

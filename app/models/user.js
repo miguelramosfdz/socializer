@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
 var UserSchema = new mongoose.Schema({
   username: { type: String, limit: 20, required: true, unique: true, trim: true },
   password: { type: String, limit: 20, required: true, trim: true },
+  accessToken: { type: String },
   email: { type: String, required: true, unique: true, trim: true },
   signedUp: { type: Date, required: true, default: Date.now },
   updated: { type: Date, required: true, default: Date.now }
@@ -26,15 +27,10 @@ UserSchema.pre('save', function(next) {
   });
 });
 
-UserSchema.methods.isValidPassword = function ( username, password, done ) {
-  User.findOne({ username: username }, function ( err, user ) {
-    if (err) return done(err);
-    if (!user) return done(null, false, { message: 'Incorrect username' });
-    bcrypt.compare(password, user.password, function ( err, result ) {
-      if (err) return done(err);
-      if (!result) return done(null, false, { message: 'Incorrect password.' });
-      return done(null, user, { message: 'signup successful'});
-    });
+UserSchema.methods.isValidPassword = function(candidatePassword, cb) {
+  bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+    if(err) return cb(err);
+    cb(null, isMatch);
   });
 };
 
