@@ -12,10 +12,8 @@ var express = require("express"),
     Authentication = require("./authentication"),
     development = require("./envs/dev");
 
-/** Declare app, server, and socket */
+/** Declare app */
 var app = express();
-var server = http.createServer(app);
-var io = require('socket.io').listen(server);
 
 /** Declase redis client */
 var client = redis.createClient();
@@ -105,11 +103,18 @@ db.setup(mongoose);
 /** Setup routes */
 routes.setup(app);
 
+/** Declare server */
+var server = http.createServer(app);
+
 /** Start app */
 server.listen(app.get("port"), function() {
   console.log("Express app listening on port " + app.get("port"));
 });
 
+/** Declare socket */
+var io = require('socket.io').listen(server);
+
+/** Emit message to ensure connection */
 io.on('connection', function (socket) {
 	socket.emit('connected', { message: 'You are real time'});
 })

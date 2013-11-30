@@ -45,6 +45,23 @@ body {
     font-size: 1.6em;
     font-weight: 800; }
 
+.navmenu {
+  background-color: black;
+  position: fixed;
+  top: 5.3em;
+  left: 1em;
+  height: auto;
+  width: 15%;
+  border-radius: 0.3em;
+  display: none; }
+  .navmenu .tab {
+    width: 100%;
+    padding-top: 0.7em;
+    padding-bottom: 0.7em;
+    text-align: center; }
+    .navmenu .tab a {
+      color: white; }
+
 .bigbox {
   background-color: red;
   height: 95%;
