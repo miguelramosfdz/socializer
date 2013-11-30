@@ -40,10 +40,10 @@ app.set("showStackError", true);
  */
 app.use( express.cookieParser() );
 app.use( express.session({
-	store: new redisStore({client: client}),
-	secret: 'boiler',
+	store: new redisStore({ client: client }),
+	secret: "boiler",
 	cookie: {
-		domain: 'locahost:5000'
+		domain: "locahost:5000"
 	}
 }) );
 
@@ -74,22 +74,23 @@ app.use(express.static(__dirname + "/../public"));
  * CORS
  */
 app.use(function (req, res, next) {
-	res.header('Access-Control-Allow-Origin','*');
-	res.header('Access-Control-Allow-Methods','POST, GET, PUT, DELETE, OPTIONS');
-	res.header('Access-Control-Allow-Credentials', 'true');
-	res.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Origin, Cookie');
+	res.header("Access-Control-Allow-Origin","*");
+	res.header("Access-Control-Allow-Methods","POST, GET, PUT, DELETE, OPTIONS");
+	res.header("Access-Control-Allow-Credentials", "true");
+	res.header("Access-Control-Allow-Headers", "Content-Type, Accept, Origin, Cookie");
 	next();
 });
 
-app.options('*', function (req, res) {
-	res.send('');
+
+app.options("*", function (req, res) {
+	res.send("");
 });
 
 /**
  *	Enable HTML5 mode for Angular routes to work without needing #
  */
 // app.use(function(req, res) {
-//   return res.redirect(req.protocol + '://' + req.get('Host') + '/#' + req.url)
+//   return res.redirect(req.protocol + "://" + req.get("Host") + "/#" + req.url)
 // });
 
 app.use(app.router);
@@ -112,11 +113,11 @@ server.listen(app.get("port"), function() {
 });
 
 /** Declare socket */
-var io = require('socket.io').listen(server);
+var io = require("socket.io").listen(server);
 
 /** Emit message to ensure connection */
-io.on('connection', function (socket) {
-	socket.emit('connected', { message: 'You are real time'});
+io.on("connection", function (socket) {
+	socket.emit("connected", { message: "Communicating live from the boiler..."});
 })
 
 module.exports = app;
