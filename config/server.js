@@ -21,7 +21,7 @@ var client = redis.createClient();
 /**
  * Declare port for app
  */
-app.set("port", 5000);
+app.set("port", 3000);
 
 /*
  * Declare views engine & folder
@@ -42,9 +42,9 @@ app.use( express.cookieParser() );
 app.use( express.session({
 	store: new redisStore({ client: client }),
 	secret: "boiler",
-	cookie: {
-		domain: "locahost:5000"
-	}
+	// cookie: {
+	// 	domain: "locahost:3000"
+	// }
 }) );
 
 /**
@@ -85,6 +85,12 @@ app.use(function (req, res, next) {
 app.options("*", function (req, res) {
 	res.send("");
 });
+
+/**
+ * Enable JSONP
+ */
+app.set("jsonp callback", true);
+
 
 /**
  *	Enable HTML5 mode for Angular routes to work without needing #

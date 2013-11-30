@@ -28,10 +28,10 @@ module.exports = {
 	signin: function (req, res, next) {
 		passport.authenticate("local", function(err, user, info) {
 			var user = user;
-			if (err) { return next(err); }
+			if (err) { return res.json(500, { message: err }); }
 			if (!user) { return res.json(403, { message: "Unknown user: "+user}); }
 			req.logIn(user, function(err) {
-				if (err) { return next(err); }
+				if (err) { return res.json(500, { message: err }); }
 				return res.json(200, { message: 'User signed in.', user: user });
 			});
 		})(req, res, next);

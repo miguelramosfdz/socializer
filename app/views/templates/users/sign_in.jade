@@ -3,8 +3,7 @@ link(rel='stylesheet', href='/styles/sign_up.css')
 
 .sign_up(ng-controller='SignInCtrl')
 
-	.success
-		{{ user.username }}
+	{{ signedIn }}
 
 	.error(ng-show="message")
 		{{ message }}

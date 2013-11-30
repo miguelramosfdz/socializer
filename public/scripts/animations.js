@@ -1,4 +1,4 @@
-$('.navbar').hover(function () {
+$('.navbar').mouseenter(function () {
 	$('.navmenu').fadeIn(500);
 });
 

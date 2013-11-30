@@ -16,7 +16,6 @@ module.exports = {
           user.set('accessToken', token);
           user.save( function (err) {
             if (err) return done(err);
-            console.log(user.get('accessToken'));
             return done(null, user.get('accessToken'));
           })
         }
@@ -24,7 +23,6 @@ module.exports = {
     }
 
     if ( user._id ) {
-      console.log('meow');
       createAccessToken();
     }
   },

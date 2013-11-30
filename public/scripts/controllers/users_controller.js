@@ -1,6 +1,6 @@
 app
-  .controller('SignUpCtrl', ['$scope', '$http', '$rootScope', '$location',
-  	function ($scope, $http, $rootScope, $location) {
+  .controller('SignUpCtrl', ['$scope', '$http', '$rootScope', '$location', 'UserService',
+  	function ($scope, $http, $rootScope, $location, User) {
 
     	$scope.user = {};
 
@@ -8,8 +8,8 @@ app
     		$http
     			.post('/signup', { user: $scope.user })
     			.success(function ( data, status, headers, config ) {
-            $rootScope.user = data.user;
-    				// $location.path( "#/" );
+            User.isLoggedIn = true;
+            User.username = data.user.username;
     			})
     			.error(function ( data, status, headers, config ) {
     				debugger;
@@ -20,8 +20,10 @@ app
   ])
 
 app
-  .controller('SignInCtrl', ['$scope', '$http', '$rootScope', '$location',
-  function ($scope, $http, $location, $rootScope) {
+  .controller('SignInCtrl', ['$scope', '$http', '$rootScope', '$location', 'UserService',
+  function ($scope, $http, $location, $rootScope, User) {
+
+    $scope.signedIn = User.username;
 
     $scope.user = {
       username: '',
@@ -35,8 +37,8 @@ app
           password: $scope.user.password
         })
         .success(function ( data, status, headers, config ) {
-          $rootScope.user = data.user;
-          // $location.path( "/main" );
+          User.isLoggedIn = true;
+          User.username = data.user.username;
         })
         .error(function ( data, status, headers, config ) {
           $('.error').fadeIn(500).fadeOut(500);
