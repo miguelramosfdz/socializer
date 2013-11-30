@@ -26,7 +26,6 @@ body {
   padding: 1em 2em 1em 2em;
   top: 1em;
   left: 1em;
-  height: auto;
   width: 15%;
   background-color: black;
   border-radius: 0.3em; }
@@ -40,6 +39,9 @@ body {
     .navbar .tab a,
     .navbar .nav-brand a {
       color: white; }
+    .navbar .tab:hover,
+    .navbar .nav-brand:hover {
+      background-color: #ccc; }
   .navbar .nav-brand {
     display: inline-block;
     font-size: 1.6em;
@@ -47,13 +49,8 @@ body {
 
 .navmenu {
   background-color: black;
-  position: fixed;
-  top: 5.3em;
-  left: 1em;
-  height: auto;
-  width: 15%;
   border-radius: 0.3em;
-  display: none; }
+  height: auto; }
   .navmenu .tab {
     width: 100%;
     padding-top: 0.7em;

@@ -27,7 +27,7 @@ body {
 	position: absolute;
 	padding: 1em 2em 1em 2em;
 	top: 1em; left: 1em;
-	height: auto; width: 15%;
+	width: 15%;
 	background-color: black;
 	border-radius: 0.3em;
 
@@ -41,7 +41,7 @@ body {
 			color: white;
 		}
 		&:hover {
-			// background-color: #ccc;
+			background-color: #ccc;
 		}
 	}
 
@@ -55,11 +55,9 @@ body {
 
 .navmenu {
 	background-color: black;
-	position: fixed;
-	top: 5.3em; left: 1em;
-	height: auto; width: 15%;
 	border-radius: 0.3em;
-	display: none;
+	height: auto;
+	// display: none;
 	.tab {
 		width: 100%;
 		padding-top: 0.7em;

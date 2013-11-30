@@ -1,6 +1,4 @@
-app.config([ '$routeProvider', '$locationProvider',
-
-  function ( $routeProvider, $locationProvider) {
+app.config(function ( $routeProvider, $locationProvider ) {
 
     var show = function (view) {
       return '/templates/' + view;
@@ -22,4 +20,4 @@ app.config([ '$routeProvider', '$locationProvider',
 
     // $locationProvider.html5Mode(true);
   }
-]);
+);

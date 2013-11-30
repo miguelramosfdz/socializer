@@ -32,7 +32,7 @@ module.exports = {
 			if (!user) { return res.json(403, { message: "Unknown user: "+user}); }
 			req.logIn(user, function(err) {
 				if (err) { return res.json(500, { message: err }); }
-				return res.json(200, { message: 'User signed in.', user: user });
+				return res.json(200, { user: user });
 			});
 		})(req, res, next);
 	},

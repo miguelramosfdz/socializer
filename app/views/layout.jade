@@ -11,14 +11,13 @@ html.no-js(ng-app="Boiler")
   head
     include head
 
-  body
+  body(ng-controller="MainCtrl")
     //if lt IE 7
       p.browsehappy
         | You are using an <strong>outdated</strong> browser.
         | Please <a href="http://browsehappy.com/">upgrade your browser</a>
         | to improve your experience.
-    .navbar(ng-controller="HeaderCtrl" ng-include="views/navbar.html")
+    .navbar(ng-include="'views/navbar.html'")
     .content(ng-view)
-
 
     include foot

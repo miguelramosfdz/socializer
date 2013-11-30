@@ -1,4 +1,4 @@
-app.controller('csrfCtrl', ['$scope', '$http',
+app.controller('csrfCtrl',
   function($scope, $http) {
 
     $scope.submit = function() {
@@ -13,4 +13,4 @@ app.controller('csrfCtrl', ['$scope', '$http',
     }
 
   }
-]);
+);

@@ -20,8 +20,8 @@ exports.setup = function ( server ) {
   // User Creation, Log In, & Log Out
   server.post('/signup', users.signup);
   server.post('/signin', users.signin);
-  server.post('/signout', users.signout);
-  server.get('/loggedin', users.is_signed_in );
+  server.get('/signout', users.signout);
+  server.get('/signedin', users.is_signed_in );
 
   // Serve error page
   server.get('/error', function ( req, res, next ) {
