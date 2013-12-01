@@ -20,7 +20,7 @@ module.exports = function (grunt) {
 					nodeArgs: ['--debug'],
 					ignoredFiles: ['node_modules/**', 'public/components'],
 					watchedExtensions: ['js'],
-					watchedFolders: [ '.', 'config'],
+					watchedFolders: [ '.' ],
 					delayTime: 1,
 					legacyWatch: true,
 					env: {
