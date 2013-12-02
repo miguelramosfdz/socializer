@@ -1,7 +1,7 @@
 .sign_up {
   width: 45%;
   padding: 3%;
-  margin: 13% auto;
+  margin: 10% auto;
   text-align: center;
   border-radius: 10px; }
   .sign_up input[type=text],
@@ -22,8 +22,18 @@
     border: none;
     padding: 2% 0 2% 0;
     color: white;
+    cursor: pointer;
     border-radius: 4px; }
   .sign_up .error {
     width: 100%;
     background-color: red;
     color: white; }
+  .sign_up .social {
+    width: 100%;
+    margin-top: 2%;
+    padding: 2% 9%;
+    text-align: center; }
+    .sign_up .social img {
+      margin-right: 7%;
+      width: 42.5%;
+      cursor: pointer; }

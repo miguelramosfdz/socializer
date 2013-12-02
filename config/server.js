@@ -41,11 +41,8 @@ app.set("showStackError", true);
 app.use( express.cookieParser() );
 app.use( express.session({
 	store: new redisStore({ client: client }),
-	secret: "boiler",
-	// cookie: {
-	// 	domain: "locahost:3000"
-	// }
-}) );
+	secret: "boiler"
+}));
 
 /**
  * Cross-Site Request Forgery
@@ -62,6 +59,9 @@ app.use(function ( req, res, next ) {
 app.use( passport.initialize() );
 app.use( passport.session() );
 passport.use(Authentication.localStrategy);
+passport.use(Authentication.facebookStrategy);
+passport.use(Authentication.twitterStrategy);
+// passport.use(Authentication.googleStrategy);
 passport.serializeUser(Authentication.serializeUser);
 passport.deserializeUser(Authentication.deserializeUser);
 
@@ -80,7 +80,6 @@ app.use(function (req, res, next) {
 	res.header("Access-Control-Allow-Headers", "Content-Type, Accept, Origin, Cookie");
 	next();
 });
-
 
 app.options("*", function (req, res) {
 	res.send("");

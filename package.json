@@ -14,7 +14,10 @@
     "bcrypt": "~0.7.7",
     "socket.io": "~0.9.16",
     "redis": "~0.9.1",
-    "connect-redis": "~1.4.6"
+    "connect-redis": "~1.4.6",
+    "passport-facebook": "~1.0.2",
+    "passport-twitter": "~1.0.2",
+    "passport-google": "~0.3.0"
   },
   "devDependencies": {
     "mocha": "*",

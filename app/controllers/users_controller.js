@@ -5,23 +5,28 @@ var User = require("../models/user"),
 
 module.exports = {
 
-	signup: function ( req, res, next ) {
+	authCallback: function(req, res, next) {
+		res.redirect('/');
+	},
+
+	signup: function(req,res,next) {
 		var new_user = req.body.user;
-		if ( new_user.password === new_user.password_confirmation ) {
+		if ( new_user.password === new_user.passwordConfirmation ) {
 			User.create({
 				username: new_user.username,
 				email: new_user.email,
 				password: new_user.password
 			}, function ( err, user ) {
-				if (err) return res.json(400, { message: "User could not be signed up:"+err });
-				return res.json({
-					message: "User Signed Up.",
-					user: {
-						username: user.username,
-						accessToken: user.accessToken
-					}
+				if (err) {
+					return res.json(400, { message: "User could not be signed up:"+err });
+				}
+				req.logIn(user, function(err) {
+					if (err) { return res.json(500, { message: err }); }
+					return res.json(200, { user: user });
 				});
 			});
+		} else {
+			return res.json(403, { message: 'Passwords do not match' });
 		}
 	},
 
@@ -38,7 +43,11 @@ module.exports = {
 	},
 
 	is_signed_in: function ( req, res, next ) {
-		return res.send( req.isAuthenticated() ? req.user : "0" );
+		if (req.isAuthenticated()) {
+			return res.send(req.user);
+		} else {
+			return res.json(403, { message: 'No user signed in' });
+		}
 	},
 
 	signout: function ( req, res, next ) {

@@ -1,25 +1,42 @@
 app.controller("MainCtrl",
-	function($scope, $rootScope, $location, Auth, User) {
+	function($scope, $rootScope, $location, $http, Auth) {
+
+		$scope.newUser = {
+			username: '',
+			email: '',
+			password: '',
+			passwordConfirmation: ''
+		};
+
+		$scope.existingUser = {
+			username: '',
+			password: ''
+		};
+
+		$scope.flashMessage = function (message) {
+				$('.error').fadeIn(500).fadeOut(500);
+				$scope.message = message;
+		};
 
 		$scope.loadAuth = function () {
 			Auth.signedin()
 				.success(function(data) {
-					$scope.user = data;
-					$scope.isSignedIn = true;
+						$scope.user = data;
+						$scope.isSignedIn = true;
 				});
-		}
+		};
 
 		$scope.signUp = function () {
 			$http
-				.post('/signup', { user: $scope.user })
+				.post('/signup', { user: $scope.newUser })
 				.success(function ( data, status, headers, config ) {
 					$scope.loadAuth();
 					$location.path('/');
 				})
 				.error(function ( data, status, headers, config ) {
-					debugger;
+					$scope.flashMessage(data.message);
 				})
-		}
+		};
 
 		$scope.signIn = function () {
 			Auth.signin({
@@ -31,8 +48,7 @@ app.controller("MainCtrl",
         $location.path('/');
 			})
 			.error(function (data, status, headers, config) {
-				$('.error').fadeIn(500).fadeOut(500);
-				$scope.message = data.message;
+				$scope.flashMessage(data.message);
 			})
 		}
 
@@ -42,6 +58,9 @@ app.controller("MainCtrl",
 					$scope.user = {};
 					$scope.isSignedIn = false;
 					$location.path('/');
+				})
+				.error(function(data) {
+					$scope.flashMessage(data.message);
 				})
 		}
 
@@ -54,4 +73,5 @@ app.controller("MainCtrl",
 		});
 
 		$scope.loadAuth();
+
 });

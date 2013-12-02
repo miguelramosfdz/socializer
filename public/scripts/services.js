@@ -1,29 +1,24 @@
-app.service('User', [
-	function() {
-		var user = {
-			isLoggedIn: false,
-			username: ''
-		}
+"use strict";
 
-		return user;
-	}
-]);
-
-app.service('Auth',
+app.service("Auth",
 	function ($http) {
 		return {
-			user: {},
 
-			signedin: function() {
-				return $http.get('/signedin');
+			signUp: function(params) {
+				return $http.post("/signup", params);
 			},
 
 			signin: function(params) {
-				return $http.post('/signin', params);
+				return $http.post("/signin", params);
 			},
 
 			signOut: function() {
-				return $http.get('/signout');
+				return $http.get("/signout");
+			},
+
+			signedin: function() {
+				return $http.get("/signedin");
 			}
-		}
+
+		};
 });
