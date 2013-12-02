@@ -2,15 +2,12 @@
 
 // Module dependencies
 var express = require("express"),
-    routes = require("./routes"),
     redis = require("redis"),
     http = require("http"),
     redisStore = require("connect-redis")(express),
     passport = require("passport"),
-    db = require("./db"),
     mongoose = require("mongoose"),
-    Authentication = require("./authentication"),
-    development = require("./envs/dev");
+    Authentication = require("./authentication");
 
 /** Declare app */
 var app = express();
@@ -101,13 +98,13 @@ app.set("jsonp callback", true);
 app.use(app.router);
 
 /** Setup development environment */
-development.setup(app, express);
+require("./envs/dev")(app, express);
 
 /** Setup database */
-db.setup(mongoose);
+require("./db")(mongoose);
 
 /** Setup routes */
-routes.setup(app);
+require("./routes")(app);
 
 /** Declare server */
 var server = http.createServer(app);

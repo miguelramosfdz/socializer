@@ -29,8 +29,8 @@ module.exports = {
 			User.findOne( { accessToken: token }, function (err, existingUser) {
 				if (err) { return done( err ); }
 				/**
-				 * If there is a user with access token,
-				 * generate new one for user.
+				 * If there is a user with the access token,
+				 * generate new one for current user.
 				 */
 				if (existingUser) {
 					createAccessToken();
@@ -49,14 +49,14 @@ module.exports = {
 		}
 	},
 
-	// Deserialize sessions
+	/** Deserialize sessions */
 	deserializeUser: function(token, done) {
 		User.findOne({ accessToken: token } , function (err, user) {
 			done(err, user);
 		});
 	},
 
-	// Create CSRF token
+	/** Create CSRF token */
 	csrf: function(req) {
 		var token = (req.body && req.body._csrf) || (req.query && req.query._csrf) || (req.headers["x-csrf-token"]) || (req.headers["x-xsrf-token"]);
 		return token;
