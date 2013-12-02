@@ -38,7 +38,10 @@ app.controller("MainCtrl",
 				.post("/signup", { user: $scope.newUser })
 				.success(function ( data, status, headers, config ) {
 					$scope.loadAuth();
-					$location.path("#/");
+					$('.signup').remove();
+					$('.signin').fadeOut(500, function () {
+						$(this).remove();
+					});
 				})
 				.error(function ( data, status, headers, config ) {
 					$scope.flashMessage(data.message);
@@ -53,6 +56,10 @@ app.controller("MainCtrl",
 			.success(function (data, status, headers, config) {
         $scope.loadAuth();
         $location.path("#/");
+				$('.signup').remove();
+				$('.signin').fadeOut(500, function () {
+					$(this).remove();
+				});
 			})
 			.error(function (data, status, headers, config) {
 				$scope.flashMessage(data.message);
@@ -72,13 +79,8 @@ app.controller("MainCtrl",
 		$scope.signOut = function() {
 			Auth.signOut()
 				.success(function(data) {
-					$('.nav-menu').fadeOut(500, function () {
-						$scope.user = {};
-						$scope.isSignedIn = false;
-						setTimeout(function() {
-							$('.nav-menu').fadeIn(500);
-						}, 600);
-					});
+					$scope.user = {};
+					$scope.isSignedIn = false;
 				})
 				.error(function(data) {
 					$scope.flashMessage(data.message);

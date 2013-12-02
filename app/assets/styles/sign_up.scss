@@ -2,8 +2,10 @@
 .signin {
   width: 45%;
   padding: 3%;
+  position: absolute;
+  top: 0; left: 28%;
   display: none;
-  margin: 8% auto;
+  margin: 10% auto;
   text-align: center;
   border-radius: 10px;
 
@@ -48,5 +50,4 @@
     }
   }
 }
-
 
