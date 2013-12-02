@@ -4,9 +4,10 @@ var mongoose = require("mongoose"),
 		bcrypt = require("bcrypt");
 
 var UserSchema = new mongoose.Schema({
+	name: { type: String },
 	username: { type: String, limit: 20, required: true, unique: true, trim: true },
-	password: { type: String, limit: 20, required: true, trim: true },
-	email: { type: String, required: true, unique: true, trim: true },
+	password: { type: String, limit: 20, trim: true },
+	email: { type: String, trim: true },
 	signedUp: { type: Date, required: true, default: Date.now },
 	updated: { type: Date, required: true, default: Date.now },
 	provider: { type: String, default: 'local' },

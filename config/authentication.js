@@ -5,6 +5,7 @@ var LocalStrategy = require("passport-local").Strategy,
 		FacebookStrategy = require("passport-facebook").Strategy,
 		TwitterStrategy = require("passport-twitter").Strategy,
 		GoogleStrategy = require("passport-google").Strategy,
+		GitHubStrategy = require("passport-github").Strategy,
 
 		/** Require User Model */
 		User = require("../app/models/user"),
@@ -82,15 +83,15 @@ module.exports = {
 	facebookStrategy: new FacebookStrategy({
 			clientID: Oauth.Facebook.appId,
 			clientSecret: Oauth.Facebook.appSecret,
-			callbackURL: Oauth.Facebook.callbackUrl
+			callbackURL: Oauth.Facebook.callbackURL
 		},
 		function(accessToken, refreshToken, profile, done) {
-			User.find({ "facebook.id": profile.id }, function(err, user) {
+			User.findOne({ "facebook.id": profile.id }, function(err, user) {
 				if (err) { return done(err); }
+				if (user) { return done(null, user); }
 				if (!user) {
 					createNewUser({
 						name: profile.displayName,
-						email: profile.emails[0].value,
 						username: profile.username,
 						provider: "facebook",
 						facebook: profile._json
@@ -103,7 +104,7 @@ module.exports = {
 	twitterStrategy: new TwitterStrategy({
 			consumerKey: Oauth.Twitter.consumerKey,
 			consumerSecret: Oauth.Twitter.consumerSecret,
-			callbackURL: Oauth.Twitter.callbackUrl
+			callbackURL: Oauth.Twitter.callbackURL
 		},
 		function(token, tokenSecret, profile, done) {
 			User.find({ "twitter.id_str": profile.id }, function(err, user) {
@@ -129,16 +130,39 @@ module.exports = {
 			User.find({ "google.id": identifier }, function(err, user) {
 				if (err) { return done(err); }
 				if (!user) {
-          createNewUser({
-              name: profile.displayName,
-              email: profile.emails[0].value,
-              username: profile.username,
-              provider: "google",
-              google: profile._json
+					createNewUser({
+							name: profile.displayName,
+							email: profile.emails[0].value,
+							username: profile.username,
+							provider: "google",
+							google: profile._json
 					}, user, done);
 				}
 			});
 		}
 	),
 
+	githubStrategy: new GitHubStrategy({
+				clientID: Oauth.Github.clientID,
+				clientSecret: Oauth.Github.clientSecret,
+				callbackURL: Oauth.Github.callbackURL
+		},
+		function(accessToken, refreshToken, profile, done) {
+			User.findOne({
+			 "github.id": profile.id
+			}, function(err, user) {
+				if (!user) {
+						createNewUser({
+								name: profile.displayName,
+								email: profile.emails[0].value,
+								username: profile.username,
+								provider: "github",
+								github: profile._json
+						}, user, done);
+				} else {
+						return done(err, user);
+				}
+			});
+		}
+	)
 };

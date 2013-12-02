@@ -29,9 +29,11 @@ module.exports = function ( server ) {
 
   server.get("/auth/facebook/callback",
     passport.authenticate("facebook", {
-      successRedirect: "/",
       failureRedirect: "/signin"
-    })
+    }),
+    function(req,res,next) {
+        res.render("index", {user : req.user});
+    }
   );
 
   server.get("/auth/twitter", passport.authenticate("twitter"));
@@ -59,6 +61,6 @@ module.exports = function ( server ) {
     res.render("static/error");
   });
 
-  server.get("*", renderIndex);
+  // server.get("*", renderIndex);
 
 };
