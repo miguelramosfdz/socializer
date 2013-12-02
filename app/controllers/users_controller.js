@@ -15,7 +15,8 @@ module.exports = {
 			User.create({
 				username: new_user.username,
 				email: new_user.email,
-				password: new_user.password
+				password: new_user.password,
+				provider: 'local'
 			}, function ( err, user ) {
 				if (err) {
 					return res.json(400, { message: "User could not be signed up:"+err });

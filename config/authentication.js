@@ -10,7 +10,15 @@ var LocalStrategy = require("passport-local").Strategy,
 		User = require("../app/models/user"),
 
 		/** Require Auth Tokens */
-		Token = require("./tokens");
+		Oauth = require("./oauth");
+
+var createNewUser = function(config, user, done) {
+	user = new User(config);
+	user.save(function(err) {
+			if (err) return done(err);
+			return done(err, user);
+	});
+};
 
 module.exports = {
 
@@ -72,50 +80,41 @@ module.exports = {
 
 	/** Facebook Strategy */
 	facebookStrategy: new FacebookStrategy({
-			clientID: Token.Facebook.appId,
-			clientSecret: Token.Facebook.appSecret,
-			callbackURL: "http://localhost:3000/auth/facebook/callback"
+			clientID: Oauth.Facebook.appId,
+			clientSecret: Oauth.Facebook.appSecret,
+			callbackURL: Oauth.Facebook.callbackUrl
 		},
 		function(accessToken, refreshToken, profile, done) {
-			User.find({ facebookId: profile.id }, function(err, user) {
+			User.find({ "facebook.id": profile.id }, function(err, user) {
 				if (err) { return done(err); }
 				if (!user) {
-					user = new User({
+					createNewUser({
 						name: profile.displayName,
 						email: profile.emails[0].value,
 						username: profile.username,
 						provider: "facebook",
 						facebook: profile._json
-					});
-					user.save(function(err) {
-							if (err) return done(err);
-							return done(err, user);
-					});
+					}, user, done);
 				}
-			});
-		}
-	),
+		});
+	}),
 
 	/** Twitter Strategy */
 	twitterStrategy: new TwitterStrategy({
-			consumerKey: Token.Twitter.consumerKey,
-			consumerSecret: Token.Twitter.consumerSecret,
-			callbackURL: "http://127.0.0.1:3000/auth/twitter/callback"
+			consumerKey: Oauth.Twitter.consumerKey,
+			consumerSecret: Oauth.Twitter.consumerSecret,
+			callbackURL: Oauth.Twitter.callbackUrl
 		},
 		function(token, tokenSecret, profile, done) {
-			User.find({ twitterId: profile.id }, function(err, user) {
+			User.find({ "twitter.id_str": profile.id }, function(err, user) {
 				if (err) { return done(err); }
 				if (!user) {
-					user = new User({
+					createNewUser({
 						name: profile.displayName,
 						username: profile.username,
-						provider: 'twitter',
+						provider: "twitter",
 						twitter: profile._json
-					});
-					user.save(function(err) {
-							if (err) return done(err);
-							return done(err, user);
-					});
+					}, user, done);
 				}
 			});
 		}
@@ -123,23 +122,20 @@ module.exports = {
 
 	/** Google Strategy */
 	googleStrategy: new GoogleStrategy({
-			returnURL: "http://localhost:3000/auth/google/return",
-			realm: "http://localhost:3000"
+			returnURL: Oauth.Google.returnURL,
+			realm: Oauth.Google.realm
 		},
 		function(identifier, profile, done) {
-			User.find({ openId: identifier }, function(err, user) {
+			User.find({ "google.id": identifier }, function(err, user) {
 				if (err) { return done(err); }
 				if (!user) {
-					user = new User({
-						name: profile.displayName,
-						username: profile.username,
-						provider: 'twitter',
-						twitter: profile._json
-					});
-					user.save(function(err) {
-							if (err) return done(err);
-							return done(err, user);
-					});
+          createNewUser({
+              name: profile.displayName,
+              email: profile.emails[0].value,
+              username: profile.username,
+              provider: "google",
+              google: profile._json
+					}, user, done);
 				}
 			});
 		}
