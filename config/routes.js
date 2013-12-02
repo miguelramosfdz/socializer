@@ -5,13 +5,15 @@ module.exports = function ( server ) {
   var users = require("../app/controllers/users_controller"),
       passport = require("passport");
 
-  /** Serve home page */
-  server.get("/", function ( req, res, next ) {
+  var renderIndex = function ( req, res) {
     res.render("index");
-  });
+  };
+
+  /** Serve home page */
+  server.get("/", renderIndex);
 
   /** Serve templates */
-  server.get("/templates/:type/:name", function ( req, res, next ) {
+  server.get("/templates/:type/:name", function(req, res) {
     res.render("templates/" + req.params.type + "/" + req.params.name);
   });
 
@@ -38,7 +40,7 @@ module.exports = function ( server ) {
     passport.authenticate("twitter", {
       failureRedirect: "/signin"
     }),
-    function (req, res, next) {
+    function(req, res) {
       res.redirect("/");
     }
   );
@@ -53,12 +55,10 @@ module.exports = function ( server ) {
   );
 
   // Serve error page
-  server.get("/error", function(req, res, next) {
+  server.get("/error", function(req, res) {
     res.render("static/error");
   });
 
-  server.get("*", function(req, res, next) {
-    res.render("index");
-  });
+  server.get("*", renderIndex);
 
 };

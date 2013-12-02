@@ -1,11 +1,11 @@
 .navbar
 	.tab.nav-brand
-		a(href='#') Boiler
+		a(href='/') Boiler
 	.tab(ng-hide='isSignedIn')
-		a(href='#/signup')  Sign Up
+		a(href='/signup')  Sign Up
 	.tab(ng-hide='isSignedIn')
-		a(href='#/signin')  Sign In
+		a(href='/signin')  Sign In
 	.tab(ng-show='isSignedIn')
-		a(href='#/dashboard')  Dashboard
+		a(href='/dashboard')  Dashboard
 	.tab(ng-show='isSignedIn')
 		a(ng-click='signOut()')  Sign Out

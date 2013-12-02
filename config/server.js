@@ -6,7 +6,6 @@ var express = require("express"),
     http = require("http"),
     redisStore = require("connect-redis")(express),
     passport = require("passport"),
-    mongoose = require("mongoose"),
     Authentication = require("./authentication");
 
 /** Declare app */
@@ -101,7 +100,7 @@ app.use(app.router);
 require("./envs/dev")(app, express);
 
 /** Setup database */
-require("./db")(mongoose);
+require("./db")();
 
 /** Setup routes */
 require("./routes")(app);
