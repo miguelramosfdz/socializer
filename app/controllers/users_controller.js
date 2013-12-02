@@ -43,11 +43,7 @@ module.exports = {
 	},
 
 	is_signed_in: function(req, res, next) {
-		if (req.isAuthenticated()) {
-			return res.send(req.user);
-		} else {
-			return res.json(403, { message: "No user signed in" });
-		}
+		return res.send(req.isAuthenticated() ? req.user : false);
 	},
 
 	signout: function(req, res, next) {

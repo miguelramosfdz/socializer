@@ -1,11 +1,16 @@
-.navbar
-	.tab.nav-brand
-		a(href='/') Boiler
-	.tab(ng-hide='isSignedIn')
-		a(href='/signup')  Sign Up
-	.tab(ng-hide='isSignedIn')
-		a(href='/signin')  Sign In
-	.tab(ng-show='isSignedIn')
-		a(href='/dashboard')  Dashboard
-	.tab(ng-show='isSignedIn')
-		a(ng-click='signOut()')  Sign Out
+.nav
+	.nav-brand.nav-box
+		a(href="/") B
+	.nav-menu.nav-box
+		.tab(ng-hide="isSignedIn")
+			a(ng-click="showSignUpModal()")  Sign Up
+		.tab(ng-hide="isSignedIn")
+			a(ng-click="showSignInModal()")  Sign In
+		.tab(ng-show="isSignedIn")
+			a(href="/dashboard")  Dashboard
+		.tab(ng-show="isSignedIn")
+			a(ng-click="signOut()")  Sign Out
+		.tab.logged-in(ng-show="isSignedIn")
+			| Logged in as
+			.user
+				{{ user.username }}

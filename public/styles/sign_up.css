@@ -1,11 +1,15 @@
-.sign_up {
+.signup,
+.signin {
   width: 45%;
   padding: 3%;
-  margin: 10% auto;
+  display: none;
+  margin: 8% auto;
   text-align: center;
   border-radius: 10px; }
-  .sign_up input[type=text],
-  .sign_up input[type=password] {
+  .signup input[type=text],
+  .signup input[type=password],
+  .signin input[type=text],
+  .signin input[type=password] {
     border: none;
     background-color: rgba(0, 0, 0, 0.4);
     padding: 2% 0 2% 0;
@@ -15,7 +19,8 @@
     width: 100%;
     font-size: 2em;
     text-align: center; }
-  .sign_up button {
+  .signup button,
+  .signin button {
     width: 100%;
     font-size: 2em;
     background-color: rgba(0, 0, 0, 0.8);
@@ -24,16 +29,19 @@
     color: white;
     cursor: pointer;
     border-radius: 4px; }
-  .sign_up .error {
+  .signup .error,
+  .signin .error {
     width: 100%;
     background-color: red;
     color: white; }
-  .sign_up .social {
+  .signup .social,
+  .signin .social {
     width: 100%;
     margin-top: 2%;
     padding: 2% 9%;
     text-align: center; }
-    .sign_up .social img {
+    .signup .social img,
+    .signin .social img {
       margin-right: 7%;
       width: 42.5%;
       cursor: pointer; }

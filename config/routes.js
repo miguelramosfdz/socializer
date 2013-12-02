@@ -5,9 +5,15 @@ module.exports = function ( server ) {
   var users = require("../app/controllers/users_controller"),
       passport = require("passport");
 
-  var renderIndex = function ( req, res) {
+
+  var renderIndex = function ( req, res ) {
     res.render("index");
   };
+
+  // server.get("*", function (req, res, next) {
+  //   console.log(req);
+  //   res.send(200);
+  // });
 
   /** Serve home page */
   server.get("/", renderIndex);
@@ -42,8 +48,8 @@ module.exports = function ( server ) {
     passport.authenticate("twitter", {
       failureRedirect: "/signin"
     }),
-    function(req, res) {
-      res.redirect("/");
+    function(req,res,next) {
+      res.render("index", {user : req.user});
     }
   );
 
@@ -60,7 +66,5 @@ module.exports = function ( server ) {
   server.get("/error", function(req, res) {
     res.render("static/error");
   });
-
-  // server.get("*", renderIndex);
 
 };

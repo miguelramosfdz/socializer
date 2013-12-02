@@ -23,8 +23,13 @@ app.controller("MainCtrl",
 		$scope.loadAuth = function () {
 			Auth.signedin()
 				.success(function(data) {
-						$scope.user = data;
-						$scope.isSignedIn = true;
+						if (data === "false") {
+							$scope.isSignedIn = false;
+						} else {
+							$scope.user = data;
+							$scope.isSignedIn = true;
+						}
+						$('.nav-menu').fadeIn(900);
 				});
 		};
 
@@ -33,7 +38,7 @@ app.controller("MainCtrl",
 				.post("/signup", { user: $scope.newUser })
 				.success(function ( data, status, headers, config ) {
 					$scope.loadAuth();
-					$location.path("/");
+					$location.path("#/");
 				})
 				.error(function ( data, status, headers, config ) {
 					$scope.flashMessage(data.message);
@@ -42,24 +47,38 @@ app.controller("MainCtrl",
 
 		$scope.signIn = function () {
 			Auth.signin({
-				username: $scope.user.username,
-				password: $scope.user.password
+				username: $scope.existingUser.username,
+				password: $scope.existingUser.password
 			})
 			.success(function (data, status, headers, config) {
         $scope.loadAuth();
-        $location.path("/");
+        $location.path("#/");
 			})
 			.error(function (data, status, headers, config) {
 				$scope.flashMessage(data.message);
 			})
 		}
 
+		$scope.showSignUpModal = function() {
+			$('.signin').fadeOut(500);
+			$('.signup').fadeIn(1500);
+		};
+
+		$scope.showSignInModal = function() {
+			$('.signup').fadeOut(500);
+			$('.signin').fadeIn(1500);
+		};
+
 		$scope.signOut = function() {
 			Auth.signOut()
 				.success(function(data) {
-					$scope.user = {};
-					$scope.isSignedIn = false;
-					$location.path("/");
+					$('.nav-menu').fadeOut(500, function () {
+						$scope.user = {};
+						$scope.isSignedIn = false;
+						setTimeout(function() {
+							$('.nav-menu').fadeIn(500);
+						}, 600);
+					});
 				})
 				.error(function(data) {
 					$scope.flashMessage(data.message);
@@ -67,13 +86,14 @@ app.controller("MainCtrl",
 		}
 
 		$rootScope.$on("$routeChangeStart", function() {
-			if ($location.url() === "/signin" && $scope.isSignedIn) {
-				$location.path("/");
+    	if ($location.url() === "/signin" && $scope.isSignedIn) {
+				$location.path("#/");
 			} else if ($location.url() === "/signup" && $scope.isSignedIn) {
-				$location.path("/");
+				$location.path("#/");
 			}
 		});
 
 		$scope.loadAuth();
 
+		// debugger;
 });

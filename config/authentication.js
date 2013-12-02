@@ -6,6 +6,7 @@ var LocalStrategy = require("passport-local").Strategy,
 		TwitterStrategy = require("passport-twitter").Strategy,
 		GoogleStrategy = require("passport-google").Strategy,
 		GitHubStrategy = require("passport-github").Strategy,
+		// RememberMeStrategy = require("../..").Strategy,
 
 		/** Require User Model */
 		User = require("../app/models/user"),
@@ -19,6 +20,22 @@ var createNewUser = function(config, user, done) {
 			if (err) return done(err);
 			return done(err, user);
 	});
+};
+
+var randomString = function(len) {
+  var buf = []
+    , chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    , charlen = chars.length;
+
+  for (var i = 0; i < len; ++i) {
+    buf.push(chars[getRandomInt(0, charlen - 1)]);
+  }
+
+  return buf.join('');
+};
+
+var getRandomInt = function(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 module.exports = {
@@ -107,7 +124,7 @@ module.exports = {
 			callbackURL: Oauth.Twitter.callbackURL
 		},
 		function(token, tokenSecret, profile, done) {
-			User.find({ "twitter.id_str": profile.id }, function(err, user) {
+			User.findOne({ "twitter.id_str": profile.id }, function(err, user) {
 				if (err) { return done(err); }
 				if (!user) {
 					createNewUser({
@@ -127,7 +144,7 @@ module.exports = {
 			realm: Oauth.Google.realm
 		},
 		function(identifier, profile, done) {
-			User.find({ "google.id": identifier }, function(err, user) {
+			User.findOne({ "google.id": identifier }, function(err, user) {
 				if (err) { return done(err); }
 				if (!user) {
 					createNewUser({
@@ -164,5 +181,23 @@ module.exports = {
 				}
 			});
 		}
-	)
+	),
+
+	// rememberMe: new RememberMeStrategy(
+	//   function(token, done) {
+	//     Token.consume(token, function (err, user) {
+	//       if (err) { return done(err); }
+	//       if (!user) { return done(null, false); }
+	//       return done(null, user);
+	//     });
+	//   },
+	//   function(user, done) {
+	//     var token = generateToken(64);
+	//     Token.save(token, { userId: user.id }, function(err) {
+	//       if (err) { return done(err); }
+	//       return done(null, token);
+	//     });
+	//   }
+	// )
+
 };

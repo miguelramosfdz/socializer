@@ -1,6 +1,6 @@
 link(rel='stylesheet', href='/styles/sign_up.css')
 
-.sign_up
+.signup
 
 	input(type='text', ng-model='newUser.username', placeholder=' Username')
 	br
@@ -12,8 +12,4 @@ link(rel='stylesheet', href='/styles/sign_up.css')
 	br
 	button(ng-click='signUp()') Sign Up
 
-	.social
-		a(href='/auth/facebook')
-			img(src='images/fbsignup.png')
-		a(href='/auth/twitter')
-			img(src='images/twittersignup.png')
+	include social
