@@ -39,11 +39,9 @@ module.exports = function ( server ) {
 
   server.get("/auth/twitter/callback",
     passport.authenticate("twitter", {
+      successRedirect: "/",
       failureRedirect: "/signin"
-    }),
-    function(req,res,next) {
-      res.render("index", {user : req.user});
-    }
+    })
   );
 
   server.get("/auth/google", passport.authenticate("google"));

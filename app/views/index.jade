@@ -9,7 +9,7 @@ doctype
 html.no-js(ng-app="Boiler")
   //<![endif]
   head
-    include head
+    include _head
 
   body(ng-controller="MainCtrl")
     //if lt IE 7
@@ -17,12 +17,14 @@ html.no-js(ng-app="Boiler")
         | You are using an <strong>outdated</strong> browser.
         | Please <a href="http://browsehappy.com/">upgrade your browser</a>
         | to improve your experience.
-    include navbar
+    include _navbar
 
     .content(ng-view)
-
-    include foot
 
     .hero
       include templates/users/signup
       include templates/users/signin
+
+    include _alert
+
+    include _foot

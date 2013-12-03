@@ -18,6 +18,18 @@ body {
 	position: relative;
 }
 
+h1 {
+	font-size: 2em;
+}
+
+h3 {
+	font-size: 1.3em;
+}
+
+a {
+	text-decoration: none;
+}
+
 .content {
 	height: 100%; width: 100%;
 	padding-top: 2em;
@@ -35,7 +47,7 @@ body {
 	.nav-box {
 		border-radius: 0.2em;
 		// -moz-box-shadow: 0 0 5px #888;
-		// -webkit-box-shadow: 0 0 5px#888;
+		// -webkit-box-shadow: 0 0 5px #888;
 		// box-shadow: 0 0 5px #888;
 		background-color: black;
 	}
@@ -89,16 +101,8 @@ body {
 	}
 }
 
-
-h1 {
-	font-size: 2em;
-}
-
-h3 {
-	font-size: 1.3em;
-}
-
-a {
-	color: #00B7FF;
-	text-decoration: none;
+.alert {
+	height: 8%;
+	border-radius: 4px;
+	background-color: rgba(142, 193, 218, 0.8);
 }
