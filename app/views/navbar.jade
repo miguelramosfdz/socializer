@@ -13,4 +13,4 @@
 		.tab.logged-in(ng-show="isSignedIn")
 			| Logged in as
 			.user
-				{{ user.username }}
+				a(href='#/account/edit') {{ user.username }}

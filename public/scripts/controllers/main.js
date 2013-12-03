@@ -81,6 +81,9 @@ app.controller("MainCtrl",
 				.success(function(data) {
 					$scope.user = {};
 					$scope.isSignedIn = false;
+					$('.edit').fadeOut(500, function () {
+						$(this).remove();
+					});
 				})
 				.error(function(data) {
 					$scope.flashMessage(data.message);

@@ -38,7 +38,7 @@ module.exports = function ( server ) {
       failureRedirect: "/signin"
     }),
     function(req,res,next) {
-        res.render("index", {user : req.user});
+        return res.render('#', { user : req.user});
     }
   );
 

@@ -1,5 +1,6 @@
 .signup,
-.signin {
+.signin,
+.edit {
   width: 45%;
   padding: 3%;
   position: absolute;
@@ -51,3 +52,6 @@
   }
 }
 
+.edit {
+  display: block;
+}

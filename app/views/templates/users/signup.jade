@@ -1,14 +1,8 @@
-link(rel='stylesheet', href='/styles/sign_up.css')
 
 .signup
 
-	input(type='text', ng-model='newUser.username', placeholder=' Username')
-	br
-	input(type='text', ng-model='newUser.email', placeholder=' Email')
-	br
-	input(type='password', ng-model='newUser.password', placeholder=' Password')
-	br
-	input(type='password', ng-model='newUser.passwordConfirmation', placeholder=' Password Confirmation')
+	include _form
+
 	br
 	button(ng-click='signUp()') Sign Up
 
