@@ -10,11 +10,6 @@ module.exports = function ( server ) {
     res.render("index");
   };
 
-  // server.get("*", function (req, res, next) {
-  //   console.log(req);
-  //   res.send(200);
-  // });
-
   /** Serve home page */
   server.get("/", renderIndex);
 
@@ -35,11 +30,9 @@ module.exports = function ( server ) {
 
   server.get("/auth/facebook/callback",
     passport.authenticate("facebook", {
+      successRedirect: "/",
       failureRedirect: "/signin"
-    }),
-    function(req,res,next) {
-        return res.render('#', { user : req.user});
-    }
+    })
   );
 
   server.get("/auth/twitter", passport.authenticate("twitter"));
