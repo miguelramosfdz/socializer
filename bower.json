@@ -1,0 +1,22 @@
+{
+  "name": "BOILER",
+  "version": "0.0.1",
+  "description": "The MEANest stack of them all",
+  "main": "start.js",
+  "authors": [
+    "cjponti"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "public/components",
+    "test"
+  ],
+  "dependencies": {
+    "components": "*",
+    "angular": "*",
+    "jquery": "*",
+    "angular-resource": "~1.2.3"
+  }
+}
