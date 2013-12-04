@@ -3,7 +3,6 @@
 // Module dependencies
 var express = require("express"),
 		routes = require("./routes"),
-		redis = require("redis"),
 		http = require("http"),
 		redisStore = require("connect-redis")(express),
 		db = require("./db"),
@@ -12,9 +11,6 @@ var express = require("express"),
 
 /** Declare app */
 var app = express();
-
-/** Declase redis client */
-var client = redis.createClient();
 
 /** Declare port for app */
 app.set("port", 3000);
