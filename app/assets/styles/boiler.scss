@@ -1,0 +1,55 @@
+@import "mixins";
+@import "variables";
+
+*, *:before, *:after {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+html, body {
+	height: 100%; width: 100%;
+	padding: 0; margin: 0;
+	font: $fontsize $font;
+}
+
+body {
+	position: relative;
+}
+
+h1 {
+	font-size: 2em;
+}
+
+h3 {
+	font-size: 1.3em;
+}
+
+a {
+	text-decoration: none;
+}
+
+.content {
+	background-color: $background;
+	height: 100%; width: 100%;
+	overflow: auto;
+}
+
+.hero {
+	height: 95%; width: 95%;
+	margin: 1% auto;
+	cursor: default;
+	.hero-title {
+		text-align: center;
+		font-size: 3.5em;
+		font-weight: bold;
+	}
+}
+
+.alert {
+	height: 8%;
+	border-radius: 4px;
+	background-color: rgba(142, 193, 218, 0.8);
+}
+
+@import "navbar";

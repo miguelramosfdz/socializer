@@ -19,6 +19,7 @@
     "jquery": "*",
     "angular-resource": "~1.2.3",
     "angular-animate": "~1.2.3",
-    "bootstrap": "~3.0.2"
+    "bootstrap": "~3.0.2",
+    "pure": "~0.3.0"
   }
 }

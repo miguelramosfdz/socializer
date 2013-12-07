@@ -1,0 +1,80 @@
+@import "mixins";
+@import "variables";
+
+.top-nav {
+	position: absolute;
+	left: 50%;
+	margin: 10px 0 0 -47.5%;
+	width: 95%; height: 50px;
+	background-color: $top-nav-background;
+	@include box-shadow($top-nav-box-shadow);
+	a {
+		color: black;
+	}
+	.brand {
+		padding: 8px 25px;
+		a {
+			font-size: 25px;
+			font-weight: bolder;
+		}
+	}
+	ul {
+		width: 100%;
+		text-align: center;
+		display: inline;
+		padding: 0 4px 0 0;
+		list-style: none;
+	}
+	ul li {
+		text-align: center;
+		display: inline-block;
+		margin-right: 4px;
+		position: relative;
+		padding: 12px;
+		background: #fff;
+		cursor: pointer;
+		font-size: 18px;
+		letter-spacing: 2px;
+		@include transition(all 0.2s);
+	}
+	ul li.pull-right {
+		margin-right: 0;
+		padding-left: 15px;
+		padding-right: 15px;
+		padding-top: 15px;
+	}
+	ul li:hover {
+		background: $top-nav-item-hover;
+		color: #fff;
+	}
+	ul li ul {
+		@include hide;
+		padding: 0;
+		position: absolute;
+		top: 47px; left: 0;
+		width: 150px;
+		opacity: 0;
+		background-color: $top-nav-background;
+		border-bottom-left-radius: 4px;
+		border-bottom-right-radius: 4px;
+		@include box-shadow($top-nav-sub-menu-box-shadow);
+		@include transition($top-nav-sub-menu-transition);
+	}
+	ul li ul li {
+		background: $top-nav-background;
+		display: block;
+		color: #fff;
+		width: 150px;
+	}
+	ul li ul li:hover {
+		background: $top-nav-item-hover;
+		font-weight: bolder;
+		a {
+			color: black;
+		}
+	}
+	ul li:hover ul {
+		@include show;
+		opacity: 1;
+	}
+}
