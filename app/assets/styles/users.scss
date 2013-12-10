@@ -1,14 +1,28 @@
+@import "mixins";
+@import "variables";
+
+.signup-button,
+.signin-button {
+  width: 10%; height: 50px;
+  div {
+    display: none;
+    visibility: hidden;
+  }
+  &:hover div {
+    display: block;
+    visibility: visible;
+  }
+}
+
 .signup,
-.signin,
-.edit {
-  width: 45%;
-  padding: 3%;
-  position: absolute;
-  top: 0; left: 28%;
-  display: none;
-  margin: 10% auto;
+.signin {
+  width: 300%;
+  padding: 10%;
+  background-color: white;
+  @include box-shadow($top-nav-box-shadow);
+  margin-top: 13.6px;
+  margin-left: -180%;
   text-align: center;
-  border-radius: 10px;
 
   input[type=text],
   input[type=password] {
@@ -17,14 +31,14 @@
     padding: 2% 0 2% 0; margin-bottom: 1%;
     border-radius: 3px;
     color: white;
-    width: 100%;
-    font-size: 2em;
+    width: 80%;
+    font-size: 1.3em;
     text-align: center;
   }
 
   button {
-    width: 100%;
-    font-size: 2em;
+    width: 80%;
+    font-size: 1.3em;
     background-color: rgba(0, 0, 0, 0.8);
     border: none;
     padding: 2% 0 2% 0;
@@ -46,7 +60,7 @@
     text-align: center;
     img {
       margin-right: 7%;
-      width: 42.5%;
+      width: 100%;
       cursor: pointer;
     }
   }

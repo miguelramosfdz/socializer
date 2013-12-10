@@ -1,35 +1,53 @@
+.center {
+  text-align: center; }
+
+.pull-right {
+  float: right; }
+
+.pull-left {
+  float: left; }
+
+.signup-button,
+.signin-button {
+  width: 10%;
+  height: 50px; }
+  .signup-button div,
+  .signin-button div {
+    display: none;
+    visibility: hidden; }
+  .signup-button:hover div,
+  .signin-button:hover div {
+    display: block;
+    visibility: visible; }
+
 .signup,
-.signin,
-.edit {
-  width: 45%;
-  padding: 3%;
-  position: absolute;
-  top: 0;
-  left: 28%;
-  display: none;
-  margin: 10% auto;
-  text-align: center;
-  border-radius: 10px; }
+.signin {
+  width: 300%;
+  padding: 10%;
+  background-color: white;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.35);
+  -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.35);
+  margin-top: 13.6px;
+  margin-left: -180%;
+  text-align: center; }
   .signup input[type=text],
   .signup input[type=password],
   .signin input[type=text],
-  .signin input[type=password],
-  .edit input[type=text],
-  .edit input[type=password] {
+  .signin input[type=password] {
     border: none;
     background-color: rgba(0, 0, 0, 0.4);
     padding: 2% 0 2% 0;
     margin-bottom: 1%;
     border-radius: 3px;
     color: white;
-    width: 100%;
-    font-size: 2em;
+    width: 80%;
+    font-size: 1.3em;
     text-align: center; }
   .signup button,
-  .signin button,
-  .edit button {
-    width: 100%;
-    font-size: 2em;
+  .signin button {
+    width: 80%;
+    font-size: 1.3em;
     background-color: rgba(0, 0, 0, 0.8);
     border: none;
     padding: 2% 0 2% 0;
@@ -37,23 +55,20 @@
     cursor: pointer;
     border-radius: 4px; }
   .signup .error,
-  .signin .error,
-  .edit .error {
+  .signin .error {
     width: 100%;
     background-color: red;
     color: white; }
   .signup .social,
-  .signin .social,
-  .edit .social {
+  .signin .social {
     width: 100%;
     margin-top: 2%;
     padding: 2% 9%;
     text-align: center; }
     .signup .social img,
-    .signin .social img,
-    .edit .social img {
+    .signin .social img {
       margin-right: 7%;
-      width: 42.5%;
+      width: 100%;
       cursor: pointer; }
 
 .edit {
