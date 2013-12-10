@@ -14,6 +14,9 @@ app.config(function ( $routeProvider, $locationProvider ) {
 			when('/signin', {
 				templateUrl: show('users/sign_in')
 			}).
+			when('/dashboard', {
+				templateUrl: show('users/dashboard')
+			}).
 			when('/account/edit', {
 				templateUrl: show('users/edit')
 			}).
