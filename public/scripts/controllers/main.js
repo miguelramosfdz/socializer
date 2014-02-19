@@ -91,7 +91,7 @@ app.controller("MainCtrl",
 		}
 
 		$rootScope.$on("$routeChangeStart", function() {
-    	if ($location.url() === "/signin" && $scope.isSignedIn) {
+			if ($location.url() === "/signin" && $scope.isSignedIn) {
 				$location.path("#/");
 			} else if ($location.url() === "/signup" && $scope.isSignedIn) {
 				$location.path("#/");
@@ -100,5 +100,4 @@ app.controller("MainCtrl",
 
 		$scope.loadAuth();
 
-		// debugger;
 });
