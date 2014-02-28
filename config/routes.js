@@ -1,61 +1,13 @@
-"use strict";
+'use strict';
 
-module.exports = function ( server ) {
+exports.setup = function(app) {
 
-  var users = require("../app/controllers/users_controller"),
-      passport = require("passport");
-
-
-  var renderIndex = function ( req, res ) {
-    res.render("index");
-  };
-
-  /** Serve home page */
-  server.get("/", renderIndex);
-
-  /** Serve templates */
-  server.get("/templates/:type/:name", function(req, res) {
-    res.render("templates/" + req.params.type + "/" + req.params.name);
+  app.get('/', function(req, res){
+    res.render('layout', { title: 'Express' });
   });
 
-  /** User Creation, Log In, & Log Out */
-  server.post("/signup", users.signup);
-  server.post("/signin", users.signin);
-  server.get("/signout", users.signout);
-  server.get("/signedin", users.is_signed_in );
-
-
-  /** Social Signin */
-  server.get("/auth/facebook", passport.authenticate("facebook"));
-
-  server.get("/auth/facebook/callback",
-    passport.authenticate("facebook", {
-      successRedirect: "/",
-      failureRedirect: "/signin"
-    })
-  );
-
-  server.get("/auth/twitter", passport.authenticate("twitter"));
-
-  server.get("/auth/twitter/callback",
-    passport.authenticate("twitter", {
-      successRedirect: "/",
-      failureRedirect: "/signin"
-    })
-  );
-
-  server.get("/auth/google", passport.authenticate("google"));
-
-  server.get("/auth/google/return",
-    passport.authenticate("google", {
-      successRedirect: "/",
-      failureRedirect: "/signin"
-    })
-  );
-
-  // Serve error page
-  server.get("/error", function(req, res) {
-    res.render("static/error");
+  app.get('/partials/:type/:file', function(req, res) {
+    res.render('/partials'+req.params.type+'/'+req.params.file);
   });
 
 };

@@ -1,25 +1,28 @@
 {
-  "name": "BOILER",
-  "version": "0.0.1",
-  "description": "The MEANest stack of them all",
-  "main": "start.js",
+  "name": "BART",
+  "version": "0.0.0",
   "authors": [
-    "cjponti"
+    "CJ Ponti <cjponti@gmail.com>"
+  ],
+  "description": "A full-stack web application boilerplate utilizing Bad Ass Rockstar Tech.",
+  "main": "config/server.js",
+  "keywords": [
+    "node",
+    "modernizer"
   ],
   "license": "MIT",
+  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
     "public/components",
-    "test"
+    "test",
+    "tests"
   ],
   "dependencies": {
-    "components": "*",
-    "angular": "*",
-    "jquery": "*",
-    "angular-resource": "~1.2.3",
-    "angular-animate": "~1.2.3",
-    "bootstrap": "~3.0.2",
-    "pure": "~0.3.0"
+    "modernizr": "~2.7.1",
+    "normalize.css": "~3.0.0",
+    "angular": "~1.2.13",
+    "jquery": "~2.1.0"
   }
 }
