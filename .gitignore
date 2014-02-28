@@ -4,6 +4,4 @@ config/oauth.js
 dump.rdb
 .sass-cache
 .DS_Store
-.bowerrc
-.nodemonignore
 npm-debug.log
