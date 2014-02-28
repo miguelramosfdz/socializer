@@ -1,7 +1,6 @@
 node_modules
 public/components
 config/oauth.js
-.travis.yml
 dump.rdb
 .sass-cache
 .DS_Store
