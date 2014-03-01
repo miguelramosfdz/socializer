@@ -1,0 +1,99 @@
+
+/* Small screens (default) */
+html { font-size: 100%; }
+
+body {
+  /* Set base font for page */
+	line-height: 1.6em;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+/**
+ * Enable border-box box-sizing. This will contain the padding and border
+ * within the set width of an element. The margin will be outside the width.
+ */
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/**
+ * Set style for page parent container
+ */
+.container {
+  margin: 0 auto;
+  max-width: 48rem;
+  width: 90%;
+}
+
+/**
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    contenteditable attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that are clearfixed.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.cf:before,
+.cf:after {
+  content: " "; /* 1 */
+  display: table; /* 2 */
+}
+
+.cf:after {
+  clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+  *zoom: 1;
+}
+
+
+a {
+  color: #00B7FF;
+}
+
+/**
+ * This adds a solid black border to elements, which comes in handy for
+ * wireframing a site
+ */
+.wireframe {
+  border: 2px solid black;
+}
+
+/**
+ * Center element horizontally
+ */
+.center {
+  margin: 0 auto;
+}
+
+@media (min-width: 40rem) {
+  .col {
+    float: left;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .col.full { width: 100%; }
+  .col.two-thirds { width: 66.7%; }
+  .col.half { width: 50%; }
+  .col.third { width: 33.3%; }
+  .col.fourth { width: 24.95%; }
+  .col.flow-opposite { float: right; }
+}
+
+/* Medium screens (640px) */
+@media (min-width: 40rem) {
+  html { font-size: 112%; }
+}
+
+/* Large screens (1024px) */
+@media (min-width: 64rem) {
+  html { font-size: 120%; }

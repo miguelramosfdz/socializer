@@ -52,6 +52,7 @@ gulp.task('watch', function() {
    * Watch for less file changes and execute 'less' task
    */
   gulp.watch('app/assets/less/main.less', [ 'less' ]);
+  gulp.watch('app/assets/js/**/*.js', [ 'js' ]);
 });
 
 /**

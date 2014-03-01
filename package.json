@@ -13,7 +13,6 @@
     "consolidate": "~0.10.0"
   },
   "devDependencies": {
-    "gulp": "~3.5.2",
     "gulp-less": "~1.2.1",
     "gulp-changed": "~0.2.1",
     "gulp-cached": "0.0.1",

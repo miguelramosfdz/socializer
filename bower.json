@@ -25,6 +25,7 @@
     "angular": "~1.2.13",
     "jquery": "~2.1.0",
     "font-awesome": "~4.0.3",
-    "prefixfree": "*"
+    "prefixfree": "*",
+    "angular-route": "~1.2.13"
   }
 }
