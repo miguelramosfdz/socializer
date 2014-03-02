@@ -1,1 +1,4 @@
-var app = angular.module('Boiler', [ 'ngRoute']);
+/**
+ * Declare app
+ */
+var app = angular.module('Boiler', [ 'ngRoute' ]);

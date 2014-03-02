@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var less = require('gulp-less');
 var jshint = require('gulp-jshint');
+var stylish = require('jshint-stylish');
 var uglify = require('gulp-uglify');
 var cached = require('gulp-cached');
 var changed = require('gulp-changed');
@@ -29,7 +30,7 @@ var livereload = require('gulp-livereload');
 gulp.task('js', function() {
   gulp.src(['app/assets/js/**/*.js'])
     .pipe(jshint())
-    .pipe(jshint.reporter('default'))
+    .pipe(jshint.reporter(stylish))
     .pipe(uglify())
     .pipe(gulp.dest('build/scripts'));
 });
@@ -54,7 +55,7 @@ gulp.task('watch', function() {
   /**
    * Watch for less file changes and execute 'less' task
    */
-  gulp.watch('app/assets/less/main.less', [ 'less' ]);
+  gulp.watch('app/assets/less/**/*.less', [ 'less' ]);
   gulp.watch('app/assets/js/**/*.js', [ 'js' ]);
   gulp.watch(['app/controller','app/model', 'config/**/*.js'], ['lint-backend']);
 });
