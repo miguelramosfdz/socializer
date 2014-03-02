@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var less = require('gulp-less');
+var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglify');
 var cached = require('gulp-cached');
 var changed = require('gulp-changed');
@@ -12,12 +13,6 @@ var nodemon = require('gulp-nodemon');
 var lr = require('tiny-lr');
 var lrserver = lr();
 var livereload = require('gulp-livereload');
-
-/**
- * Have commented out gulp-jshint due to issue with downloading it from
- * NPM
- */
-// var jshint = require('gulp-jshint');
 
 /**
  * TODO Implement these gulp helpers
@@ -33,9 +28,17 @@ var livereload = require('gulp-livereload');
  */
 gulp.task('js', function() {
   gulp.src(['app/assets/js/**/*.js'])
-    // .pipe(jshint())
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'))
     .pipe(uglify())
     .pipe(gulp.dest('build/scripts'));
+});
+
+gulp.task('lint-backend', function() {
+  gulp.src(['app/controller','app/model', 'config/**/*.js'])
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'))
+    .pipe(uglify())
 });
 
 gulp.task('less', function() {
@@ -53,6 +56,7 @@ gulp.task('watch', function() {
    */
   gulp.watch('app/assets/less/main.less', [ 'less' ]);
   gulp.watch('app/assets/js/**/*.js', [ 'js' ]);
+  gulp.watch(['app/controller','app/model', 'config/**/*.js'], ['lint-backend']);
 });
 
 /**
@@ -68,7 +72,7 @@ gulp.task('startServer', function() {
 /**
  * Default task for running all necessary tasks
  */
-gulp.task('default', ['startServer', 'watch', 'js', 'less', 'less']);
+gulp.task('default', ['lint-backend', 'startServer', 'watch', 'js', 'less']);
 
 gulp.task('clean', function() {
   gulp.src('build')
