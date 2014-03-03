@@ -1,16 +1,14 @@
-/**
- * Declare app
- */
-var app = angular.module('Boiler', [ 'ngRoute' ]);
-
 'use strict';
 
-var partial = function(type, page) {
-	return 'partials/'+type+'/'+page;
-};
+// Declare app
+var app = angular.module('Boiler', [ 'ngRoute' ]);
 
-app.config(['$routeProvider',
-	function($routeProvider) {
+app.config(['$routeProvider', '$locationProvider',
+	function($routeProvider, $locationProvider) {
+
+		var partial = function(type, page) {
+			return 'partials/'+type+'/'+page;
+		};
 
 		$routeProvider.
 			when('/signup', {
@@ -24,5 +22,6 @@ app.config(['$routeProvider',
 				redirectTo: '/'
 			})
 
+		$locationProvider.html5Mode(true);
 	}
 ]);

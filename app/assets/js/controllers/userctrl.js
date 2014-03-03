@@ -1,10 +1,9 @@
-angular.module('SignUpCtrl', ['$scope', '$location',
+app.controller('SignUpCtrl', [
 	function($scope, $location) {
-
 		$scope.user = {
 			email: null,
 			password: null,
-			password: null
+			passwordConfirmation: null
 		}
 	}
 ]);

@@ -2,14 +2,9 @@
 
 exports.setup = function(app, passport) {
 
-	// Serve index
-	app.get('/', function(req, res){
-		res.render('index', { title: 'Boiler' });
-	});
-
 	// Route for serving templates
 	app.get('/partials/:type/:file', function(req, res) {
-		res.render('/partials'+req.params.type+'/'+req.params.file);
+		res.render('partials/'+req.params.type+'/'+req.params.file);
 	});
 
 	// route middleware to make sure a user is logged in
@@ -38,9 +33,14 @@ exports.setup = function(app, passport) {
 		}));
 
 	// Route for logout
-	app.get('/logout', function(req, res) {
+	app.post('/logout', function(req, res) {
 		req.logout();
 		res.redirect('/');
+	});
+
+	// Catch-all Route
+	app.get('*', function(req, res){
+		res.render('index', { title: 'Boiler' });
 	});
 
 };

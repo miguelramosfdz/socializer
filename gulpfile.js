@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var jade = require("gulp-jade");
 var less = require('gulp-less');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
@@ -9,6 +10,16 @@ var changed = require('gulp-changed');
 var concat = require('gulp-concat');
 var nodemon = require('gulp-nodemon');
 var rename = require('gulp-rename');
+
+var sources = {
+  js: 'app/assets/js/**/*.js',
+  less: {
+    main: 'app/assets/less/main.less',
+    all: 'app/assets/less/**/*.less',
+  },
+  jade: './app/views/**/*.jade',
+  backend: [ 'app/controller', 'app/model', 'config/**/*.js' ]
+};
 
 // TODO Implement LiveReload
 // Modules required for LiveReload
@@ -24,7 +35,7 @@ var rename = require('gulp-rename');
 
 // Lint client-side files
 gulp.task('js', function() {
-  gulp.src(['app/assets/js/**/*.js'])
+  gulp.src([sources.js])
     .pipe(jshint())
     .pipe(jshint.reporter(stylish))
     .pipe(uglify())
@@ -32,17 +43,23 @@ gulp.task('js', function() {
 });
 
 gulp.task('scripts', function() {
-    return gulp.src('app/assets/js/**/*.js')
-        .pipe(concat('all.js'))
-        .pipe(gulp.dest('dist'))
-        .pipe(rename('all.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('build/scripts'));
+    gulp.src([sources.js])
+      .pipe(concat('all.js'))
+      .pipe(gulp.dest('build/scripts'))
+      .pipe(rename('all.min.js'))
+      .pipe(uglify())
+      .pipe(gulp.dest('build/scripts'));
+});
+
+gulp.task('jade', function() {
+  gulp.src([sources.jade])
+    .pipe(jade({ pretty: true }))
+    .pipe(gulp.dest("./build/views"))
 });
 
 // Lint server-side files
 gulp.task('lint-backend', function() {
-  gulp.src(['app/controller','app/model', 'config/**/*.js'])
+  gulp.src(sources.backend)
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(uglify())
@@ -50,16 +67,17 @@ gulp.task('lint-backend', function() {
 
 // Build CSS from Less files
 gulp.task('less', function() {
-  gulp.src(['app/assets/less/main.less'])
+  gulp.src([sources.less.main])
     .pipe(less())
     .pipe(gulp.dest('build/styles'));
 });
 
 // Watch for file changes
 gulp.task('watch', function() {
-  gulp.watch('app/assets/less/**/*.less', [ 'less' ]);
-  gulp.watch('app/assets/js/**/*.js', [ 'scripts' ]);
-  gulp.watch(['app/controller', 'app/model', 'config/**/*.js'], ['lint-backend']);
+  gulp.watch('app/assets/')
+  gulp.watch(sources.less.all, [ 'less' ]);
+  gulp.watch(sources.js, [ 'scripts' ]);
+  gulp.watch(sources.backend, ['lint-backend']);
 });
 
 // Start Express server with nodemon
@@ -70,7 +88,7 @@ gulp.task('startServer', function() {
 });
 
 // Default task for running all necessary tasks
-gulp.task('default', ['lint-backend', 'startServer', 'watch', 'scripts', 'less']);
+gulp.task('default', ['lint-backend', 'watch', 'scripts', 'less', 'jade', 'startServer']);
 
 // gulp.task('clean', function() {
 //   gulp.src('build')

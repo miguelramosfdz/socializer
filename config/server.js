@@ -4,20 +4,22 @@
 var path = require('path');
 var http = require('http');
 var express = require('express');
-var engines = require('consolidate');
-var passport = require('passport');
-var flash = require('connect-flash');
 var mongoose = require('mongoose');
+var passport = require('passport');
+var engines = require('consolidate');
+var flash = require('connect-flash');
+
+// App module dependencies
+var db = require('./db');
+var routes = require('./routes');
+var authentication = require('./authentication');
 
 // Require Redis & declare store and client
 var redis = require('redis');
 var redisStore = require('connect-redis')(express);
 var redisClient = redis.createClient();
 
-// App module dependencies
-var db = require('./db');
-var routes = require('./routes');
-var authentication = require('./authentication');
+
 
 // Declare server
 var server = express();
@@ -49,6 +51,7 @@ server.configure(function() {
 	server.use(passport.session());
 	server.use(flash());
 	server.use(express.static(path.join(__dirname, '../build')));
+	// server.use(server.router);
 });
 
 // Development enviroment configuration
