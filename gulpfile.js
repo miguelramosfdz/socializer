@@ -8,6 +8,7 @@ var cached = require('gulp-cached');
 var changed = require('gulp-changed');
 var concat = require('gulp-concat');
 var nodemon = require('gulp-nodemon');
+var rename = require('gulp-rename');
 
 // TODO Implement LiveReload
 // Modules required for LiveReload
@@ -19,7 +20,6 @@ var nodemon = require('gulp-nodemon');
 // var autoprefixer = require('gulp-autoprefixer'),
 // var minifycss = require('gulp-minify-css'),
 // var imagemin = require('gulp-imagemin'),
-// var rename = require('gulp-rename'),
 // var clean = require('gulp-clean'),
 
 // Lint client-side files
@@ -32,12 +32,12 @@ gulp.task('js', function() {
 });
 
 gulp.task('scripts', function() {
-    return gulp.src('js/*.js')
+    return gulp.src('app/assets/js/**/*.js')
         .pipe(concat('all.js'))
         .pipe(gulp.dest('dist'))
         .pipe(rename('all.min.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('build/scripts'));
 });
 
 // Lint server-side files
@@ -58,7 +58,7 @@ gulp.task('less', function() {
 // Watch for file changes
 gulp.task('watch', function() {
   gulp.watch('app/assets/less/**/*.less', [ 'less' ]);
-  gulp.watch('app/assets/js/**/*.js', [ 'js' ]);
+  gulp.watch('app/assets/js/**/*.js', [ 'scripts' ]);
   gulp.watch(['app/controller', 'app/model', 'config/**/*.js'], ['lint-backend']);
 });
 
@@ -70,7 +70,7 @@ gulp.task('startServer', function() {
 });
 
 // Default task for running all necessary tasks
-gulp.task('default', ['lint-backend', 'startServer', 'watch', 'js', 'less']);
+gulp.task('default', ['lint-backend', 'startServer', 'watch', 'scripts', 'less']);
 
 // gulp.task('clean', function() {
 //   gulp.src('build')

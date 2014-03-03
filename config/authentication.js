@@ -3,7 +3,7 @@
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var User = require('../app/model/User');
-var Auth = require('./auth');
+var Auth = require('./oauth');
 
 exports.setup = function(passport) {
 
