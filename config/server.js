@@ -1,36 +1,56 @@
 /*jshint strict:false */
 
-/**
- * Module dependencies.
- */
+// NPM module dependencies
 var path = require('path');
 var http = require('http');
 var express = require('express');
-var routes = require('./routes');
 var engines = require('consolidate');
+var passport = require('passport');
+var flash = require('connect-flash');
+var mongoose = require('mongoose');
 
-var app = express();
+// App module dependencies
+var db = require('./db');
+var routes = require('./routes');
+var authentication = require('./authentication');
 
-// all environments
-app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, '../app/views'));
-app.set('view engine', 'jade');
-app.engine('jade', engines.jade);
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.methodOverride());
-app.use(app.router);
-app.use(express.static(path.join(__dirname, '../build')));
+// Declare server
+var server = express();
 
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+// Configure server for all environments
+server.configure(function() {
+	server.set('port', process.env.PORT || 3000);
+	server.set('views', path.join(__dirname, '../app/views'));
+	server.set('view engine', 'jade');
+	server.engine('jade', engines.jade);
+	server.use(express.favicon());
+	server.use(express.logger('dev'));
+	server.use(express.json());
+	server.use(express.urlencoded());
+	server.use(express.methodOverride());
+	server.use(express.cookieParser());
+	server.use(express.session({ secret: 'ilikebigbuttsandicannotlie' }));
+	server.use(passport.initialize());
+	server.use(passport.session());
+	server.use(flash());
+	server.use(express.static(path.join(__dirname, '../build')));
+});
+
+// Development enviroment configuration
+if ('development' == server.get('env')) {
+  server.use(express.errorHandler());
 }
 
-routes.setup(app);
+// Setup database
+db.setup(mongoose);
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+// Setup routes
+routes.setup(server, passport);
+
+// Set up authentication
+authentication.setup(passport);
+
+// Start server
+server.listen(server.get('port'), function(){
+  console.log('Express server listening on port ' + server.get('port'));
 });

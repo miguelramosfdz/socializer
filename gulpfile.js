@@ -3,30 +3,26 @@ var less = require('gulp-less');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var uglify = require('gulp-uglify');
+var jshint = require('gulp-jshint');
 var cached = require('gulp-cached');
 var changed = require('gulp-changed');
 var concat = require('gulp-concat');
 var nodemon = require('gulp-nodemon');
 
-/**
- * Modules required for LiveReload
- */
-var lr = require('tiny-lr');
-var lrserver = lr();
-var livereload = require('gulp-livereload');
+// TODO Implement LiveReload
+// Modules required for LiveReload
+// var lr = require('tiny-lr');
+// var lrserver = lr();
+// var livereload = require('gulp-livereload');
 
-/**
- * TODO Implement these gulp helpers
- */
+// TODO Implement these gulp helpers
 // var autoprefixer = require('gulp-autoprefixer'),
 // var minifycss = require('gulp-minify-css'),
 // var imagemin = require('gulp-imagemin'),
 // var rename = require('gulp-rename'),
 // var clean = require('gulp-clean'),
 
-/**
- *
- */
+// Lint client-side files
 gulp.task('js', function() {
   gulp.src(['app/assets/js/**/*.js'])
     .pipe(jshint())
@@ -35,6 +31,7 @@ gulp.task('js', function() {
     .pipe(gulp.dest('build/scripts'));
 });
 
+// Lint server-side files
 gulp.task('lint-backend', function() {
   gulp.src(['app/controller','app/model', 'config/**/*.js'])
     .pipe(jshint())
@@ -42,40 +39,31 @@ gulp.task('lint-backend', function() {
     .pipe(uglify())
 });
 
+// Build CSS from Less files
 gulp.task('less', function() {
   gulp.src(['app/assets/less/main.less'])
     .pipe(less())
     .pipe(gulp.dest('build/styles'));
 });
 
-/**
- * Watch for file changes
- */
+// Watch for file changes
 gulp.task('watch', function() {
-  /**
-   * Watch for less file changes and execute 'less' task
-   */
   gulp.watch('app/assets/less/**/*.less', [ 'less' ]);
   gulp.watch('app/assets/js/**/*.js', [ 'js' ]);
-  gulp.watch(['app/controller','app/model', 'config/**/*.js'], ['lint-backend']);
+  gulp.watch(['app/controller', 'app/model', 'config/**/*.js'], ['lint-backend']);
 });
 
-/**
- * Start Express server & livereload server
- */
+// Start Express server with nodemon
 gulp.task('startServer', function() {
   nodemon({
-    script: 'config/server.js',
-    ignore: ['gulpfile.js']
+    script: 'config/server.js'
   })
 });
 
-/**
- * Default task for running all necessary tasks
- */
+// Default task for running all necessary tasks
 gulp.task('default', ['lint-backend', 'startServer', 'watch', 'js', 'less']);
 
-gulp.task('clean', function() {
-  gulp.src('build')
-    .pipe(clean());
-});
+// gulp.task('clean', function() {
+//   gulp.src('build')
+//     .pipe(clean());
+// });
