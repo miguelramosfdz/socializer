@@ -5,8 +5,7 @@ html { font-size: 100%; }
 body {
   /* Set base font for page */
   line-height: 1.6em;
-  font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
-  font-family: @font-autowide;
+  font: @basefont;
 }
 
 /**
@@ -81,7 +80,6 @@ a {
     padding-left: 1rem;
     padding-right: 1rem;
   }
-
   .col.full { width: 100%; }
   .col.two-thirds { width: 66.7%; }
   .col.half { width: 50%; }
@@ -90,17 +88,13 @@ a {
   .col.flow-opposite { float: right; }
 }
 
-/**
- * To be used with ul elements
- */
+// To be used with ul elements
 .row {
 	width: 100%;
 	list-style-type: none;
 }
 
-/**
- * To be used with li elements
- */
+// To be used with li elements
 .row-block {
 	margin: 1em 1.5em;
 	display: inline-block;

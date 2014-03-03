@@ -3,7 +3,7 @@
 exports.setup = function(app, passport) {
 
 	app.get('/', function(req, res){
-		res.render('layout', { title: 'Ehxe' });
+		res.render('layout', { title: 'Boiler' });
 	});
 
 	app.get('/partials/:type/:file', function(req, res) {
