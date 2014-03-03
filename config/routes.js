@@ -2,10 +2,12 @@
 
 exports.setup = function(app, passport) {
 
+	// Serve index
 	app.get('/', function(req, res){
-		res.render('layout', { title: 'Boiler' });
+		res.render('index', { title: 'Boiler' });
 	});
 
+	// Route for serving templates
 	app.get('/partials/:type/:file', function(req, res) {
 		res.render('/partials'+req.params.type+'/'+req.params.file);
 	});
@@ -21,13 +23,6 @@ exports.setup = function(app, passport) {
 		}
 	};
 
-	// route for showing the profile page
-	app.get('/profile', this.isLoggedIn, function(req, res) {
-		res.render('profile.ejs', {
-			user : req.user // get the user out of session and pass to template
-		});
-	});
-
 	/**
 	 * Facebook Routes
 	 */
@@ -38,8 +33,8 @@ exports.setup = function(app, passport) {
 	// Route to handle the Facebook authentication callback
 	app.get('/auth/facebook/callback',
 		passport.authenticate('facebook', {
-			successRedirect : '/profile',
-			failureRedirect : '/'
+			successRedirect: '/profile',
+			failureRedirect: '/'
 		}));
 
 	// Route for logout
