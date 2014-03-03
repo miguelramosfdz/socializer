@@ -9,6 +9,11 @@ var passport = require('passport');
 var flash = require('connect-flash');
 var mongoose = require('mongoose');
 
+// Require Redis & declare store and client
+var redis = require('redis');
+var redisStore = require('connect-redis')(express);
+var redisClient = redis.createClient();
+
 // App module dependencies
 var db = require('./db');
 var routes = require('./routes');
@@ -26,10 +31,20 @@ server.configure(function() {
 	server.use(express.favicon());
 	server.use(express.logger('dev'));
 	server.use(express.json());
+	server.set('jsonp callback', true);
 	server.use(express.urlencoded());
 	server.use(express.methodOverride());
 	server.use(express.cookieParser());
-	server.use(express.session({ secret: 'ilikebigbuttsandicannotlie' }));
+	server.use(express.session({
+		store: new redisStore({ client: redisClient }),
+		secret: "ilikebigbuttsandicannotlie"
+	}));
+	// Cross-Site Request Forgery
+	server.use(express.csrf({ value: authentication.csrf }) );
+	server.use(function ( req, res, next ) {
+		res.cookie( "XSRF-TOKEN", req.csrfToken() );
+		next();
+	});
 	server.use(passport.initialize());
 	server.use(passport.session());
 	server.use(flash());

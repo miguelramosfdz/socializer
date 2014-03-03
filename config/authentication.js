@@ -3,7 +3,11 @@
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var User = require('../app/model/User');
-var Auth = require('./oauth');
+var OAuth = require('./oauth');
+
+exports.csrf = function(req) {
+	return (req.body && req.body._csrf) || (req.query && req.query._csrf) || (req.headers["x-csrf-token"]) || (req.headers["x-xsrf-token"]);
+};
 
 exports.setup = function(passport) {
 
@@ -19,9 +23,9 @@ exports.setup = function(passport) {
 	});
 
 	passport.use(new FacebookStrategy({
-		clientID        : Auth.Facebook.appId,
-		clientSecret    : Auth.Facebook.appSecret,
-		callbackURL     : Auth.Facebook.callbackURL
+		clientID        : OAuth.Facebook.appId,
+		clientSecret    : OAuth.Facebook.appSecret,
+		callbackURL     : OAuth.Facebook.callbackURL
 	},
 	function(token, refreshToken, profile, done) {
 
