@@ -4,8 +4,9 @@ html { font-size: 100%; }
 
 body {
   /* Set base font for page */
-	line-height: 1.6em;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  line-height: 1.6em;
+  font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: @font-autowide;
 }
 
 /**
@@ -87,6 +88,22 @@ a {
   .col.third { width: 33.3%; }
   .col.fourth { width: 24.95%; }
   .col.flow-opposite { float: right; }
+}
+
+/**
+ * To be used with ul elements
+ */
+.row {
+	width: 100%;
+	list-style-type: none;
+}
+
+/**
+ * To be used with li elements
+ */
+.row-block {
+	margin: 1em 1.5em;
+	display: inline-block;
 }
 
 /* Medium screens (640px) */

@@ -19,6 +19,7 @@
     "passport": "~0.2.0"
   },
   "devDependencies": {
+    "gulp": "3.5.2",
     "gulp-less": "~1.2.1",
     "gulp-changed": "~0.2.1",
     "gulp-cached": "0.0.1",
@@ -30,6 +31,7 @@
     "gulp-concat": "~2.1.7",
     "gulp-nodemon": "~1.0.0",
     "tiny-lr": "0.0.5",
-    "gulp-jshint": "~1.5.0"
+    "gulp-jshint": "~1.5.0",
+    "jshint-stylish": "~0.1.5"
   }
 }

@@ -1,4 +1,4 @@
-'use strict';
+/*jshint strict:false */
 
 // NPM module dependencies
 var path = require('path');

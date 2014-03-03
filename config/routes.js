@@ -1,4 +1,4 @@
-'use strict';
+/*jshint strict:false */
 
 exports.setup = function(app, passport) {
 
