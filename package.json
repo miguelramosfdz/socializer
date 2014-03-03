@@ -10,7 +10,9 @@
     "jade": "*",
     "mocha": "*",
     "forever": "*",
-    "consolidate": "~0.10.0"
+    "consolidate": "~0.10.0",
+    "crypto": "0.0.3",
+    "mongoose": "~3.8.8"
   },
   "devDependencies": {
     "gulp-less": "~1.2.1",
