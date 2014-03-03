@@ -31,6 +31,15 @@ gulp.task('js', function() {
     .pipe(gulp.dest('build/scripts'));
 });
 
+gulp.task('scripts', function() {
+    return gulp.src('js/*.js')
+        .pipe(concat('all.js'))
+        .pipe(gulp.dest('dist'))
+        .pipe(rename('all.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('dist'));
+});
+
 // Lint server-side files
 gulp.task('lint-backend', function() {
   gulp.src(['app/controller','app/model', 'config/**/*.js'])
