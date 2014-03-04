@@ -1,10 +1,14 @@
-h1 Meow
 
 .signin(ng-controller="SignUpCtrl")
-	input(ng-model="user.email")
-	input(ng-model="user.password")
-	input(ng-model="user.passwordConfirmation")
-	button(ng-click="signUp()")
+	.boiler-form
+		.cf
+			input(type="text", placeholder="email", ng-model="user.email")
+		.cf
+			input(type="text", placeholder="password", ng-model="user.password")
+		.cf
+			input(type="text", placeholder="password confirmation", ng-model="user.passwordConfirmation")
+		.cf
+			button.go(ng-click="signUp()") Sign Up
 
-	.social
-		.btn-facebook
+		.social
+			.btn-facebook

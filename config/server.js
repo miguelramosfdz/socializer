@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var engines = require('consolidate');
 var flash = require('connect-flash');
+var liveReload = require('connect-livereload');
 
 // App module dependencies
 var db = require('./db');
@@ -19,39 +20,37 @@ var redis = require('redis');
 var redisStore = require('connect-redis')(express);
 var redisClient = redis.createClient();
 
-
-
 // Declare server
 var server = express();
 
 // Configure server for all environments
 server.configure(function() {
-	server.set('port', process.env.PORT || 3000);
-	server.set('views', path.join(__dirname, '../app/views'));
-	server.set('view engine', 'jade');
-	server.engine('jade', engines.jade);
-	server.use(express.favicon());
-	server.use(express.logger('dev'));
-	server.use(express.json());
-	server.set('jsonp callback', true);
-	server.use(express.urlencoded());
-	server.use(express.methodOverride());
-	server.use(express.cookieParser());
-	server.use(express.session({
-		store: new redisStore({ client: redisClient }),
-		secret: "ilikebigbuttsandicannotlie"
-	}));
-	// Cross-Site Request Forgery
-	server.use(express.csrf({ value: authentication.csrf }) );
-	server.use(function ( req, res, next ) {
-		res.cookie( "XSRF-TOKEN", req.csrfToken() );
-		next();
-	});
-	server.use(passport.initialize());
-	server.use(passport.session());
-	server.use(flash());
-	server.use(express.static(path.join(__dirname, '../build')));
-	// server.use(server.router);
+	server.set('port', process.env.PORT || 3000)
+		.set('views', path.join(__dirname, '../app/views'))
+		.set('view engine', 'jade')
+		.engine('jade', engines.jade)
+		.use(express.favicon())
+		.use(express.logger('dev'))
+		.use(express.query())
+		.use(express.json())
+		.set('jsonp callback', true)
+		.use(express.urlencoded())
+		.use(express.methodOverride())
+		.use(express.cookieParser())
+		.use(express.session({
+			store: new redisStore({ client: redisClient }),
+			secret: "ilikebigbuttsandicannotlie"
+		}))
+		// Cross-Site Request Forgery
+		.use(express.csrf({ value: authentication.csrf }) )
+		.use(function ( req, res, next ) {
+			res.cookie( "XSRF-TOKEN", req.csrfToken() );
+			next();
+		})
+		.use(passport.initialize())
+		.use(passport.session())
+		.use(flash())
+		.use(express.static(path.join(__dirname, '../build')))
 });
 
 // Development enviroment configuration

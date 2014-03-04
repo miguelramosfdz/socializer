@@ -1,11 +1,20 @@
 
-<h1>Meow</h1>
 <div ng-controller="SignUpCtrl" class="signin">
-  <input ng-model="user.email"/>
-  <input ng-model="user.password"/>
-  <input ng-model="user.passwordConfirmation"/>
-  <button ng-click="signUp()"></button>
-  <div class="social">
-    <div class="btn-facebook"></div>
+  <div class="boiler-form">
+    <div class="cf">
+      <input type="text" placeholder="email" ng-model="user.email"/>
+    </div>
+    <div class="cf">
+      <input type="text" placeholder="password" ng-model="user.password"/>
+    </div>
+    <div class="cf">
+      <input type="text" placeholder="password confirmation" ng-model="user.passwordConfirmation"/>
+    </div>
+    <div class="cf">
+      <button ng-click="signUp()" class="go">Sign Up</button>
+    </div>
+    <div class="social">
+      <div class="btn-facebook"></div>
+    </div>
   </div>
 </div>

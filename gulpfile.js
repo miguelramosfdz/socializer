@@ -15,17 +15,16 @@ var sources = {
   js: 'app/assets/js/**/*.js',
   less: {
     main: 'app/assets/less/main.less',
-    all: 'app/assets/less/**/*.less',
+    all: 'app/assets/less/**/*.less'
   },
   jade: './app/views/**/*.jade',
-  backend: [ 'app/controller', 'app/model', 'config/**/*.js' ]
+  backend: [ 'app/controller', 'app/model', 'config/**/*.js' ],
+  build: ['build/scripts/*.js', 'build/styles/*.css', 'build/views/**/*.html']
 };
 
-// TODO Implement LiveReload
 // Modules required for LiveReload
-// var lr = require('tiny-lr');
-// var lrserver = lr();
-// var livereload = require('gulp-livereload');
+var lr = require('tiny-lr')();
+var livereload = require('gulp-livereload');
 
 // TODO Implement these gulp helpers
 // var autoprefixer = require('gulp-autoprefixer'),
@@ -33,17 +32,11 @@ var sources = {
 // var imagemin = require('gulp-imagemin'),
 // var clean = require('gulp-clean'),
 
-// Lint client-side files
-gulp.task('js', function() {
-  gulp.src([sources.js])
-    .pipe(jshint())
-    .pipe(jshint.reporter(stylish))
-    .pipe(uglify())
-    .pipe(gulp.dest('build/scripts'));
-});
-
+// Concat
 gulp.task('scripts', function() {
     gulp.src([sources.js])
+      .pipe(jshint())
+      .pipe(jshint.reporter(stylish))
       .pipe(concat('all.js'))
       .pipe(gulp.dest('build/scripts'))
       .pipe(rename('all.min.js'))
@@ -51,6 +44,7 @@ gulp.task('scripts', function() {
       .pipe(gulp.dest('build/scripts'));
 });
 
+// Compile Jade file to HTML
 gulp.task('jade', function() {
   gulp.src([sources.jade])
     .pipe(jade({ pretty: true }))
@@ -61,7 +55,7 @@ gulp.task('jade', function() {
 gulp.task('lint-backend', function() {
   gulp.src(sources.backend)
     .pipe(jshint())
-    .pipe(jshint.reporter('default'))
+    .pipe(jshint.reporter(stylish))
     .pipe(uglify())
 });
 
@@ -72,19 +66,27 @@ gulp.task('less', function() {
     .pipe(gulp.dest('build/styles'));
 });
 
+// Notify LiveReload
+function restartBrowser(event) {
+  gulp.src(event.path, {read: false})
+    .pipe(require('gulp-livereload')(lr));
+};
+
+gulp.task('livereload', restartBrowser);
+
 // Watch for file changes
 gulp.task('watch', function() {
-  gulp.watch('app/assets/')
   gulp.watch(sources.less.all, [ 'less' ]);
   gulp.watch(sources.js, [ 'scripts' ]);
   gulp.watch(sources.backend, ['lint-backend']);
+  gulp.watch(sources.build, restartBrowser);
 });
 
 // Start Express server with nodemon
 gulp.task('startServer', function() {
   nodemon({
     script: 'config/server.js'
-  })
+  });
 });
 
 // Default task for running all necessary tasks

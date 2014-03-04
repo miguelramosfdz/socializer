@@ -1,4 +1,4 @@
-app.controller('SignUpCtrl', [
+app.controller('SignUpCtrl', [ '$scope', '$location',
 	function($scope, $location) {
 		$scope.user = {
 			email: null,

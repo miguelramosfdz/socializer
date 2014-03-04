@@ -5,9 +5,9 @@ html { font-size: 100%; }
 html, body { height: 100%; width: 100%; }
 
 body {
-  /* Set base font for page */
-  line-height: 1.6em;
-  font: @basefont;
+	/* Set base font for page */
+	line-height: 1.6em;
+	font: @basefont;
 }
 
 /**
@@ -15,18 +15,19 @@ body {
  * within the set width of an element. The margin will be outside the width.
  */
 *, *:before, *:after {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 /**
  * Set style for page parent container
  */
 .container {
-  margin: 5% auto 0;
-  width: 95%;
-  height: 95%;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	height: 100%;
 }
 
 /**
@@ -40,12 +41,12 @@ body {
  */
 .cf:before,
 .cf:after {
-  content: " "; /* 1 */
-  display: table; /* 2 */
+	content: " "; /* 1 */
+	display: table; /* 2 */
 }
 
 .cf:after {
-  clear: both;
+	clear: both;
 }
 
 /**
@@ -53,12 +54,12 @@ body {
  * Include this rule to trigger hasLayout and contain floats.
  */
 .cf {
-  *zoom: 1;
+	*zoom: 1;
 }
 
 
 a {
-  color: #00B7FF;
+	color: #00B7FF;
 }
 
 /**
@@ -66,33 +67,33 @@ a {
  * wireframing a site
  */
 .wireframe {
-  border: 2px solid black;
+	border: 2px solid black;
 }
 
 /**
  * Center element horizontally
  */
 .center {
-  margin: 0 auto;
+	margin: 0 auto;
 }
 
 @media (min-width: 40rem) {
-  .col {
-    float: left;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-  .col.full { width: 100%; }
-  .col.two-thirds { width: 66.7%; }
-  .col.half { width: 50%; }
-  .col.third { width: 33.3%; }
-  .col.fourth { width: 24.95%; }
-  .col.flow-opposite { float: right; }
+	.col {
+		float: left;
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+	.col.full { width: 100%; }
+	.col.two-thirds { width: 66.7%; }
+	.col.half { width: 50%; }
+	.col.third { width: 33.3%; }
+	.col.fourth { width: 24.95%; }
+	.col.flow-opposite { float: right; }
 }
 
 // Remove decoration from links
 a {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 // To be used with ul elements
@@ -108,15 +109,34 @@ a {
 }
 
 .float-right {
-  float: right;
+	float: right;
+}
+
+@lr-small-breakpoint: 24em;
+@lr-med-breakpoint: 46.8em;
+@lr-large-breakpoint: 50em;
+@lr-xl-breakpoint: 73em;
+
+/* Large screens (384px) */
+@media all and (max-width: @lr-small-breakpoint) {
+	html { font-size: 112%; }
+	.container { margin-top: 4em; }
 }
 
 /* Medium screens (640px) */
-@media (min-width: 40rem) {
-  html { font-size: 112%; }
+@media all and (max-width: @lr-med-breakpoint) {
+	html { font-size: 112%; }
+	.container { margin-top: 4em; }
+}
+
+
+@media all and (max-width: @lr-large-breakpoint) {
+	html { font-size: 116%; }
+	.container { margin-top: 4em; }
 }
 
 /* Large screens (1024px) */
-@media (min-width: 64rem) {
-  html { font-size: 120%; }
+@media all and (min-width: @lr-xl-breakpoint) {
+	html { font-size: 120%; }
+	.container { margin-top: 4em; }
 }
