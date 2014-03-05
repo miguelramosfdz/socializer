@@ -15,6 +15,7 @@ var sources = {
   js: 'app/assets/js/**/*.js',
   less: {
     main: 'app/assets/less/main.less',
+    pages: 'app/assets/less/pages/pages.less',
     all: 'app/assets/less/**/*.less'
   },
   jade: './app/views/**/*.jade',
@@ -62,6 +63,9 @@ gulp.task('lint-backend', function() {
 // Build CSS from Less files
 gulp.task('less', function() {
   gulp.src([sources.less.main])
+    .pipe(less())
+    .pipe(gulp.dest('build/styles'));
+  gulp.src([sources.less.pages])
     .pipe(less())
     .pipe(gulp.dest('build/styles'));
 });
