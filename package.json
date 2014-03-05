@@ -36,6 +36,7 @@
     "jshint-stylish": "~0.1.5",
     "gulp-rename": "~1.1.0",
     "gulp-jade": "~0.4.2",
-    "connect-livereload": "~0.3.2"
+    "connect-livereload": "~0.3.2",
+    "gulp-minify-css": "~0.3.0"
   }
 }

@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var jade = require("gulp-jade");
 var less = require('gulp-less');
+var minifycss = require('gulp-minify-css');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var uglify = require('gulp-uglify');
@@ -14,7 +15,7 @@ var rename = require('gulp-rename');
 var sources = {
   js: 'app/assets/js/**/*.js',
   less: {
-    main: 'app/assets/less/main.less',
+    main: 'app/assets/less/boiler/boiler.less',
     pages: 'app/assets/less/pages/pages.less',
     all: 'app/assets/less/**/*.less'
   },
@@ -24,12 +25,11 @@ var sources = {
 };
 
 // Modules required for LiveReload
-var lr = require('tiny-lr')();
+var livereloadServer = require('tiny-lr')();
 var livereload = require('gulp-livereload');
 
 // TODO Implement these gulp helpers
 // var autoprefixer = require('gulp-autoprefixer'),
-// var minifycss = require('gulp-minify-css'),
 // var imagemin = require('gulp-imagemin'),
 // var clean = require('gulp-clean'),
 
@@ -62,28 +62,21 @@ gulp.task('lint-backend', function() {
 
 // Build CSS from Less files
 gulp.task('less', function() {
-  gulp.src([sources.less.main])
+  gulp.src([sources.less.main, sources.less.pages])
     .pipe(less())
-    .pipe(gulp.dest('build/styles'));
-  gulp.src([sources.less.pages])
-    .pipe(less())
-    .pipe(gulp.dest('build/styles'));
+    .pipe(minifycss())
+    .pipe(gulp.dest('build/styles'))
+    .pipe(livereload(livereloadServer));
 });
 
-// Notify LiveReload
-function restartBrowser(event) {
-  gulp.src(event.path, {read: false})
-    .pipe(require('gulp-livereload')(lr));
-};
-
-gulp.task('livereload', restartBrowser);
+// gulp.task('livereload', restartBrowser);
 
 // Watch for file changes
 gulp.task('watch', function() {
   gulp.watch(sources.less.all, [ 'less' ]);
   gulp.watch(sources.js, [ 'scripts' ]);
   gulp.watch(sources.backend, ['lint-backend']);
-  gulp.watch(sources.build, restartBrowser);
+  // gulp.watch(sources.build, restartBrowser);
 });
 
 // Start Express server with nodemon

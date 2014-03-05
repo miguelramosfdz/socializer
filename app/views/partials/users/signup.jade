@@ -1,4 +1,4 @@
-.signin(ng-controller="SignUpCtrl")
+.signup(ng-controller="SignUpCtrl")
 	.boiler-form
 		.cf
 			input(type="text", placeholder="email", ng-model="user.email")
@@ -10,9 +10,11 @@
 			button.go(ng-click="signUp()") Sign Up
 
 		.social
+			h3 Or
 			button.btn-facebook
 				i(class="fa fa-facebook fa-fw")
 				p Sign Up With Facebook
+			br
 			button.btn-twitter 
 				i(class="fa fa-twitter fa-fw")
 				p Sign Up With Twitter
