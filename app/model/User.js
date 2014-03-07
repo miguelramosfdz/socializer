@@ -17,7 +17,8 @@ var UserSchema = new Schema({
 	hashed_password: String,
 	provider: String,
 	salt: String,
-	facebook: {}
+	facebook: {},
+	twitter: {}
 });
 
 /**
@@ -40,25 +41,31 @@ var validatePresenceOf = function(value) {
 	return value && value.length;
 };
 
-// the below 4 validations only apply if you are signing up traditionally
+var validateIsStringAndLength = function(value) {
+	return typeof value === 'string' && value.length > 0;
+};
+
+/**
+ * Validations for LocalStrategy
+ */
 UserSchema.path('name').validate(function(name) {
 	if (!this.provider) return true;
-	return (typeof name === 'string' && name.length > 0);
+	return (validateIsStringAndLength(name));
 }, 'Name cannot be blank');
 
 UserSchema.path('email').validate(function(email) {
 	if (!this.provider) return true;
-	return (typeof email === 'string' && email.length > 0);
+	return (validateIsStringAndLength(email));
 }, 'Email cannot be blank');
 
 UserSchema.path('username').validate(function(username) {
 	if (!this.provider) return true;
-	return (typeof username === 'string' && username.length > 0);
+	return (validateIsStringAndLength(username));
 }, 'Username cannot be blank');
 
 UserSchema.path('hashed_password').validate(function(hashed_password) {
 	if (!this.provider) return true;
-	return (typeof hashed_password === 'string' && hashed_password.length > 0);
+	return (validateIsStringAndLength(hashed_password));
 }, 'Password cannot be blank');
 
 

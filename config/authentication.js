@@ -2,6 +2,7 @@
 
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
+var TwitterStrategy = require('passport-twitter').Strategy;
 var User = require('../app/model/User');
 var OAuth = require('./oauth');
 
@@ -23,11 +24,17 @@ exports.setup = function(passport) {
 		});
 	});
 
-	passport.use(new LocalStrategy({
-
-	},
-	function() {
-
+	passport.use(new LocalStrategy(function(username, password, done) {
+		User.findOne({ email: email }, function(err, user) {
+			if (err) { return done(err); }
+			if (!user) {
+				return done(null, false, { message: 'Incorrect username.' });
+			}
+			if (!user.validPassword(password)) {
+				return done(null, false, { message: 'Incorrect password.' });
+			}
+			return done(null, user);
+		});
 	}));
 
 	passport.use(new FacebookStrategy({
@@ -49,32 +56,58 @@ exports.setup = function(passport) {
 					return done(null, user);
 				} else {
 					// Create new user if no user exists
-					var newUser = new User();
+					new User({
+							facebook: {
+								// Save user's Facebook id
+								id: profile.id,
+								// Set all of the facebook information in our user model							
+								profile: profile,
+								// Save user's Facebook token
+								token: token
+							}
+						})
+						.save(function(err) {
+							if (err)
+								throw err;
 
-					// Save user's Facebook id
-					newUser.facebook.id = profile.id;
-
-					// Set all of the facebook information in our user model
-					newUser.facebook.profile = profile;
-
-					 // Save user's Facebook token
-					newUser.facebook.token = token;
-
-					 // Save user
-					newUser.save(function(err) {
-						if (err)
-							throw err;
-
-						/* if successful, return the new user */
-						return done(null, newUser);
-					});
+							// if successful, return the new user
+							return done(null, newUser);
+						});					
+					// newUser.facebook.id = profile.id;
+					// newUser.facebook.profile = profile;
+					// newUser.facebook.token = token;
 				}
-
 			});
 		});
 
 	}));
-
+	
+	passport.use(new TwitterStrategy({
+		consumerKey: OAuth.Twitter.consumerKey,
+		consumerSecret: OAuth.Twitter.consumerSecret,
+		callbackURL: OAuth.Twitter.callbackURL
+	},
+	function(token, tokenSecret, profile, done) {
+		User.findOne({ 'twitter.id_str': profile.id}, function(err, user) {
+			if (err) {
+				return done(err);
+			}
+			if (user) {
+				return done(null, user);
+			} else {
+				new User({
+						name: profile.displayName,
+						username: profile.username,
+						provider: 'twitter',
+						twitter: profile._json
+					})
+					.save(function(err) {
+						if (err) console.log(err);
+						return done(err, user);
+					});
+			}
+		});
+	}));
 
 
 };

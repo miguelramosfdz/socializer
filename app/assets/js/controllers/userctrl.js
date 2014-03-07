@@ -7,7 +7,13 @@ app.controller('SignUpCtrl', [ '$scope', '$location', '$http',
 		}
 
 		$scope.signUp = function() {
-			$http.post('/users')
+			$http({ method: 'GET', url:'/users'})
+				.success(function(data, status, headers, config) {
+					console.log(data);
+				})
+				.error(function(data, status, headers, config) {
+					console.log(data);
+				});
 		}
 	}
 ]);
