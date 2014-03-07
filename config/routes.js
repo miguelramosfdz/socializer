@@ -32,6 +32,8 @@ exports.setup = function(app, passport) {
 			failureRedirect: '/'
 		}));
 
+	app.post('/users', passport.authenticate('local'));
+	
 	// Route for logout
 	app.post('/logout', function(req, res) {
 		req.logout();

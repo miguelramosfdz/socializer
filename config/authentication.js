@@ -7,7 +7,7 @@ var User = require('../app/model/User');
 var OAuth = require('./oauth');
 
 exports.csrf = function(req) {
-	return (req.body && req.body._csrf) || (req.query && req.query._csrf) || (req.headers["x-csrf-token"]) || (req.headers["x-xsrf-token"]);
+	return (req.body && req.body._csrf) || (req.query && req.query._csrf) || (req.headers['x-csrf-token']) || (req.headers['x-xsrf-token']);
 };
 
 exports.setup = function(passport) {
