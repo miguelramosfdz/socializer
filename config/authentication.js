@@ -11,16 +11,24 @@ exports.csrf = function(req) {
 
 exports.setup = function(passport) {
 
+	// used to serialize user
 	passport.serializeUser(function(user, done) {
 		done(null, user.id);
 	});
 
-	// used to deserialize the user
+	// used to deserialize user
 	passport.deserializeUser(function(id, done) {
 		User.findById(id, function(err, user) {
 			done(err, user);
 		});
 	});
+
+	passport.use(new LocalStrategy({
+
+	},
+	function() {
+
+	}));
 
 	passport.use(new FacebookStrategy({
 		clientID        : OAuth.Facebook.appId,
