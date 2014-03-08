@@ -38,6 +38,7 @@
     "gulp-rename": "~1.1.0",
     "gulp-jade": "~0.4.2",
     "connect-livereload": "~0.3.2",
-    "gulp-minify-css": "~0.3.0"
+    "gulp-minify-css": "~0.3.0",
+    "gulp-qunit": "~0.2.1"
   }
 }

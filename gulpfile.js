@@ -11,7 +11,7 @@ var changed = require('gulp-changed');
 var concat = require('gulp-concat');
 var nodemon = require('gulp-nodemon');
 var rename = require('gulp-rename');
-
+var qunit = require('gulp-qunit');
 var sources = {
 	js: 'app/assets/js/**/*.js',
 	less: {
@@ -84,6 +84,11 @@ gulp.task('startServer', function() {
 	nodemon({
 		script: 'config/server.js'
 	});
+});
+
+gulp.task('test', function() {
+	return gulp.src('./test/SpecRunner.html')
+		.pipe(qunit());
 });
 
 // Default task for running all necessary tasks
