@@ -1,8 +1,8 @@
 
 exports.setup = function(mongoose) {
-	mongoose.connect('mongodb://localhost:27020/mydb', function(err) {
+	mongoose.connect('mongodb://localhost/boiler', function(err) {
 		if (err) {
-			console.log('Could not connect to database');
+			console.log(err);
 			return;
 		} else {
 			console.log('Connected to MongoDB');
