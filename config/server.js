@@ -51,7 +51,20 @@ server.configure(function() {
 		.use(passport.session())
 		.use(flash())
 		.use(express.static(path.join(__dirname, '../build')))
+		// Access Control Setup
+		.use(function(req, res, next) {
+		    res.header('Access-Control-Allow-Origin', '*');
+		    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+		    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+		    if ('OPTIONS' == req.method) {
+		        res.send(200);
+		    } else {
+		        next();
+		    }
+		})
 });
+
 
 // Development enviroment configuration
 if ('development' == server.get('env')) {

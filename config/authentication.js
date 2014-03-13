@@ -24,6 +24,7 @@ exports.setup = function(passport) {
 		});
 	});
 
+	// For non-OAuth users
 	passport.use(new LocalStrategy(function(username, password, done) {
 		User.findOne({ email: email }, function(err, user) {
 			if (err) { return done(err); }
@@ -37,6 +38,7 @@ exports.setup = function(passport) {
 		});
 	}));
 
+	// For 'Sign up with Facebook'
 	passport.use(new FacebookStrategy({
 		clientID        : OAuth.Facebook.appId,
 		clientSecret    : OAuth.Facebook.appSecret,
@@ -82,6 +84,7 @@ exports.setup = function(passport) {
 
 	}));
 	
+	// For 'Sign up with Twitter'
 	passport.use(new TwitterStrategy({
 		consumerKey: OAuth.Twitter.consumerKey,
 		consumerSecret: OAuth.Twitter.consumerSecret,

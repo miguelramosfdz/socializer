@@ -18,7 +18,8 @@
     "connect-flash": "~0.1.1",
     "connect-redis": "~1.4.7",
     "redis": "~0.10.1",
-    "passport-twitter": "~1.0.2"
+    "passport-twitter": "~1.0.2",
+    "passport-http": "~0.2.2"
   },
   "devDependencies": {
     "gulp": "3.5.2",
