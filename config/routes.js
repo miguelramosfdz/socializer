@@ -31,12 +31,16 @@ exports.setup = function(app, passport) {
 		passport.authenticate('facebook', {
 			successRedirect: '/profile',
 			failureRedirect: '/'
-		}));
+		})
+	);
 
 	// Route to handle local authentication
 	app.post('/login', passport.authenticate('local'), function(req, res) {
 		res.send(req.user);
 	});
+
+	
+	app.get('/profile', this.isLoggedIn);
 
 	// Route for logout
 	app.post('/logout', function(req, res) {

@@ -18,9 +18,13 @@ app.config(['$routeProvider', '$locationProvider',
 			when('/about', {
 				templateUrl: partial('static', 'about')
 			}).
+			when('/profile', {
+				templateUrl: partial('users', 'profile'),
+				controller: 'ProfileCtrl'
+			}).
 			otherwise({
 				redirectTo: '/'
-			})
+			});
 
 		$locationProvider.html5Mode(true);
 	}
