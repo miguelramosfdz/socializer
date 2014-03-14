@@ -24,7 +24,7 @@ exports.setup = function(app, passport) {
 	});
 
 	// Route for Facebook authentication and login
-	app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+	app.get('/auth/facebook', passport.authenticate('facebook'));
 
 	// Route to handle the Facebook authentication callback
 	app.get('/auth/facebook/callback',
