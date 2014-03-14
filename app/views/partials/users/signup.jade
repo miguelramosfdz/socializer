@@ -11,10 +11,12 @@
 
 		.social
 			h3 Or
-			button.btn-facebook(ng-click="signUpFacebook()")
-				i(class="fa fa-facebook fa-fw")
-				p Sign Up With Facebook
+			form.boiler-form(action='/auth/facebook', method='POST')
+				button.btn-facebook(ng-click="signUpFacebook()")
+					i(class="fa fa-facebook fa-fw")
+					p Sign Up With Facebook
 			br
-			button.btn-twitter(ng-click="signUpTwitter()")
-				i(class="fa fa-twitter fa-fw")
-				p Sign Up With Twitter
+			form.boiler-form(action='/auth/twitter', method='POST')
+				button.btn-twitter(ng-click="signUpTwitter()")
+					i(class="fa fa-twitter fa-fw")
+					p Sign Up With Twitter

@@ -17,25 +17,5 @@ app.controller('SignUpCtrl', [ '$scope', '$location', '$http',
 				});
 		};
 
-		$scope.signUpFacebook = function() {
-			$http({ method: 'GET', url:'/auth/facebook'})
-				.success(function(data, status, headers, config) {
-					console.log(data);
-				})
-				.error(function(data, status, headers, config) {
-					console.log(data);
-				});
-		};
-
-		$scope.signUpTwitter = function() {
-			$http({ method: 'GET', url:'/auth/twitter' })
-				.success(function(data, status, headers, config) {
-					console.log(data);
-				})
-				.error(function(data, status, headers, config) {
-					console.log(data);
-				});
-		};
-
 	}
 ]);
