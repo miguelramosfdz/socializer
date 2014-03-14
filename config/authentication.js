@@ -80,32 +80,19 @@ exports.setup = function(passport) {
 				} else {
 					// Create new user if no user exists
 					new User({
-						name: profile.displayName,
-						email: profile.emails[0].value,
-						username: profile.username,
-						provider: 'facebook',
-						facebook: profile._json
-						// provider: 'facebook',    
-						// facebook: {
-						//  // Save user's Facebook id
-						//  id: profile.id,
-						//  // Set all of the facebook information in our user model                            
-						//  profile: profile,
-						//  // Save user's Facebook token
-						//  token: token,
-						//  // Define which provider use utilized
-						// }
+							name: profile.displayName,
+							email: profile.emails[0].value,
+							username: profile.username,
+							provider: 'facebook',
+							facebook: profile._json
 						})
-						.save(function(err) {
-							if (err)
+						.save(function(err, newUser) {
+							if (err) {
 								throw err;
-
+							}
 							// if successful, return the new user
 							return done(null, newUser);
-						});                 
-					// newUser.facebook.id = profile.id;
-					// newUser.facebook.profile = profile;
-					// newUser.facebook.token = token;
+						});
 				}
 			});
 		});
