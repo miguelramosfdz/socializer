@@ -37,31 +37,33 @@ server.configure(function() {
 		.use(express.urlencoded())
 		.use(express.methodOverride())
 		.use(express.cookieParser())
+			
+		// Define session store
 		.use(express.session({
 			store: new redisStore({ client: redisClient }),
 			secret: "ilikebigbuttsandicannotlie"
 		}))
-		// Cross-Site Request Forgery
-		.use(express.csrf({ value: authentication.csrf }) )
-		.use(function ( req, res, next ) {
-			res.cookie( "XSRF-TOKEN", req.csrfToken() );
-			next();
-		})
+
+		// Use passport session
 		.use(passport.initialize())
 		.use(passport.session())
+
+		// Define CSRF Protection
+		.use(express.csrf({ value: authentication.csrf }) )
+		.use(authentication.csrfCookieToken)
+		.use(authentication.csrfFormToken)
+		.use(authentication.cors)
+
 		.use(flash())
 		.use(express.static(path.join(__dirname, '../build')))
-		// Access Control Setup
-		.use(function(req, res, next) {
-			// res.header('Access-Control-Allow-Origin', '*');
-			// res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-			// res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-		    if ('OPTIONS' == req.method) {
-		        res.send(200);
-		    } else {
-		        next();
-		    }
-		})
+
+		// Utilize compress method for specified file types
+		.use(express.compress({
+			filter: function(req, res) {
+				return (/json|text|javascript|css/).test(res.getHeader('Content-Type'));
+			},
+			level: 9
+		}));
 });
 
 

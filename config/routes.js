@@ -11,12 +11,16 @@ exports.setup = function(app, passport) {
 	this.isLoggedIn = function(req, res, next) {
 		if (req.isAuthenticated()) {
 			// if user is authenticated in the session, carry on
-			return next();
+			next();
 		} else {
 			// if they aren't redirect them to the home page
-			res.redirect('/');
+			res.send(401);
 		}
 	};
+
+	app.get('/isLoggedIn', function(req, res) {
+		res.send(req.isAuthenticated() ? req.user : '0');
+	});
 
 	/**
 	 * Facebook Routes
@@ -32,7 +36,10 @@ exports.setup = function(app, passport) {
 			failureRedirect: '/'
 		}));
 
-	app.post('/users', passport.authenticate('local'));
+	// Route to handle local authentication
+	app.post('/login', passport.authenticate('local'), function(req, res) {
+		res.send(req.user);
+	});
 	
 	// Route for logout
 	app.post('/logout', function(req, res) {

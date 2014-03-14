@@ -15,12 +15,16 @@
     </div>
     <div class="social">
       <h3>Or</h3>
-      <button class="btn-facebook"><i class="fa fa-facebook fa-fw"></i>
-        <p>Sign Up With Facebook</p>
-      </button><br/>
-      <button class="btn-twitter"><i class="fa fa-twitter fa-fw"></i>
-        <p>Sign Up With Twitter</p>
-      </button>
+      <form action="/auth/facebook" method="POST" class="boiler-form">
+        <button ng-click="signUpFacebook()" class="btn-facebook"><i class="fa fa-facebook fa-fw"></i>
+          <p>Sign Up With Facebook</p>
+        </button>
+      </form><br/>
+      <form action="/auth/twitter" method="POST" class="boiler-form">
+        <button ng-click="signUpTwitter()" class="btn-twitter"><i class="fa fa-twitter fa-fw"></i>
+          <p>Sign Up With Twitter</p>
+        </button>
+      </form>
     </div>
   </div>
 </div>

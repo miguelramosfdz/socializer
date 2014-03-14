@@ -10,6 +10,27 @@ exports.csrf = function(req) {
 	return (req.body && req.body._csrf) || (req.query && req.query._csrf) || (req.headers['x-csrf-token']) || (req.headers['x-xsrf-token']);
 };
 
+exports.csrfFormToken = function(req, res, next) {
+	res.locals.csrfFormToken = req.session._csrf;
+	next();
+};
+
+exports.csrfCookieToken = function ( req, res, next ) {
+	res.cookie( "XSRF-TOKEN", req.csrfToken() );
+	next();
+};
+
+exports.cors = function(req, res, next) {
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+	res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+	if ('OPTIONS' == req.method) {
+		res.send(200);
+	} else {
+		next();
+	}
+};
+
 exports.setup = function(passport) {
 
 	// used to serialize user
@@ -59,14 +80,21 @@ exports.setup = function(passport) {
 				} else {
 					// Create new user if no user exists
 					new User({
-							facebook: {
-								// Save user's Facebook id
-								id: profile.id,
-								// Set all of the facebook information in our user model							
-								profile: profile,
-								// Save user's Facebook token
-								token: token
-							}
+						name: profile.displayName,
+						email: profile.emails[0].value,
+						username: profile.username,
+						provider: 'facebook',
+						facebook: profile._json
+						// provider: 'facebook',    
+						// facebook: {
+						//  // Save user's Facebook id
+						//  id: profile.id,
+						//  // Set all of the facebook information in our user model                            
+						//  profile: profile,
+						//  // Save user's Facebook token
+						//  token: token,
+						//  // Define which provider use utilized
+						// }
 						})
 						.save(function(err) {
 							if (err)
@@ -74,7 +102,7 @@ exports.setup = function(passport) {
 
 							// if successful, return the new user
 							return done(null, newUser);
-						});					
+						});                 
 					// newUser.facebook.id = profile.id;
 					// newUser.facebook.profile = profile;
 					// newUser.facebook.token = token;
