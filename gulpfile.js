@@ -12,6 +12,7 @@ var concat = require('gulp-concat');
 var nodemon = require('gulp-nodemon');
 var rename = require('gulp-rename');
 var qunit = require('gulp-qunit');
+
 var sources = {
 	js: 'app/assets/js/**/*.js',
 	less: {

@@ -18,13 +18,10 @@ exports.setup = function(app, passport) {
 		}
 	};
 
+	// Route for confirming if user is logged in
 	app.get('/isLoggedIn', function(req, res) {
 		res.send(req.isAuthenticated() ? req.user : '0');
 	});
-
-	/**
-	 * Facebook Routes
-	 */
 
 	// Route for Facebook authentication and login
 	app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
@@ -40,7 +37,7 @@ exports.setup = function(app, passport) {
 	app.post('/login', passport.authenticate('local'), function(req, res) {
 		res.send(req.user);
 	});
-	
+
 	// Route for logout
 	app.post('/logout', function(req, res) {
 		req.logout();
