@@ -29,3 +29,8 @@ app.config(['$routeProvider', '$locationProvider',
 		$locationProvider.html5Mode(true);
 	}
 ]);
+
+// Redirect to rid url of '#_=_' added by Facebook auth redirect
+if (window.location.hash && window.location.hash == '#_=_') {
+	window.location.hash = '';
+}
