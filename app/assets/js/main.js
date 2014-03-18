@@ -1,36 +1,40 @@
-'use strict';
+var app;
 
-// Declare app
-var app = angular.module('Boiler', [ 'ngRoute' ]);
+(function() {
+	'use strict';
 
-app.config(['$routeProvider', '$locationProvider',
-	function($routeProvider, $locationProvider) {
+	// Declare app
+	app = angular.module('Boiler', [ 'ngRoute' ]);
 
-		var partial = function(type, page) {
-			return 'partials/'+type+'/'+page;
-		};
+	app.config(['$routeProvider', '$locationProvider',
+		function($routeProvider, $locationProvider) {
 
-		$routeProvider.
-			when('/signup', {
-				templateUrl: partial('users', 'signup'),
-				controller: 'SignUpCtrl'
-			}).
-			when('/about', {
-				templateUrl: partial('static', 'about')
-			}).
-			when('/profile', {
-				templateUrl: partial('users', 'profile'),
-				controller: 'ProfileCtrl'
-			}).
-			otherwise({
-				redirectTo: '/'
-			});
+			var partial = function(type, page) {
+				return 'partials/'+type+'/'+page;
+			};
 
-		$locationProvider.html5Mode(true);
+			$routeProvider.
+				when('/signup', {
+					templateUrl: partial('users', 'signup'),
+					controller: 'SignUpCtrl'
+				}).
+				when('/about', {
+					templateUrl: partial('static', 'about')
+				}).
+				when('/profile', {
+					templateUrl: partial('users', 'profile'),
+					controller: 'ProfileCtrl'
+				}).
+				otherwise({
+					redirectTo: '/'
+				});
+
+			$locationProvider.html5Mode(true);
+		}
+	]);
+
+	// Redirect to rid url of '#_=_' added by Facebook auth redirect
+	if (window.location.hash && window.location.hash == '#_=_') {
+		window.location.hash = '';
 	}
-]);
-
-// Redirect to rid url of '#_=_' added by Facebook auth redirect
-if (window.location.hash && window.location.hash == '#_=_') {
-	window.location.hash = '';
-}
+})();

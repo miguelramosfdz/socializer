@@ -2,9 +2,9 @@ doctype html
 html(ng-app="Boiler")
 	head
 		include partials/_head
-	body
+	body(ng-controller='AppCtrl')
 		include partials/_nav
 
-		.container(ng-view ng-controller='HomeCtrl')
+		.container(ng-view)
 
 		include partials/_foot

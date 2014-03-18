@@ -1,8 +1,8 @@
-.navbar
+.navbar(ng-controller="NavCtrl")
   ul.row
     li.row-block
       a.brand(href="/") Boiler.io
-    li.row-block.float-right
-      a(href="/signup", ng-hide='') Sign Up
-    li.row-block.float-right
+    li.row-block.float-right(ng-hide='isLoggedIn')
+      a(href="/signup") Sign Up
+    li.row-block.float-right(ng-hide='isLoggedIn')
       a(href="/login",target="_self") Log In

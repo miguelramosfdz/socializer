@@ -4,6 +4,7 @@
 var path = require('path');
 var http = require('http');
 var express = require('express');
+var expressJwt = require('express-jwt');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var engines = require('consolidate');
@@ -32,9 +33,10 @@ server.configure(function() {
 		.use(express.favicon())
 		.use(express.logger('dev'))
 		.use(express.query())
+		.use('/api', expressJwt({ secret: "ilikebigbuttsandicannotlie" }))
+		.use(express.urlencoded())
 		.use(express.json())
 		.set('jsonp callback', true)
-		.use(express.urlencoded())
 		.use(express.methodOverride())
 		.use(express.cookieParser())
 
