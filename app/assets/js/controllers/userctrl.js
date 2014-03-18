@@ -1,5 +1,5 @@
 app
-	.controller('SignUpCtrl', [ '$scope', '$location', '$http',
+	.controller('SignUpCtrl', [ '$scope', '$location', '$http', 'UserFactory',
 		function($scope, $location, $http) {
 
 			$scope.user = {
@@ -9,7 +9,7 @@ app
 			};
 
 			$scope.signUp = function() {
-				$http({ method: 'POST', url:'/users', data: $scope.user })
+				$http({ method: 'POST', url:'/api/user', data: $scope.user })
 					.success(function(data, status, headers, config) {
 						console.log(data);
 					})

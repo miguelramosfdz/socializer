@@ -1,4 +1,4 @@
-app.factory('UserFactory', function() {
+app.factory('UserFactory', function($http) {
 	return {
 		authenticate: function() {
 			var result;

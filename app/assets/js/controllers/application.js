@@ -11,9 +11,12 @@ app
 
 		}
 	])
-	.controller('NavCtrl', ['$rootScope','$scope', '$location', '$http',
-		function($rootScope, $scope, $location, $http) {
-			$scope.user = $rootScope.user;
-			$scope.isLoggedIn = $scope.user ? true : false;
+	.controller('NavCtrl', ['$rootScope','$scope', '$location', '$http', 'UserFactory',
+		function($rootScope, $scope, $location, $http, UserFactory) {
+			debugger;
+			UserFactory.authenticate();
+
+			// $scope.user = $rootScope.user;
+			// $scope.isLoggedIn = $scope.user ? true : false;
 		}
 	]);
