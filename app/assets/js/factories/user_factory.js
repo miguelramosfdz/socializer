@@ -1,4 +1,4 @@
-app.factory('UserFactory', function($http) {
+app.factory('UserFactory', function($http, $rootScope) {
 	return {
 		authenticate: function() {
 			var result;
@@ -6,6 +6,7 @@ app.factory('UserFactory', function($http) {
 			$http({ method: 'GET', url: '/api/user' })
 				.success(function(data,status, headers, config) {
 					result = data.user; 
+					$rootScope.user = result;
 				})
 				.error(function(data,status, headers, config) {
 					result = data.message;
