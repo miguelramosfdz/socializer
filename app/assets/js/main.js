@@ -6,8 +6,7 @@ var app;
 	// Declare app
 	app = angular.module('Boiler', [ 'ngRoute' ]);
 
-	app.config(['$routeProvider', '$locationProvider',
-		function($routeProvider, $locationProvider) {
+	app.config(function($routeProvider, $locationProvider) {
 
 			var partial = function(type, page) {
 				return 'partials/'+type+'/'+page;
@@ -30,8 +29,7 @@ var app;
 				});
 
 			$locationProvider.html5Mode(true);
-		}
-	]);
+	});
 
 	// Redirect to rid url of '#_=_' added by Facebook auth redirect
 	if (window.location.hash && window.location.hash == '#_=_') {
