@@ -20,7 +20,7 @@ exports.setup = function(app, passport) {
 
 	// Route for confirming if user is logged in
 	app.get('/api/user', function(req, res) {
-		res.send(req.isAuthenticated() ? req.user : 401);
+		res.send(req.isAuthenticated() ? { user: req.user } : { message: 'No user signed in' });
 	});
 
 	// Route to handle local authentication

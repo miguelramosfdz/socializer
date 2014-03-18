@@ -1,15 +1,8 @@
 app
-	.controller('AppCtrl', function($rootScope, $scope, $location, $http) {
-		$http({ method: 'GET', url: '/isLoggedIn' })
-			.success(function(data, status, headers, config) {
-				$rootScope.user = data;
-			})
-			.error(function(data, status, headers, config) {
-				console.log(data);
-			});
+	.controller('AppCtrl', function($rootScope, $scope, $location, UserFactory) {
+
 	})
-	.controller('NavCtrl', function($rootScope, $scope, $location, $http, UserFactory) {
-		UserFactory.authenticate();
+	.controller('NavCtrl', function($rootScope, $scope, $location, UserFactory) {
 		$scope.user = $rootScope.user;
 		$scope.isLoggedIn = $scope.user ? true : false;
 	});

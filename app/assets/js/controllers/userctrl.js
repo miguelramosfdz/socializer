@@ -5,7 +5,10 @@ app
 				password: null,
 				passwordConfirmation: null
 			};
-			UserFactory.signUp($scope.user);
+
+			$scope.signUp = function() {
+				UserFactory.signUp($scope.user);
+			};
 	})
 	.controller('ProfileCtrl', function($rootScope, $scope, $location, $http) {
 
