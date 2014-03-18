@@ -12,6 +12,19 @@ app.factory('UserFactory', function($http) {
 				});
 
 			return result;
+		},
+		signUp: function(user) {
+			var result;
+
+			$http({ method: 'POST', url:'/api/user', data: user })
+				.success(function(data, status, headers, config) {
+					result = data;
+				})
+				.error(function(data, status, headers, config) {
+					results = data;
+				});
+
+			return result;
 		}
 	};
 });

@@ -8,20 +8,11 @@ app
 				passwordConfirmation: null
 			};
 
-			$scope.signUp = function() {
-				$http({ method: 'POST', url:'/api/user', data: $scope.user })
-					.success(function(data, status, headers, config) {
-						console.log(data);
-					})
-					.error(function(data, status, headers, config) {
-						console.log(data);
-					});
-			};
-
+			UserFactory.signUp($scope.user);
 		}
 	])
 	.controller('ProfileCtrl', ['$rootScope', '$scope', '$location', '$http',
 		function($rootScope, $scope, $location, $http) {
-			$scope.meow = $rootScope.user;
+
 		}
 	]);
