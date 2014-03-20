@@ -14,15 +14,15 @@
     <script src="components/modernizr/modernizr.js"></script>
     <script src="components/prefixfree/prefixfree.min.js"></script>
   </head>
-  <body>
-    <div class="navbar">
+  <body ng-controller="AppCtrl">
+    <div ng-controller="NavCtrl" class="navbar">
       <ul class="row">
         <li class="row-block"><a href="/" class="brand">Boiler.io</a></li>
-        <li class="row-block float-right"><a href="/signup" ng-hide="">Sign Up</a></li>
-        <li class="row-block float-right"><a href="/login" target="_self">Log In</a></li>
+        <li ng-hide="isLoggedIn" class="row-block float-right"><a href="/signup">Sign Up</a></li>
+        <li ng-hide="isLoggedIn" class="row-block float-right"><a href="/login" target="_self">Log In</a></li>
       </ul>
     </div>
-    <div ng-view ng-controller="HomeCtrl" class="container">{{ $rootScope }}</div>
+    <div ng-view class="container"></div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script src="components/angular/angular.js"></script>
     <script src="components/angular-route/angular-route.min.js"></script>
