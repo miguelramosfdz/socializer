@@ -46,14 +46,22 @@ exports.setup = function(app, passport) {
 																})
 															);
 	// Route for logout
-	app.post('/deauthenticate', function(req, res) {
+	app.post('/logout', function(req, res) {
 		req.logout();
 		res.redirect('/');
 	});
 
 	// Catch-all Route
 	app.get('*', function(req, res){
-		res.render('index', { title: 'Boiler' });
+		if (req.isAuthenticated()) {
+			res.render('index', {
+				title: 'Boiler' ,
+				user: req.user
+			});
+		} else {
+			res.render('index', { });
+		}
+
 	});
 
 };

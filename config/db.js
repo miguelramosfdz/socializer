@@ -8,4 +8,4 @@ exports.setup = function(mongoose) {
 			console.log('Connected to MongoDB');
 		}
 	});
-}
+};

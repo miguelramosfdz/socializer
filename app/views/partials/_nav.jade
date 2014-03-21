@@ -1,8 +1,19 @@
 .navbar(ng-controller="NavCtrl")
-  ul.row
-    li.row-block
-      a.brand(href="/") Boiler.io
-    li.row-block.float-right(ng-hide='isLoggedIn')
-      a(href="/signup") Sign Up
-    li.row-block.float-right(ng-hide='isLoggedIn')
-      a(href="/login",target="_self") Log In
+
+	ul.row
+	
+		li.row-block
+			a.brand(href="/") Boiler.io
+	
+		if !user
+			li.row-block.float-right
+				a(href="/signup") Sign Up
+			li.row-block.float-right
+				a(href="/login",target="_self") Log In
+	
+		else
+			li.row-block.float-right
+				a(href="/logout",target="_self") Log Out
+			li.row-block.float-right.user-nav
+				img(src=user.picture)
+				a(href='/profile')= 'Signed in as ' + user.username

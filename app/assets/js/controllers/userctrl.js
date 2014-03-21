@@ -10,6 +10,6 @@ app
 				UserFactory.signUp($scope.user);
 			};
 	})
-	.controller('ProfileCtrl', function($rootScope, $scope, $location, $http) {
-		
+	.controller('ProfileCtrl', function($rootScope, $scope, $location, UserFactory) {
+
 	});

@@ -33,7 +33,7 @@ server.configure(function() {
 		.use(express.favicon())
 		.use(express.logger('dev'))
 		.use(express.query())
-		.use('/api', expressJwt({ secret: "ilikebigbuttsandicannotlie" }))
+		// .use('/api', expressJwt({ secret: "ilikebigbuttsandicannotlie" }))
 		.use(express.urlencoded())
 		.use(express.json())
 		.set('jsonp callback', true)
