@@ -49,7 +49,6 @@ server.configure(function() {
 		// Use passport session
 		.use(passport.initialize())
 		.use(passport.session())
-		// .use(passport.authenticate())
 
 		// Define CSRF Protection
 		.use(express.csrf({ value: authentication.csrf }) )
