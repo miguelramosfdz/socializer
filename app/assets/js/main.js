@@ -4,7 +4,7 @@ var app;
 	'use strict';
 
 	// Declare app
-	app = angular.module('Boiler', [ 'ngRoute' ]);
+	app = angular.module('Boiler', [ 'ngRoute', 'ngCookies' ]);
 
 	app.config(function($routeProvider, $locationProvider) {
 
