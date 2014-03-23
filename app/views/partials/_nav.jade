@@ -3,19 +3,18 @@ ul.navbar(ng-controller="NavCtrl")
 	.navbar-item.brand
 		a(href="/") Boiler.io
 
-	if !user
-		.navbar-item
-			a(href="/signup") Sign Up
-		.navbar-item.log-in
-			a(href="/login",target="_self") Log In
-			.login-buttons
-				include _social
+	.right
+		if !user
+			.navbar-item.log-in
+				a(href="/login") Log In
+				.login-buttons
+					include _social
 
-	else
-		.navbar-item
-			a(href="/logout",target="_self") Log Out
-		.navbar-item.user-nav
-			aside.photo
-				img(src='http://graph.facebook.com/'+user.username+'/picture')
-			aside.name
-				a(href='/profile')= user.facebook.first_name
+		else
+			.navbar-item.user-nav
+				.photo
+					img(src='http://graph.facebook.com/'+user.username+'/picture')
+				.name
+					a(href='/profile')= user.facebook.first_name
+				.user-menu
+					a(href="/logout",target="_self") Log Out

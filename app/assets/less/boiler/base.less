@@ -6,8 +6,10 @@ html { font-size: 100%; }
 
 body {
 	/* Set base font for page */
-	line-height: 1.6em;
+	line-height: 1.5em;
+	letter-spacing: 0.05em;
 	font: @helvetica;
+	font-size: 14px;
 }
 
 /**
@@ -25,7 +27,9 @@ body {
  */
 .container {
 	margin: 0 auto;
+	margin-top: 2em;
 	padding: 0 1.3em;
+	padding-top: 1em;
 	width: 100%; height: 100%;
 }
 
@@ -107,23 +111,23 @@ a {
 /* Large screens (384px) */
 @media all and (max-width: @lr-small-breakpoint) {
 	html { font-size: 112%; }
-	.container { margin-top: 4em; }
+	.container { margin-top: 2em; }
 }
 
 /* Medium screens (640px) */
 @media all and (max-width: @lr-med-breakpoint) {
 	html { font-size: 112%; }
-	.container { margin-top: 4em; }
+	.container { margin-top: 2em; }
 }
 
 
 @media all and (max-width: @lr-large-breakpoint) {
 	html { font-size: 116%; }
-	.container { margin-top: 4em; }
+	.container { margin-top: 2em; }
 }
 
 /* Large screens (1024px) */
 @media all and (min-width: @lr-xl-breakpoint) {
 	html { font-size: 120%; }
-	.container { margin-top: 4em; }
+	.container { margin-top: 2em; }
 }
