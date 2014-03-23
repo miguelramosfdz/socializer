@@ -1,8 +1,5 @@
-
 /* Small screens (default) */
 html { font-size: 100%; }
-
-// html, body { height: 100%; width: 100%; }
 
 body {
 	/* Set base font for page */
@@ -22,9 +19,7 @@ body {
 	box-sizing: border-box;
 }
 
-/**
- * Set style for page parent container
- */
+/* Set style for page parent container */
 .container {
 	margin: 0 auto;
 	margin-top: 2em;
@@ -43,23 +38,17 @@ body {
 
 
 .dropdown-menu {
-	/**
-	 * Hide dropdown menus by default
-	 */
+	/* Hide dropdown menus by default */
 	display: none;
 	&:hover {
-		/**
-		 * Change display of dropdown menu to block upon hover
-		 */
+		/* Change display of dropdown menu to block upon hover */
 		display: block;
 	}
 }
 
 
 .dropdown-toggle {
-	/**
-	 * Change display of dropdown menu to block upon hover of its trigger
-	 */
+	/* Change display of dropdown menu to block upon hover of its trigger */
 	&:hover ~ .dropdown-menu {
 		display: block;
 	}
@@ -106,31 +95,10 @@ body {
 	.col.flow-opposite { float: right; }
 }
 
-// Remove decoration from links
+/* Remove decoration from links */
 a {
 	text-decoration: none;
 }
-
-// To be used with ul elements
-.row {
-	width: 100%;
-	list-style-type: none;
-}
-
-// To be used with li elements
-.row-block {
-	margin: 0.5em 1.5em;
-	display: inline-block;
-}
-
-.float-right {
-	float: right;
-}
-
-@lr-small-breakpoint: 24em;
-@lr-med-breakpoint: 46.8em;
-@lr-large-breakpoint: 50em;
-@lr-xl-breakpoint: 73em;
 
 /* Large screens (384px) */
 @media all and (max-width: @lr-small-breakpoint) {
