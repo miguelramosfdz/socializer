@@ -1,6 +1,5 @@
-.navbar {
+.navbar-container {
 	height: 3.125rem;
-	margin: 0;
 	padding: 0 0.5rem;
 	width: 100%;
 	top: 0; left: 0;
@@ -8,59 +7,63 @@
 	background-color: @dark-grey-blue;
 	font-weight: 300;
 	color: @light-grey;
-	list-style: none;
-	
-	a {
-		color: @light-grey;
-	}
 
-	.navbar-item {
-		padding: 1rem;
-		display: inline-block;
-	}
-	
-	.navbar-item:hover {
-		background-color: @item-hover;
-	}
+	.navbar {
+		margin: 0;
+		list-style: none;
+		
+		a {
+			color: @light-grey;
+		}
 
-	.brand {
-		padding-top: 0.55em;
-		padding-bottom: 0.55rem;
-		font-size: 1.5rem;
-	}
+		.navbar-item {
+			padding: 1rem;
+			display: inline-block;
+		}
+		
+		.navbar-item:hover {
+			background-color: @item-hover;
+		}
 
-	.login-buttons {
-		text-align: center;
-		margin-left: -13rem;
-		background-color: @dark-grey-blue;
-	}
+		.brand {
+			padding-top: 0.55em;
+			padding-bottom: 0.55rem;
+			font-size: 1.5rem;
+		}
 
-	.user-nav {
-		height: 100%;
-		padding-top: 0;
-		padding-bottom: 0;
-		font-size: 0.8rem;
-		.photo {
-			width: 40%;
-			float: left;
-			height: 1rem;
-			img {
-				width: 100%;
+		.login-buttons {
+			text-align: center;
+			margin-left: -13rem;
+			background-color: @dark-grey-blue;
+		}
+
+		.user-nav {
+			height: 100%;
+			padding-top: 0;
+			padding-bottom: 0;
+			font-size: 0.8rem;
+			.photo {
+				width: 40%;
+				float: left;
+				height: 1rem;
+				img {
+					width: 100%;
+				}
+			}
+			.name {
+				width: 50%;
+				float: right;
+				padding: 1rem 0.3em;
+				font-size: 1rem;
+				text-align: center;
 			}
 		}
-		.name {
-			width: 50%;
-			float: right;
-			padding: 1rem 0.3em;
-			font-size: 1rem;
+
+		.user-menu {
 			text-align: center;
+			background-color: @dark-grey-blue;
+			padding: 1rem 0.3rem;
 		}
-	}
 
-	.user-menu {
-		text-align: center;
-		background-color: @dark-grey-blue;
-		padding: 1rem 0.3rem;
 	}
-
 }
