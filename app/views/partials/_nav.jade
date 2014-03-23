@@ -1,4 +1,4 @@
-ul.navbar(ng-controller="NavCtrl")
+ul.navbar.cf(ng-controller="NavCtrl")
 
 	.navbar-item.brand
 		a(href="/") Boiler.io
@@ -6,8 +6,7 @@ ul.navbar(ng-controller="NavCtrl")
 	.right
 		if !user
 			.navbar-item.log-in
-				.dropdown-toggle
-					a(href="/login") Log In
+				a.dropdown-toggle(href="/login") Log In
 				.login-buttons.dropdown-menu
 					include _social
 

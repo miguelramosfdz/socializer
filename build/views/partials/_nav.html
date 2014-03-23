@@ -1,19 +1,21 @@
 
-<ul ng-controller="NavCtrl" class="navbar">
+<ul ng-controller="NavCtrl" class="navbar cf">
   <div class="navbar-item brand"><a href="/">Boiler.io</a></div>
-  <div class="navbar-item"><a href="/signup">Sign Up</a></div>
-  <div class="navbar-item log-in"><a href="/login" target="_self">Log In</a>
-    <div class="login-buttons">
-      <form action="/auth/facebook" method="GET" class="boiler-form">
-        <button ng-click="signUpFacebook()" class="btn-facebook"><i class="fa fa-facebook fa-fw"></i>
-          <p>Sign Up With Facebook</p>
-        </button>
-      </form><br/>
-      <form action="/auth/twitter" method="GET" class="boiler-form">
-        <button ng-click="signUpTwitter()" class="btn-twitter"><i class="fa fa-twitter fa-fw"></i>
-          <p>Sign Up With Twitter</p>
-        </button>
-      </form>
+  <div class="right">
+    <div class="navbar-item log-in">
+      <div class="dropdown-toggle"><a href="/login">Log In</a></div>
+      <div class="login-buttons dropdown-menu">
+        <form action="/auth/facebook" method="GET" class="boiler-form">
+          <button ng-click="signUpFacebook()" class="btn-facebook"><i class="fa fa-facebook fa-fw"></i>
+            <p>Sign Up With Facebook</p>
+          </button>
+        </form>
+        <form action="/auth/twitter" method="GET" class="boiler-form">
+          <button ng-click="signUpTwitter()" class="btn-twitter"><i class="fa fa-twitter fa-fw"></i>
+            <p>Sign Up With Twitter</p>
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </ul>

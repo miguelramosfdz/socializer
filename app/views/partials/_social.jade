@@ -1,8 +1,9 @@
-form.boiler-form(action='/auth/facebook', method='GET')
-	button.btn-facebook(ng-click="signUpFacebook()")
-		i(class="fa fa-facebook fa-fw")
-		p Sign Up With Facebook
-form.boiler-form(action='/auth/twitter', method='GET')
-	button.btn-twitter(ng-click="signUpTwitter()")
-		i(class="fa fa-twitter fa-fw")
-		p Sign Up With Twitter
+a.btn-facebook(href='/auth/facebook')
+	i(class="fa fa-facebook fa-fw")
+	p Sign Up With Facebook
+
+br
+
+a.btn-twitter(href='/auth/twitter')
+	i(class="fa fa-twitter fa-fw")
+	p Sign Up With Twitter
