@@ -1,15 +1,38 @@
 .navbar {
-  width: 100%;
-  top: 0; left: 0;
-  position: fixed;
-  background-color: @dark-grey-blue;
-  font-size: 1.2em;
-  font-weight: 300;
-  letter-spacing: 0.05em;
-  color: @light-grey;
+	height: 2em;
+	margin: 0;
+	padding: 0.5em;
+	width: 100%;
+	top: 0; left: 0;
+	position: fixed;
+	background-color: @dark-grey-blue;
+	font-size: 1.2em;
+	font-weight: 300;
+	letter-spacing: 0.05em;
+	color: @light-grey;
+	list-style: none;
+	
+	.navbar-item {
+		display: inline-block;
+	}
 
-  a {
-  	color: @light-grey;
-  }
+	a {
+		color: @light-grey;
+	}
+
+	.user-nav {
+		height: 100%;
+		font-size: 0.8em;
+		aside {
+			display: inline-block;
+		}
+		.photo {
+
+		}
+		.name {
+			text-align: center;
+			line-height: 100%;
+		}
+	}
 
 }

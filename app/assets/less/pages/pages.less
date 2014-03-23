@@ -5,10 +5,22 @@ body {
 	background-color: rgba(233, 234, 237, 1);
 }
 
+.log-in {
+	position: relative;
+	div {
+		display: none;
+		position: absolute;
+		padding-top: 2em;
+	}
+	div:hover {
+		display: block;
+	}
+}
 
-.user-nav {
-	padding-top: 0.2em;
-	font-size: 0.8em;
+.log-in:hover {
+	div {
+		display: block;
+	}
 }
 
 @import "signup.less";
