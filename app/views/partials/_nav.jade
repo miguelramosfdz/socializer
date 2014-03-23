@@ -5,10 +5,10 @@ ul.navbar.cf(ng-controller="NavCtrl")
 
 	.right
 		if !user
-			.navbar-item.log-in
-				a.dropdown-toggle(href="/login") Log In
-				.login-buttons.dropdown-menu
-					include _social
+			.navbar-item.dropdown-toggle.log-in
+				a(href="/login") Log In
+			.login-buttons.dropdown-menu
+				include _social
 
 		else
 			.navbar-item.user-nav.dropdown-toggle
