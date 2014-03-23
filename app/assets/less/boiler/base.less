@@ -41,6 +41,30 @@ body {
 	float: right;
 }
 
+
+.dropdown-menu {
+	/**
+	 * Hide dropdown menus by default
+	 */
+	display: none;
+	&:hover {
+		/**
+		 * Change display of dropdown menu to block upon hover
+		 */
+		display: block;
+	}
+}
+
+
+.dropdown-toggle {
+	/**
+	 * Change display of dropdown menu to block upon hover of its trigger
+	 */
+	&:hover ~ .dropdown-menu {
+		display: block;
+	}
+}
+
 /**
  * For modern browsers
  * 1. The space content is one way to avoid an Opera bug when the

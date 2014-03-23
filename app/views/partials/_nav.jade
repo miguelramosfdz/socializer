@@ -6,15 +6,16 @@ ul.navbar(ng-controller="NavCtrl")
 	.right
 		if !user
 			.navbar-item.log-in
-				a(href="/login") Log In
-				.login-buttons
+				.dropdown-toggle
+					a(href="/login") Log In
+				.login-buttons.dropdown-menu
 					include _social
 
 		else
-			.navbar-item.user-nav
+			.navbar-item.user-nav.dropdown-toggle
 				.photo
 					img(src='http://graph.facebook.com/'+user.username+'/picture')
 				.name
 					a(href='/profile')= user.facebook.first_name
-				.user-menu
-					a(href="/logout",target="_self") Log Out
+			.user-menu.dropdown-menu
+				a(href="/logout",target="_self") Log Out
