@@ -5,13 +5,13 @@ header.navbar-container
 
 		li.navbar-dropdown.right
 			if !user
-				.dropdown-toggle(role="button")
+				.login.dropdown-toggle(role="button")
 					a Log In
 				.login-buttons.dropdown-menu(role="menu")
 					include _social
 
 			else
-				.user.dropdown-toggle(role="button")
+				.dropdown-toggle.user(role="button")
 					.photo
 						img(src='http://graph.facebook.com/'+user.username+'/picture')
 					.name
