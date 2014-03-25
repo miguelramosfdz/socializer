@@ -1,20 +1,20 @@
 header.navbar-container
 	ul.navbar.cf(ng-controller="NavCtrl")
-		.navbar-item.brand
+		li.navbar-item.brand
 			a(href="/") Boiler.io
 
-		.right
+		li.navbar-dropdown.right
 			if !user
-				.navbar-item.dropdown-toggle.log-in
-					a(href="/login") Log In
-				.login-buttons.dropdown-menu
+				.dropdown-toggle(role="button")
+					a Log In
+				.login-buttons.dropdown-menu(role="menu")
 					include _social
 
 			else
-				.navbar-item.user-nav.dropdown-toggle
+				.user.dropdown-toggle(role="button")
 					.photo
 						img(src='http://graph.facebook.com/'+user.username+'/picture')
 					.name
 						a(href='/profile')= user.facebook.first_name
-				.user-menu.dropdown-menu
+				.user-menu.dropdown-menu(role="menu")
 					a(href="/logout",target="_self") Log Out

@@ -10,6 +10,7 @@
 
 	.navbar {
 		margin: 0;
+		height: 100%;
 		list-style: none;
 		
 		a {
@@ -24,6 +25,14 @@
 		.navbar-item:hover {
 			background-color: @item-hover;
 		}
+		
+		.navbar-dropdown {
+			display: inline-block;
+			.dropdown-toggle {
+				height: 3.125rem;
+				padding: 1rem;
+			}
+		}
 
 		.brand {
 			padding-top: 0.55em;
@@ -37,7 +46,7 @@
 			background-color: @dark-grey-blue;
 		}
 
-		.user-nav {
+		.user {
 			height: 100%;
 			padding-top: 0;
 			padding-bottom: 0;

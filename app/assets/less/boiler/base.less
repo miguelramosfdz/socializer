@@ -65,29 +65,43 @@ body {
 	width: 100%; height: 100%;
 }
 
+/* Float element left */
 .left {
 	float: left;
 }
 
+/* Float element right */
 .right {
 	float: right;
 }
 
 
-.dropdown-menu {
-	/* Hide dropdown menus by default */
-	display: none;
-	margin-top: -0.5rem;
-	&:hover {
-		/* Change display of dropdown menu to block upon hover */
+.dropdown {
+	.trigger {
+
+	}
+	.menu {
+
+	}
+}
+/**
+ * Element that will toggle a sibling element with class of .dropdown-menu
+ */
+.dropdown-toggle {
+	/* Change display of dropdown menu to block upon hover of its trigger */
+	&:hover ~ .dropdown-menu {
 		display: block;
 	}
 }
 
-
-.dropdown-toggle {
-	/* Change display of dropdown menu to block upon hover of its trigger */
-	&:hover ~ .dropdown-menu {
+/**
+ * Drop-down menu
+ */
+.dropdown-menu {
+	/* Hide dropdown menus by default */
+	display: none;
+	&:hover {
+		/* Change display of dropdown menu to block upon hover */
 		display: block;
 	}
 }
