@@ -2,7 +2,7 @@ node_modules
 build/components
 build/styles/**
 build/scripts/**
-config/auth.js
+config/oauth.js
 dump.rdb
 .sass-cache
 .DS_Store
