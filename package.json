@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "test": "PATH=./node_modules/.bin:$PATH; mocha",
+    "test": "PATH=./node_modules/.bin:$PATH; mocha --reporter spec tests",
     "postinstall": "./node_modules/bower/bin/bower install; "
   },
   "dependencies": {
@@ -21,7 +21,6 @@
     "redis": "~0.10.1",
     "passport-twitter": "~1.0.2",
     "passport-http": "~0.2.2",
-    "express-jwt": "~0.2.0",
     "bower": "*",
     "gulp": "~3.6.2",
     "gulp-less": "~1.2.1",
@@ -36,7 +35,6 @@
     "jshint-stylish": "~0.1.5",
     "gulp-rename": "~1.1.0",
     "gulp-jade": "~0.4.2",
-    "gulp-minify-css": "~0.3.1",
-    "gulp-qunit": "~0.2.2"
+    "gulp-minify-css": "~0.3.1"
   }
 }

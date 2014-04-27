@@ -11,7 +11,6 @@ var changed = require('gulp-changed');
 var concat = require('gulp-concat');
 var nodemon = require('gulp-nodemon');
 var rename = require('gulp-rename');
-var qunit = require('gulp-qunit');
 
 var sources = {
     js: './client/scripts/**/*.js',
@@ -76,11 +75,6 @@ var startServer = function() {
     });
 };
 
-var test = function() {
-    gulp.src('./test/SpecRunner.html')
-        .pipe(qunit());
-};
-
 // Define Tasks
 gulp.task('scripts', clientScripts);
 gulp.task('jade', jadeBuild);
@@ -88,5 +82,4 @@ gulp.task('lint-backend', serverHint);
 gulp.task('less', lessBuild);
 gulp.task('watch', watchFiles);
 gulp.task('startServer', startServer);
-gulp.task('test', test);
 gulp.task('default', ['lint-backend', 'watch', 'scripts', 'less', 'jade', 'startServer']);
