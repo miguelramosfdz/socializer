@@ -1,22 +1,25 @@
-(function() {
+exports = module.exports = (function() {
 	'use strict';
 
 	var LocalStrategy = require('passport-local').Strategy;
 	var FacebookStrategy = require('passport-facebook').Strategy;
 	var TwitterStrategy = require('passport-twitter').Strategy;
 	var User = require('../app/model/User');
-	var OAuth = require('./oauth');
+	var Config = require('./config');
 
-	exports.csrf = function(req) {
+	return {
+
+	}
+	csrf:  function(req) {
 		return (req.body && req.body._csrf) || (req.query && req.query._csrf) || (req.headers['x-csrf-token']) || (req.headers['x-xsrf-token']);
-	};
+	},
 
-	exports.csrfFormToken = function(req, res, next) {
+	csrfFormToken: function(req, res, next) {
 		res.locals.csrfFormToken = req.csrfToken();
 		next();
-	};
+	},
 
-	exports.csrfCookieToken = function ( req, res, next ) {
+	csrfCookieToken = function ( req, res, next ) {
 		res.cookie( "XSRF-TOKEN", req.csrfToken() );
 		next();
 	};
@@ -63,9 +66,9 @@
 
 		// For 'Sign up with Facebook'
 		passport.use(new FacebookStrategy({
-			clientID        : OAuth.Facebook.appId,
-			clientSecret    : OAuth.Facebook.appSecret,
-			callbackURL     : OAuth.Facebook.callbackURL
+			clientID: OAuth.Facebook.appId,
+			clientSecret: OAuth.Facebook.appSecret,
+			callbackURL: OAuth.Facebook.callbackURL
 		},
 		function(token, refreshToken, profile, done) {
 			process.nextTick(function() {

@@ -1,5 +1,7 @@
 
 exports.setup = function(mongoose) {
+	'use strict';
+
 	mongoose.connect('mongodb://localhost/boiler', function(err) {
 		if (err) {
 			console.log(err);
@@ -8,4 +10,5 @@ exports.setup = function(mongoose) {
 			console.log('Connected to MongoDB');
 		}
 	});
+	
 };
