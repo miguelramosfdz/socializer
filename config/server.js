@@ -9,7 +9,6 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var engines = require('consolidate');
 var flash = require('connect-flash');
-var liveReload = require('connect-livereload');
 
 // App module dependencies
 var db = require('./db');
