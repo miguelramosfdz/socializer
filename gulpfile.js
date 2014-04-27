@@ -14,88 +14,77 @@ var rename = require('gulp-rename');
 var qunit = require('gulp-qunit');
 
 var sources = {
-	js: 'app/assets/js/**/*.js',
-	less: {
-		main: 'app/assets/less/boiler/boiler.less',
-		pages: 'app/assets/less/pages/pages.less',
-		all: 'app/assets/less/**/*.less'
-	},
-	jade: './app/views/**/*.jade',
-	backend: [ 'app/controller', 'app/model', 'config/**/*.js' ],
-	build: ['build/scripts/*.js', 'build/styles/*.css', 'build/views/**/*.html']
+    js: 'app/assets/js/**/*.js',
+    less: {
+        main: 'app/assets/less/main.less',
+        pages: 'app/assets/less/pages/pages.less',
+        all: 'app/assets/less/**/*.less'
+    },
+    jade: './app/views/**/*.jade',
+    backend: [ 'app/controller', 'app/model', 'config/**/*.js' ],
+    build: ['build/scripts/*.js', 'build/styles/*.css', 'build/views/**/*.html']
 };
 
-// Modules required for LiveReload
-var livereloadServer = require('tiny-lr')();
-var livereload = require('gulp-livereload');
-
-// TODO Implement these gulp helpers
-// var autoprefixer = require('gulp-autoprefixer'),
-// var imagemin = require('gulp-imagemin'),
-// var clean = require('gulp-clean'),
-
-// Concat
-gulp.task('scripts', function() {
-		gulp.src([sources.js])
-			.pipe(jshint())
-			.pipe(jshint.reporter(stylish))
-			.pipe(concat('all.js'))
-			.pipe(gulp.dest('build/scripts'))
-			.pipe(rename('all.min.js'))
-			.pipe(uglify())
-			.pipe(gulp.dest('build/scripts'));
-});
+// jshint, concat, and minify client side javascript
+var clientScripts = function() {
+    gulp.src([sources.js])
+        .pipe(jshint())
+        .pipe(jshint.reporter(stylish))
+        .pipe(concat('all.js'))
+        .pipe(gulp.dest('build/scripts'))
+        .pipe(rename('all.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('build/scripts'));
+};
 
 // Compile Jade file to HTML
-gulp.task('jade', function() {
-	gulp.src([sources.jade])
-		.pipe(jade({ pretty: true }))
-		.pipe(gulp.dest("./build/views"))
-});
+var jadeBuild = function() {
+    gulp.src([sources.jade])
+        .pipe(jade({ pretty: true }))
+        .pipe(gulp.dest("./build/views"))
+};
 
-// Lint server-side files
-gulp.task('lint-backend', function() {
-	gulp.src(sources.backend)
-		.pipe(jshint())
-		.pipe(jshint.reporter(stylish))
-		.pipe(uglify())
-});
+// jshing server side javascript
+var serverHint = function() {
+    gulp.src(sources.backend)
+        .pipe(jshint())
+        .pipe(jshint.reporter(stylish))
+        .pipe(uglify())
+};
 
 // Build CSS from Less files
-gulp.task('less', function() {
-	gulp.src([sources.less.main, sources.less.pages])
-		.pipe(less())
-		.pipe(minifycss())
-		.pipe(gulp.dest('build/styles'))
-		.pipe(livereload(livereloadServer));
-});
-
-// gulp.task('livereload', restartBrowser);
+var lessBuild = function() {
+    gulp.src([sources.less.main, sources.less.pages])
+        .pipe(less())
+        .pipe(minifycss())
+        .pipe(gulp.dest('build/styles'));
+};
 
 // Watch for file changes
-gulp.task('watch', function() {
-	gulp.watch(sources.less.all, [ 'less' ]);
-	gulp.watch(sources.js, [ 'scripts' ]);
-	gulp.watch(sources.backend, ['lint-backend']);
-	// gulp.watch(sources.build, restartBrowser);
-});
+var watchFiles = function() {
+    gulp.watch(sources.less.all, [ 'less' ]);
+    gulp.watch(sources.js, [ 'scripts' ]);
+    gulp.watch(sources.backend, ['lint-backend']);
+};
 
 // Start Express server with nodemon
-gulp.task('startServer', function() {
-	nodemon({
-		script: 'config/server.js'
-	});
-});
+var startServer = function() {
+    nodemon({
+        script: 'config/server.js'
+    });
+};
 
-gulp.task('test', function() {
-	return gulp.src('./test/SpecRunner.html')
-		.pipe(qunit());
-});
+var test = function() {
+    gulp.src('./test/SpecRunner.html')
+        .pipe(qunit());
+};
 
-// Default task for running all necessary tasks
+// Define Tasks
+gulp.task('scripts', clientScripts);
+gulp.task('jade', jadeBuild);
+gulp.task('lint-backend', serverHint);
+gulp.task('less', lessBuild);
+gulp.task('watch', watchFiles);
+gulp.task('startServer', startServer);
+gulp.task('test', test);
 gulp.task('default', ['lint-backend', 'watch', 'scripts', 'less', 'jade', 'startServer']);
-
-// gulp.task('clean', function() {
-//   gulp.src('build')
-//     .pipe(clean());
-// });
