@@ -4,7 +4,6 @@
 var path = require('path');
 var http = require('http');
 var express = require('express');
-var expressJwt = require('express-jwt');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var engines = require('consolidate');
@@ -13,6 +12,7 @@ var flash = require('connect-flash');
 // App module dependencies
 var db = require('./db');
 var routes = require('./routes');
+var config = require('./config');
 var authentication = require('./authentication');
 
 // Require Redis & declare store and client
@@ -25,14 +25,13 @@ var server = express();
 
 // Configure server for all environments
 server.configure(function() {
-	server.set('port', process.env.PORT || 3000)
+	server.set('port', process.env.PORT || 8000)
 		.set('views', path.join(__dirname, '../app/views'))
 		.set('view engine', 'jade')
 		.engine('jade', engines.jade)
 		.use(express.favicon())
 		.use(express.logger('dev'))
 		.use(express.query())
-		// .use('/api', expressJwt({ secret: "ilikebigbuttsandicannotlie" }))
 		.use(express.urlencoded())
 		.use(express.json())
 		.set('jsonp callback', true)
@@ -42,7 +41,7 @@ server.configure(function() {
 		// Define session store
 		.use(express.session({
 			store: new redisStore({ client: redisClient }),
-			secret: "ilikebigbuttsandicannotlie"
+			secret: process.env.BOILER_SECRET
 		}))
 
 		// Use passport session

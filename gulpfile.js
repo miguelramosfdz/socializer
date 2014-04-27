@@ -14,15 +14,14 @@ var rename = require('gulp-rename');
 var qunit = require('gulp-qunit');
 
 var sources = {
-    js: 'app/assets/js/**/*.js',
+    js: './client/scripts/**/*.js',
     less: {
-        main: 'app/assets/less/main.less',
-        pages: 'app/assets/less/pages/pages.less',
-        all: 'app/assets/less/**/*.less'
+        main: './client/styles/main.less',
+        all: './client/styles/**/*.less'
     },
     jade: './app/views/**/*.jade',
-    backend: [ 'app/controller', 'app/model', 'config/**/*.js' ],
-    build: ['build/scripts/*.js', 'build/styles/*.css', 'build/views/**/*.html']
+    backend: [ './app/controller', './app/model', './config/**/*.js' ],
+    build: ['./build/scripts/*.js', './build/styles/*.css', './build/views/**/*.html']
 };
 
 // jshint, concat, and minify client side javascript
@@ -30,9 +29,9 @@ var clientScripts = function() {
     gulp.src([sources.js])
         .pipe(jshint())
         .pipe(jshint.reporter(stylish))
-        .pipe(concat('all.js'))
+        .pipe(concat('boiler.js'))
         .pipe(gulp.dest('build/scripts'))
-        .pipe(rename('all.min.js'))
+        .pipe(rename('boiler.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('build/scripts'));
 };
@@ -54,9 +53,12 @@ var serverHint = function() {
 
 // Build CSS from Less files
 var lessBuild = function() {
-    gulp.src([sources.less.main, sources.less.pages])
+    gulp.src([sources.less.main])
         .pipe(less())
+        .pipe(concat('boiler.css'))
+        .pipe(gulp.dest('build/styles'))
         .pipe(minifycss())
+        .pipe(rename('boiler.min.css'))
         .pipe(gulp.dest('build/styles'));
 };
 
@@ -70,7 +72,7 @@ var watchFiles = function() {
 // Start Express server with nodemon
 var startServer = function() {
     nodemon({
-        script: 'config/server.js'
+        script: 'server/main.js'
     });
 };
 

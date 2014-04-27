@@ -4,7 +4,7 @@ exports = module.exports = (function() {
 	var LocalStrategy = require('passport-local').Strategy;
 	var FacebookStrategy = require('passport-facebook').Strategy;
 	var TwitterStrategy = require('passport-twitter').Strategy;
-	var User = require('../app/model/User');
+	var User = require('../app/models/User');
 	var Config = require('./config');
 
 	return {

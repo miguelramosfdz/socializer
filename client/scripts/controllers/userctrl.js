@@ -1,4 +1,4 @@
-app
+angular.module('Boiler')
 	.controller('SignUpCtrl', function($scope, $location, $http, UserFactory) {
 			$scope.user = {
 				email: null,

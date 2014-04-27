@@ -18,5 +18,6 @@ exports = module.exports = (function() {
 			test: 'mongodb://localhost/backpack-test',
 			prod: 'mongodb://localhost/backpack-prod'
 		}
-	}
+	};
+	
 })();
