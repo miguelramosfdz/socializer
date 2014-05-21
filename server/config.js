@@ -14,10 +14,10 @@ exports = module.exports = (function() {
 			}
 		},
 		db: {
-			dev: 'mongodb://localhost/boiler-dev',
-			test: 'mongodb://localhost/backpack-test',
-			prod: 'mongodb://localhost/backpack-prod'
+			dev: 'mongodb://localhost/hogar-dev',
+			test: 'mongodb://localhost/hogar-test',
+			prod: 'mongodb://localhost/hogar-prod'
 		}
 	};
-	
+
 })();

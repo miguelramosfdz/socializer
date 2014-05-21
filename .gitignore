@@ -1,6 +1,3 @@
 .idea
 node_modules
-build/components
-build/styles/**
-build/scripts/**
-build/view/**
+build
