@@ -11,10 +11,5 @@ header.navbar-container
                     a(href='/signup') Sign Up
 
             else
-                .dropdown-toggle.user(role="button")
-                    .photo
-                        img(src='http://graph.facebook.com/'+user.username+'/picture')
-                    .name
-                        a(href='/profile')= user.username
-                .user-menu.dropdown-menu(role="menu")
-                    a(href="/logout",target="_self") Log Out
+                .navbar-item
+                    a(href='/profile')= user.username
