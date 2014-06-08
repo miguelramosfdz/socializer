@@ -1,10 +1,10 @@
 {
-  "name": "Boiler",
-  "version": "0.0.0",
+  "name": "Hogar",
+  "version": "0.0.1",
   "authors": [
     "CJ Ponti <cjponti@gmail.com>"
   ],
-  "description": "A full-stack web application boilerplate utilizing Bad Ass Rockstar Tech.",
+  "description": "A full-stack web application boilerplate.",
   "main": "config/server.js",
   "keywords": [
     "node",
@@ -20,14 +20,9 @@
     "tests"
   ],
   "dependencies": {
-    "modernizr": "~2.7.1",
-    "normalize.css": "~3.0.0",
-    "jquery": "~2.1.0",
     "font-awesome": "~4.0.3",
-    "prefixfree": "*",
     "angular": "*",
     "angular-route": "*",
-    "angular-resource": "*",
-    "boiler-css": "~0.0.8"
+    "angular-resource": "*"
   }
 }

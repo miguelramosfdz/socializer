@@ -1,8 +1,10 @@
 {
-  "name": "Boiler",
+  "name": "hogar",
   "version": "0.0.1",
   "private": true,
+  "description": "A full-stack web application boilerplate.",
   "scripts": {
+    "start": "node server/main.js",
     "test": "PATH=./node_modules/.bin:$PATH; mocha --reporter spec tests",
     "postinstall": "./node_modules/bower/bin/bower install; "
   },
@@ -10,22 +12,17 @@
     "express": "~3.4.8",
     "jade": "~1.3.1",
     "mocha": "~1.18.2",
-    "forever": "~0.11.1",
     "consolidate": "~0.10.0",
     "mongoose": "~3.8.8",
     "passport": "~0.2.0",
     "passport-local": "~0.1.6",
-    "passport-facebook": "~1.0.2",
     "connect-flash": "~0.1.1",
     "connect-redis": "~1.4.7",
     "redis": "~0.10.1",
-    "passport-twitter": "~1.0.2",
     "passport-http": "~0.2.2",
     "bower": "*",
     "gulp": "~3.6.2",
     "gulp-less": "~1.2.1",
-    "gulp-changed": "~0.2.1",
-    "gulp-cached": "0.0.1",
     "gulp-uglify": "~0.2.1",
     "gulp-util": "~2.2.14",
     "gulp-notify": "~1.0.0-beta",
@@ -33,8 +30,9 @@
     "gulp-nodemon": "~1.0.0",
     "gulp-jshint": "~1.5.5",
     "jshint-stylish": "~0.1.5",
-    "gulp-rename": "~1.1.0",
-    "gulp-jade": "~0.4.2",
-    "gulp-minify-css": "~0.3.1"
+    "gulp-rename": "~1.1.0"
+  },
+  "devDependencies": {
+    "gulp-watch": "^0.6.5"
   }
 }
