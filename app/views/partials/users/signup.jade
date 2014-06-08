@@ -1,10 +1,12 @@
 .signup(ng-controller="SignUpCtrl")
-	.boiler-form
-		.cf
-			input(type="text", placeholder="email", ng-model="user.email")
-		.cf
-			input(type="password", placeholder="password", ng-model="user.password")
-		.cf
-			input(type="password", placeholder="password confirmation", ng-model="user.passwordConfirmation")
-		.cf
-			button.go(ng-click="signUp()") Sign Up
+    .boiler-form
+        .cf
+            input(type="text", placeholder="username", ng-model="user.username")
+        .cf
+            input(type="text", placeholder="email", ng-model="user.email")
+        .cf
+            input(type="password", placeholder="password", ng-model="user.password")
+        .cf
+            input(type="password", placeholder="password confirmation", ng-model="user.passwordConfirmation")
+        .cf
+            button.go(ng-click="signUp()") Sign Up

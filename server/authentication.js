@@ -5,7 +5,7 @@ exports = module.exports = (function() {
   var User = require('../app/models/User');
 
   return {
-    csrf:  function(req) {
+    csrf: function(req) {
       return (req.body && req.body._csrf) || (req.query && req.query._csrf) ||
         (req.headers['x-csrf-token']) || (req.headers['x-xsrf-token']);
     },
@@ -16,7 +16,7 @@ exports = module.exports = (function() {
     },
 
     csrfCookieToken: function ( req, res, next ) {
-      res.cookie( "XSRF-TOKEN", req.csrfToken() );
+      res.cookie("XSRF-TOKEN", req.csrfToken());
       next();
     },
 
@@ -31,7 +31,7 @@ exports = module.exports = (function() {
       }
     },
 
-  setup: function(passport) {
+    setup: function(passport) {
       // used to serialize user
       passport.serializeUser(function(user, done) {
         done(null, user.id);
@@ -50,28 +50,27 @@ exports = module.exports = (function() {
           passReqToCallback : true
         },
         function(req, email, password, done) {
-          User.findOne({ 'local.email' :  email }, function(err, user) {
+          User.findOne({ email: req.body.email }, function(err, user) {
             if (err)
               return done(err);
 
-            if (user) {
+            if (user)
               return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-            } else {
 
-              var newUser = new User();
-              newUser.local.email = email;
-              newUser.local.password = newUser.generateHash(password);
+            if (req.body.password != req.body.passwordConfirmation)
+              return done(null, false, req.flash('signupMessage', 'Password do not match.'));
 
-              newUser.save(function(err) {
-                if (err)
-                  throw err;
-                return done(null, newUser);
-              });
-            }
-
+            var newUser = new User();
+            newUser.username = req.body.username;
+            newUser.email = req.body.email;
+            newUser.set('password', req.body.password);
+            newUser.save(function(err) {
+              if (err) throw err;
+              return done(null, newUser);
+            });
           });
-
-        }));
+        })
+      );
 
       passport.use('local-login', new LocalStrategy({
           usernameField : 'email',
@@ -79,8 +78,7 @@ exports = module.exports = (function() {
           passReqToCallback : true
         },
         function(req, email, password, done) {
-
-          User.findOne({ 'local.email' :  email }, function(err, user) {
+          User.findOne({ email:  email }, function(err, user) {
             if (err)
               return done(err);
 
@@ -92,8 +90,8 @@ exports = module.exports = (function() {
 
             return done(null, user);
           });
-
-        }));
+        })
+      );
 		}
 	};
 

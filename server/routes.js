@@ -20,11 +20,19 @@ exports.setup = function(app, passport) {
     res.send(req.isAuthenticated() ? { user: req.user } : { message: 'No user signed in' });
   });
 
-  /* Routes for log-in and sign-up */
-  app.post('/login', passport.authenticate('local-login'));
-  app.post('/signup', passport.authenticate('local-singup'));
+  /* Route for log-in */
+  app.post('/login', passport.authenticate('local-login', { failureRedirect: '/' }),
+    function(req, res) {
+      res.redirect('/profile');
+    });
 
-  // Route for logout
+  /* Route for sign-up */
+  app.post('/signup', passport.authenticate('local-signup', { failureRedirect: '/' }),
+    function(req, res) {
+      res.redirect('/profile');
+    });
+
+  /* Route for log-out */
   app.get('/logout', function(req, res) {
     req.logout();
     res.redirect('/');
