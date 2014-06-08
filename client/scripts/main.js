@@ -1,35 +1,37 @@
-(function() {
-    'use strict';
-    
-    angular.module('Boiler', [ 'ngRoute' ])
-        .config(function($routeProvider, $locationProvider) {
+'use strict';
 
-                var partial = function(type, page) {
-                    return 'partials/'+type+'/'+page;
-                };
+angular.module('hogar', [ 'ngRoute' ]);
 
-                $routeProvider.
-                    when('/signup', {
-                        templateUrl: partial('users', 'signup'),
-                        controller: 'SignUpCtrl'
-                    }).
-                    when('/about', {
-                        templateUrl: partial('static', 'about')
-                    }).
-                    when('/profile', {
-                        templateUrl: partial('users', 'profile'),
-                        controller: 'ProfileCtrl'
-                    }).
-                    otherwise({
-                        redirectTo: '/'
-                    });
+angular.module('hogar').config(function($routeProvider, $locationProvider) {
 
-                $locationProvider.html5Mode(true);
-        });
+  var partial = function(type, page) {
+      return 'partials/'+type+'/'+page;
+  };
 
-    // Redirect to rid url of '#_=_' added by Facebook auth redirect
-    if (window.location.hash && window.location.hash == '#_=_') {
-        window.location.hash = '';
-    }
+  $routeProvider.
+    when('/signup', {
+        templateUrl: partial('users', 'signup'),
+        controller: 'SignUpCtrl'
+    }).
+    when('/login', {
+      templateUrl: partial('users', 'login'),
+      controller: 'LogInCtrl'
+    }).
+    when('/about', {
+        templateUrl: partial('static', 'about')
+    }).
+    when('/profile', {
+        templateUrl: partial('users', 'profile'),
+        controller: 'ProfileCtrl'
+    }).
+    otherwise({
+        redirectTo: '/'
+    });
 
-})();
+  $locationProvider.html5Mode(true);
+});
+
+// Redirect to rid url of '#_=_' added by Facebook auth redirect
+if (window.location.hash && window.location.hash == '#_=_') {
+  window.location.hash = '';
+}
