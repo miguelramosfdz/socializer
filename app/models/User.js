@@ -83,7 +83,8 @@ UserSchema.pre('save', function(next) {
  * Methods
  */
 UserSchema.methods = {
-	/**
+
+  /**
 	 * Authenticate - check if the passwords are the same
 	 *
 	 * @param {String} plainText
@@ -111,11 +112,12 @@ UserSchema.methods = {
 	 * @return {String}
 	 * @api public
 	 */
-	encryptPassword: function(password) {
+  encryptPassword: function(password) {
 		if (!password || !this.salt) return '';
 		var salt = new Buffer(this.salt, 'base64');
 		return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');
 	}
+
 };
 
 module.exports = mongoose.model('User', UserSchema);
