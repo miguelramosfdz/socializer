@@ -1,20 +1,21 @@
 header.navbar-container
-	ul.navbar(ng-controller="NavCtrl")
-		li.navbar-item.brand
-			a(href="/") Boiler.io
+    ul.navbar(ng-controller="NavCtrl")
+        li.navbar-item.brand
+            a(href="/") Hogar
 
-		li.navbar-dropdown.right
-			if !user
-				.login.dropdown-toggle(role="button")
-					a Log In
-				.login-buttons.dropdown-menu(role="menu")
-					include _social
+        li.navbar-dropdown.right
+            if !user
+                .navbar-item
+                    a(href='/login') Log In
+                .navbar-item
+                    a(href='/signup') Sign Up
 
-			else
-				.dropdown-toggle.user(role="button")
-					.photo
-						img(src='http://graph.facebook.com/'+user.username+'/picture')
-					.name
-						a(href='/profile')= user.facebook.first_name
-				.user-menu.dropdown-menu(role="menu")
-					a(href="/logout",target="_self") Log Out
+
+            else
+                .dropdown-toggle.user(role="button")
+                    .photo
+                        img(src='http://graph.facebook.com/'+user.username+'/picture')
+                    .name
+                        a(href='/profile')= user.facebook.first_name
+                .user-menu.dropdown-menu(role="menu")
+                    a(href="/logout",target="_self") Log Out
