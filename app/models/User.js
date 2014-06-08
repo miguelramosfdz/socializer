@@ -14,8 +14,8 @@ var crypto = require('crypto');
 var UserSchema = new Schema({
   email: { type: String, unique: true, required: true },
   username: { type: String, unique: true, required: true },
-  hashed_password: { type: String, unique: true, required: true },
-  salt: { type: String, unique: true, required: true }
+  hashed_password: { type: String, required: true },
+  salt: { type: String, required: true }
 });
 
 /**

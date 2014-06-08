@@ -23,19 +23,19 @@ exports.setup = function(app, passport) {
   /* Route for log-in */
   app.post('/login', passport.authenticate('local-login', { failureRedirect: '/' }),
     function(req, res) {
-      res.redirect('/profile');
+      res.render('index', { user: req.user });
     });
 
   /* Route for sign-up */
   app.post('/signup', passport.authenticate('local-signup', { failureRedirect: '/' }),
     function(req, res) {
-      res.redirect('/profile');
+      res.render('index', { user: req.user });
     });
 
   /* Route for log-out */
-  app.get('/logout', function(req, res) {
+  app.post('/logout', function(req, res) {
     req.logout();
-    res.redirect('/');
+    res.render('index', { user: req.user });
   });
 
   // Catch-all Route

@@ -1,4 +1,4 @@
-angular.module('hogar').factory('UserFactory', function($http) {
+angular.module('hogar').factory('UserFactory', function($http, $route) {
 
   var _this = this;
 
@@ -9,32 +9,20 @@ angular.module('hogar').factory('UserFactory', function($http) {
     user: _this.user,
 
     authenticate: function() {
-      var result;
-
       $http({ method: 'GET', url: '/api/user' })
         .success(function(data,status, headers, config) {
           _this.user = result;
         })
-        .error(function(data,status, headers, config) {
-          debugger;
-        });
+    },
 
-      return result;
+    logIn: function(user) {
+      $http({ method: 'POST', url:'/login', data: user })
     },
 
     signUp: function(user) {
-      var result;
-
       $http({ method: 'POST', url:'/signup', data: user })
-        .success(function(data, status, headers, config) {
-          debugger;
-        })
-        .error(function(data, status, headers, config) {
-          debugger;
-        });
-
-      return result;
     }
+
   };
 
 });

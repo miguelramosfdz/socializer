@@ -13,6 +13,10 @@ angular.module('hogar').config(function($routeProvider, $locationProvider) {
         templateUrl: partial('users', 'signup'),
         controller: 'SignUpCtrl'
     }).
+    when('/login', {
+      templateUrl: partial('users', 'login'),
+      controller: 'LogInCtrl'
+    }).
     when('/about', {
         templateUrl: partial('static', 'about')
     }).

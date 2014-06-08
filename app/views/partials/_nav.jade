@@ -13,3 +13,7 @@ header.navbar-container
             else
                 .navbar-item
                     a(href='/profile')= user.username
+                .navbar-item
+                    form(method='POST',action='/logout')
+                        input(type='hidden',name='_csrf',value=csrfFormToken)
+                        button Log Out
