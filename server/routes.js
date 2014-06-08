@@ -40,7 +40,7 @@ exports.setup = function(app, passport) {
 
   // Catch-all Route
   app.get('*', function(req, res){
-    res.render('index');
+    res.render('index', { user: req.user });
   });
 
 };
