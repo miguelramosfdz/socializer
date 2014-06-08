@@ -1,5 +1,4 @@
 var gulp = require('gulp');
-var jade = require("gulp-jade");
 var less = require('gulp-less');
 var minifycss = require('gulp-minify-css');
 var jshint = require('gulp-jshint');
@@ -35,13 +34,6 @@ var clientScripts = function() {
         .pipe(gulp.dest('build/scripts'));
 };
 
-// Compile Jade file to HTML
-var jadeBuild = function() {
-    gulp.src([sources.jade])
-        .pipe(jade({ pretty: true }))
-        .pipe(gulp.dest("./build/views"))
-};
-
 // jshing server side javascript
 var serverHint = function() {
     gulp.src(sources.backend)
@@ -69,7 +61,7 @@ var watchFiles = function() {
 };
 
 // Start Express server with nodemon
-var startServer = function() {
+var serverTask = function() {
     nodemon({
         script: 'server/main.js'
     });
@@ -77,9 +69,9 @@ var startServer = function() {
 
 // Define Tasks
 gulp.task('scripts', clientScripts);
-gulp.task('jade', jadeBuild);
 gulp.task('lint-backend', serverHint);
 gulp.task('less', lessBuild);
 gulp.task('watch', watchFiles);
-gulp.task('startServer', startServer);
-gulp.task('default', ['lint-backend', 'watch', 'scripts', 'less', 'jade', 'startServer']);
+gulp.task('server', serverTask);
+gulp.task('build', [ 'less', 'scripts' ]);
+gulp.task('default', ['lint-backend', 'watch', 'build', 'server']);
