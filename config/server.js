@@ -25,28 +25,11 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.set("showStackError", true);
 
-/** Add CSRF support */
-app.use(express.cookieParser());
-app.use(express.session({ secret: 'boiler' }));
-
-/** Cross-Site Request Forgery */
-// app.use( express.csrf() );
-// app.use(function ( req, res, next ) {
-// 	 res.cookie( "XSRF-TOKEN", req.csrfToken() );
-// 	 next();
-// });
-
 /** Declare public folder */
 app.use(express.static(__dirname + "/../public"));
 
-/** CORS */
-app.use(function (req, res, next) {
-	res.header("Access-Control-Allow-Origin","*");
-	res.header("Access-Control-Allow-Methods","POST, GET, PUT, DELETE, OPTIONS");
-	res.header("Access-Control-Allow-Credentials", "true");
-	res.header("Access-Control-Allow-Headers", "Content-Type, Accept, Origin, Cookie");
-	next();
-});
+// Show error stack
+app.use(express.errorHandler({showStack: true}));
 
 app.options("*", function (req, res) {
 	res.send("");
@@ -54,14 +37,6 @@ app.options("*", function (req, res) {
 
 /** Enable JSONP */
 app.set("jsonp callback", true);
-
-
-/**
- *	Enable HTML5 mode for Angular routes to work without needing #
- */
-// app.use(function(req, res) {
-//   return res.redirect(req.protocol + "://" + req.get("Host") + "/#" + req.url)
-// });
 
 app.use(app.router);
 
