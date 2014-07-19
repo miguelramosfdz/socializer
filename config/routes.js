@@ -2,11 +2,6 @@ exports.setup = function (server) {
 
   var twitter = require('../app/controllers/twitter');
 
-  // Serve home page
-  server.get('/', function ( req, res, next ) {
-    res.render('index');
-  });
-
   // Serve templates
   server.get('/templates/:type/:name', function ( req, res, next ) {
     res.render('templates/' + req.params.type + '/' + req.params.name);
@@ -20,6 +15,11 @@ exports.setup = function (server) {
     res.render('static/error');
   });
 
+  // Serve home page
+  server.get('*', function ( req, res, next ) {
+    res.render('index');
+  });
+  
   // Set responce for OPTIONS call
   server.options("*", function (req, res) {
     res.send("");
