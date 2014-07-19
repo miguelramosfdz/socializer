@@ -6,7 +6,7 @@
   var express = require("express");
   var mongoose = require("mongoose");
   var socketIO = require("socket.io");
-  
+
   // Application dependencies
   var db = require("./db");
   var routes = require("./routes");
@@ -32,12 +32,7 @@
 
   // Show error stack
   app.use(express.errorHandler({showStack: true}));
-
-  // Set responce for OPTIONS call
-  app.options("*", function (req, res) {
-    res.send("");
-  });
-
+  
   /** Enable JSONP */
   app.set("jsonp callback", true);
 
