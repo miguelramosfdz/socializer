@@ -1,4 +1,4 @@
-exports.setup = function ( server ) {
+exports.setup = function (server) {
 
   var twitter = require('../app/controllers/twitter');
 
@@ -12,6 +12,7 @@ exports.setup = function ( server ) {
     res.render('templates/' + req.params.type + '/' + req.params.name);
   });
 
+  // Search Twitter
   server.post('/twitter/search', twitter.search);
 
   // Serve error page
@@ -19,4 +20,9 @@ exports.setup = function ( server ) {
     res.render('static/error');
   });
 
-}
+  // Set responce for OPTIONS call
+  server.options("*", function (req, res) {
+    res.send("");
+  });
+
+};
