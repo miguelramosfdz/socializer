@@ -1,8 +1,16 @@
-var app = require('../config/server');
-
 describe('Server', function () {
+  
+  var app;
 
-  it('should be listening on port 3000', function(done) {
+  beforeEach(function() {
+    app = require('../config/server');  
+  });
+
+  afterEach(function() {
+    app = null;
+  });
+
+  it('should be listening on port 3000', function() {
     expect(app.port).toEqual(3000);
   });
 
