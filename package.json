@@ -6,9 +6,9 @@
     "start": "node config/server.js"
   },
   "dependencies": {
-    "express": "3.4.0",
+    "express": "*",
     "jade": "*",
-    "twit": "~1.1.11"
+    "twit": "*"
   },
   "devDependencies": {
     "mocha": "*",
