@@ -2,13 +2,14 @@
 
   "use strict";
 
-  var twitter = require('twit');
+  var Twitter = require('twit');
+  var tokens = require('../../config/tokens');
 
-  var twitterClient = new twitter({
-    consumer_key: tokens.twitter.consumerKey,
-    consumer_secret: tokens.twitter.consumerSecret,
-    access_token: tokens.twitter.accessToken,
-    access_token_secret: tokens.twitter.accessSecret
+  var twitterClient = new Twitter({
+    consumer_key: tokens.Twitter.consumerKey,
+    consumer_secret: tokens.Twitter.consumerSecret,
+    access_token: tokens.Twitter.accessToken,
+    access_token_secret: tokens.Twitter.accessSecret
   });
 
   module.exports = {
