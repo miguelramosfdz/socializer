@@ -1,14 +1,17 @@
 {
-  "name": "Statly",
+  "name": "node-twitter",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node config/server.js"
   },
   "dependencies": {
-    "express": "*",
+    "express": "4.x",
     "jade": "*",
-    "twit": "*"
+    "twit": "*",
+    "body-parser": "*",
+    "morgan": "*",
+    "method-override": "*"
   },
   "devDependencies": {
     "mocha": "*",
