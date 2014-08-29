@@ -11,7 +11,7 @@ html.no-js(ng-app="Statly")
   head
     include _head
 
-  body(ng-controller="MainCtrl")
+  body
     //if lt IE 7
       p.browsehappy
         | You are using an <strong>outdated</strong> browser.
@@ -19,6 +19,6 @@ html.no-js(ng-app="Statly")
         | to improve your experience.
     include _navbar
 
-    .content(ng-view)
+    .container
 
     include _foot
