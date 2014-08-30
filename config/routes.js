@@ -8,6 +8,10 @@ exports.setup = function (server) {
   });
 
   // Search Twitter
+  server.get('/twitter/search', function(req, res, next) {
+    res.render('templates/twitter', { layout: 'index' });
+  });
+
   server.post('/twitter/search', twitter.search);
 
   // Serve error page
