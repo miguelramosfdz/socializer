@@ -1,0 +1,19 @@
+.twitter.hero
+
+	form#twitter-search
+		.field
+			input(type='text', placeholder=" Search for...", data-model="query")
+		.field
+			input(type='text', placeholder=" Where...", data-model="address")
+		.field
+			input(type='text', id='radius', placeholder=" Mile Radius...", ng-model="radius")
+		.field
+			button.btn.btn-green Search
+
+	.tweets
+		.tweet(ng-repeat="tweet in tweets")
+			.tweet-user-image
+				img(src='{{tweet.user.profile_image_url}}')
+			.tweet-data
+				.tweet-user {{ tweet.user.name }}
+				.tweet-text {{ tweet.text }}
