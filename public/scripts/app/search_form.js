@@ -1,5 +1,7 @@
 define(['jquery', 'backbone'], function($, Backbone) {
 
+  var $scope = {};
+  
   $scope.template = [
     "<div class='tweet'>",
        "<div class='tweet-user-image' >",
@@ -12,6 +14,11 @@ define(['jquery', 'backbone'], function($, Backbone) {
     "</div>"
   ].join('');
   
+  $("#twitter-search").submit(function(e) {
+    e.preventDefault();
+
+  });
+
   $( "#radius" ).keyup(function() {
     $(this).val($scope.radius + ' miles');
   });
