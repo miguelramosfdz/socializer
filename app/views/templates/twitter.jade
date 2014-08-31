@@ -5,11 +5,11 @@ block content
 
 		form#twitter-search
 			.field
-				input(type='text', placeholder=" Search for...", data-model="query")
+				input(type='text', placeholder=" Search for...", name="query")
 			.field
-				input(type='text', placeholder=" Where...", data-model="address")
+				input(type='text', placeholder=" Where...", name="location")
 			.field
-				input(type='text', id='radius', placeholder=" Mile Radius...", ng-model="radius")
+				input(type='text', placeholder=" Mile Radius...", name="radius")
 			.field
 				button.btn.btn-green Search
 
