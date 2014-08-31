@@ -1,8 +1,12 @@
+/**
+ * Configure RequireJS
+ */
 requirejs.config({
     
     baseUrl: '/../scripts',
     
     paths: {
+        api: '/scripts/app/api_service',
         jquery: '/libs/jquery/dist/jquery.min',
         underscore: '/libs/underscore/underscore-min',
         bootstrap: '/libs/bootstrap/dist/js/bootstrap.min',
@@ -11,12 +15,13 @@ requirejs.config({
 
 });
 
-// Start loading the main app file. Put all of
-// your application logic in there.
+/**
+ * Load application
+ */
 requirejs([
     'app/main',
     'app/search_form',
     'app/twitter'
-  ], function() {
-
+], function() {
+    console.log('App loaded.');
 });
