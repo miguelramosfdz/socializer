@@ -9,7 +9,7 @@ doctype
 html.no-js(ng-app="Statly")
   //<![endif]
   head
-    include _head
+    include partials/_head
 
   body
     //if lt IE 7
@@ -17,9 +17,9 @@ html.no-js(ng-app="Statly")
         | You are using an <strong>outdated</strong> browser.
         | Please <a href="http://browsehappy.com/">upgrade your browser</a>
         | to improve your experience.
-    include _navbar
+    include partials/_navbar
 
     .container
       block content
 
-    include _foot
+    include partials/_foot
