@@ -1,24 +1,4 @@
-doctype
-//if lt IE 7
-  <html class="no-js lt-ie9 lt-ie8 lt-ie7">
-//if IE 7
-  <html class="no-js lt-ie9 lt-ie8">
-//if IE 8
-  <html class="no-js lt-ie9">
-//[if gt IE 8]><!
-html.no-js(ng-app="Statly")
-  //<![endif]
-  head
-    include _head
+extends layout
 
-  body
-    //if lt IE 7
-      p.browsehappy
-        | You are using an <strong>outdated</strong> browser.
-        | Please <a href="http://browsehappy.com/">upgrade your browser</a>
-        | to improve your experience.
-    include _navbar
-
-    .container
-
-    include _foot
+block content
+  h1 Meow
