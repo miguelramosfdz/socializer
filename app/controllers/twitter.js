@@ -14,7 +14,11 @@
 
   module.exports = {
 
-  	search: function(req,res,next) {
+    getSearch: function(req, res, next) {
+      res.render('templates/twitter', { layout: 'index' });
+    },
+
+  	postSearch: function(req,res,next) {
   		twitterClient.get('search/tweets', {
   			q: req.body.query,
   			geocode: req.body.geo,
