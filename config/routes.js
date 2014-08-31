@@ -1,32 +1,22 @@
 exports.setup = function (server) {
 
-  var twitter = require('../app/controllers/twitter');
+  var TwitterController = require('../app/controllers/twitter');
+  var MainController = require('../app/controllers/main_controller');
 
   // Serve templates
-  server.get('/templates/:type/:name', function ( req, res, next ) {
-    res.render('templates/' + req.params.type + '/' + req.params.name);
-  });
+  server.get('/templates/:type/:name', MainController.serveTemplates);
 
-  // Search Twitter
-  server.get('/twitter/search', function(req, res, next) {
-    res.render('templates/twitter', { layout: 'index' });
-  });
-
-  server.post('/twitter/search', twitter.search);
+  
+  server.get('/twitter/search', TwitterController.getSearch);
+  server.post('/twitter/search', TwitterController.postSearch);
 
   // Serve error page
-  server.get('/error', function ( req, res, next ) {
-    res.render('static/error');
-  });
+  server.get('/error', MainController.error);
 
   // Serve home page
-  server.get('*', function ( req, res, next ) {
-    res.render('index');
-  });
+  server.get('*', MainController.root);
   
   // Set responce for OPTIONS call
-  server.options("*", function (req, res) {
-    res.send("");
-  });
+  server.options("*", MainController.options);
 
 };
