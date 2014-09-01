@@ -21,6 +21,11 @@ module.exports = (function() {
    */
   var oauth_token = Foursquare.clientId;
 
+  var getAutorization = function(req, res) {
+    res.writeHead(303, { location: Foursquare.getAuthClientRedirectUrl() });
+    res.end();
+  };
+  
   return {
     
     getCallback: function(req, res, next) {
@@ -38,10 +43,7 @@ module.exports = (function() {
       });
     },
     
-    authorize: function(req, res) {
-      res.writeHead(303, { location: Foursquare.getAuthClientRedirectUrl() });
-      res.end();
-    },
+    authorize: getAutorization,
 
     getSearch: function(req, res, next) {
       if (tokens.Foursquare.oauth_token) {
@@ -69,8 +71,7 @@ module.exports = (function() {
             }
           });  
       } else {
-        res.writeHead(303, { location: Foursquare.getAuthClientRedirectUrl() });
-        res.end();
+        getAutorization(req, res, next);
       }
     }
   };
