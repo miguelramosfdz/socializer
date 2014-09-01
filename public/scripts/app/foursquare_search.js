@@ -1,15 +1,29 @@
 define(['jquery','backbone', 'api'], function($, Backbone, API) {
 
-  var $scope = {};
-  $scope.template = _.template([
-    "<li class='list-group-item'>",
-      "<div class='row'>",
-        "<div class='col-md-offset-3 col-md-6'>",
-          "<%= venue.name %> in <%= venue.location.city %>, <%= venue.location.country %>",
+  var $scope = {
+    
+    template: _.template([
+      "<li class='list-group-item'>",
+        "<div class='row'>",
+          "<div class='col-md-offset-3 col-md-6'>",
+            "<%= venue.name %> in <%= venue.location.city %>, <%= venue.location.country %>",
+          "</div>",
         "</div>",
-      "</div>",
-    "</li>"
-  ].join(''));
+      "</li>"
+    ].join('')),
+    
+    map: document.getElementById("checkins-map"),
+
+    mapOptions: {
+      center: new google.maps.LatLng(-34.397, 150.644),
+      zoom: 8
+    },
+
+    initializeMap: function() {
+      new google.maps.Map($scope.map, $scope.mapOptions);
+    }
+
+  };
 
   $('#foursquare-search').submit(function(e) {
     /**
