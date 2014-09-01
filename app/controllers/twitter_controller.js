@@ -14,7 +14,7 @@ module.exports = (function() {
   return {
 
     getSearch: function(req, res, next) {
-      res.render('twitter/search', { layout: 'index' });
+      res.render('twitter/search', { layout: true });
     },
 
   	postSearch: function(req,res,next) {
