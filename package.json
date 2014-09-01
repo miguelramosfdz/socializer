@@ -10,6 +10,7 @@
     "express": "4.x",
     "jade": "*",
     "method-override": "*",
+    "mongoose": "^3.8.15",
     "morgan": "*",
     "node-foursquare": "^0.2.1",
     "restler": "^3.2.2",
