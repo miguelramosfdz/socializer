@@ -1,9 +1,9 @@
 module.exports = (function() {
 
   var REST = require('restler');
-  var tokens = require('../../config/tokens');
+  var secrets = require('../../config/secrets');
   var node_foursquare = require('node-foursquare');
-  var Foursquare = node_foursquare({ secrets: tokens.Foursquare });
+  var Foursquare = node_foursquare({ secrets: secrets.Foursquare });
 
   /**
    * Base Foursquare API URI
@@ -11,21 +11,15 @@ module.exports = (function() {
    */
   var base_uri = 'https://api.foursquare.com/v2/';
 
-  var getOauth = function() {
-    return '&oauth_token='+tokens.Foursquare.oauth_token+'&v=20140714';
+  var getOauth = function(req) {
+    return '&oauth_token='+req.user.oauth_token+'&v=20140714';
   };
-
-  /**
-   * Oauth param
-   * @type {String}
-   */
-  var oauth_token = Foursquare.clientId;
 
   var getAutorization = function(req, res) {
     res.writeHead(303, { location: Foursquare.getAuthClientRedirectUrl() });
     res.end();
   };
-  
+
   return {
     
     getCallback: function(req, res, next) {
@@ -36,7 +30,6 @@ module.exports = (function() {
           res.send('An error was thrown: ' + error.message);
         }
         else {
-          tokens.Foursquare.oauth_token = accessToken;
           res.redirect('/foursquare/search');
           res.end();
         }
@@ -46,10 +39,10 @@ module.exports = (function() {
     authorize: getAutorization,
 
     getSearch: function(req, res, next) {
-      if (tokens.Foursquare.oauth_token) {
+      if (req.user && req.user.Foursquare.oauth_token) {
         res.render('foursquare/search', { layout: true });
       } else {
-        res.redirect('/auth/foursquare');
+        res.redirect('/');
         res.end();
       }
     },
