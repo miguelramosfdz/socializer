@@ -2,17 +2,19 @@ define(['jquery', 'backbone', 'api'], function($, Backbone, API) {
 
   var $scope = this;
 
-  $scope.template = [
-    "<div class='tweet'>",
-       "<div class='tweet-user-image' >",
-         "<img src='{{tweet.user.profile_image_url}}' />",
-        "<div class='tweet-data'>",
-          "<div class='tweet-user'>{{ tweet.user.name }}</div>",
-          "<div class='tweet-text'> {{ tweet.text }}</div>",
+  $scope.template = _.template([
+    "<li class='list-group-item'>",
+      "<div class='row'>",
+        "<div class='col-md-3'>",
+          "<img src='<%= user.profile_image_url %>' />",
+        "</div>",
+        "<div class='col-md-3'>",
+          "<div class='tweet-user'><h5><%= user.screen_name %></h5></div>",
+          "<div class='tweet-text'><%= text %></div>",
         "</div>",
       "</div>",
-    "</div>"
-  ].join('');
+    "</li>"
+  ].join(''));
 
   $("#twitter-search").submit(function(e) {
     /**
@@ -34,13 +36,13 @@ define(['jquery', 'backbone', 'api'], function($, Backbone, API) {
      * Make API call through service
      */
     API.searchTwitter(requestParams, function(data) {
-      
+      var statuses = data.tweets.statuses.map(function(tweet) {
+        return $scope.template(tweet);
+      });
+
+      $('#tweets').append(statuses.join(''));
     });
 
-  });
-
-  $( "#radius" ).keyup(function() {
-    $(this).val($scope.radius + ' miles');
   });
   
 });
