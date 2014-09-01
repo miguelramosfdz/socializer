@@ -1,8 +1,8 @@
 {
-  "name": "BOILER",
+  "name": "Socializer",
   "version": "0.0.1",
-  "description": "The MEANest stack of them all",
-  "main": "start.js",
+  "description": "A social network searcher",
+  "main": "config/server.js",
   "authors": [
     "cjponti"
   ],
