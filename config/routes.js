@@ -1,8 +1,8 @@
 exports.setup = function (server) {
   "use strict";
-
-  var TwitterController = require('../app/controllers/twitter');
+  
   var MainController = require('../app/controllers/main_controller');
+  var TwitterController = require('../app/controllers/twitter_controller');
   var FoursquareController = require('../app/controllers/foursquare_controller');
   
   // Serve templates
