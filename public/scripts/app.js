@@ -21,7 +21,8 @@ requirejs.config({
 requirejs([
     'app/main',
     'app/search_form',
-    'app/twitter'
+    'app/twitter',
+    'app/foursquare_search'
 ], function() {
     console.log('App loaded.');
 });

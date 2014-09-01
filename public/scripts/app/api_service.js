@@ -10,7 +10,6 @@ define(['jquery'], function($) {
      *        @param {String} options.location
      *        @param {String} options.radius
      * @param {Function} callback
-     * @return {[type]} [description]
      */
     searchTwitter: function(options, callback) {
       $.post('/twitter/search', {
@@ -18,6 +17,15 @@ define(['jquery'], function($) {
           location: options.location,
           radius: options.radius
         }, callback);
+    },
+
+    /**
+     * Search Foursquare
+     * @param  {Object}   options
+     * @param  {Function} callback
+     */
+    searchFoursquare: function(options, callback) {
+      $.post('/foursquare/search/user', options, callback);
     }
   };
 

@@ -11,7 +11,7 @@ module.exports = (function() {
     Foursquare: {
       clientId: process.env.FOURSQUARE_ID,
       clientSecret: process.env.FOURSQUARE_SECRET,
-      redirectURI: process.env.FOURSQUARE_REDIRECT
+      redirectUrl: process.env.FOURSQUARE_REDIRECT
     }
   };
 
