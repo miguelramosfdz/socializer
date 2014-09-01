@@ -8,7 +8,7 @@ define(['jquery', 'backbone', 'api'], function($, Backbone, API) {
         "<div class='col-md-3'>",
           "<img src='<%= user.profile_image_url %>' />",
         "</div>",
-        "<div class='col-md-3'>",
+        "<div class='col-md-9'>",
           "<div class='tweet-user'><h5><%= user.screen_name %></h5></div>",
           "<div class='tweet-text'><%= text %></div>",
         "</div>",
