@@ -1,63 +1,110 @@
-(function() {
-  "use strict";
+/**
+ * Module dependencies.
+ */
 
-  // Module dependencies
-  var http = require("http");
-  var morgan  = require('morgan');
-  var express = require("express");
-  var bodyParser = require("body-parser");
-  var methodOverride = require('method-override');
+var express = require('express');
+var cookieParser = require('cookie-parser');
+var compress = require('compression');
+var session = require('express-session');
+var bodyParser = require('body-parser');
+var logger = require('morgan');
+var errorHandler = require('errorhandler');
+var csrf = require('lusca').csrf();
+var methodOverride = require('method-override');
 
-  // Application dependencies
-  var routes = require("./routes");
-  
-  /** Declare app */
-  var app = express();
+var _ = require('lodash');
+var MongoStore = require('connect-mongo')({ session: session });
+var path = require('path');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var expressValidator = require('express-validator');
 
-  /** Declare port for app */
-  app.set("port", 3000);
+var routes = require('./routes');
 
-  /** Declare views engine & folder */
-  app.set("view engine", "jade");
-  app.set("views", __dirname + "/../app/views");
+/**
+ * API keys and Passport configuration.
+ */
+var secrets = require('./secrets');
+var passportConf = require('passport');
 
-  /** Logging */
-  app.use(morgan('combined'));
+/**
+ * Create Express server.
+ */
+var app = express();
 
-  // parse application/x-www-form-urlencoded
-  app.use(bodyParser.urlencoded({ extended: false }));
 
-  // parse application/json
-  app.use(bodyParser.json());
+var hour = 3600000;
+var day = hour * 24;
+var week = day * 7;
 
-  // parse application/vnd.api+json as json
-  app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
+/**
+ * CSRF whitelist.
+ */
 
-  // override with the X-HTTP-Method-Override header in the request
-  app.use(methodOverride('X-HTTP-Method-Override'));
+var csrfExclude = ['/url1', '/url2'];
 
-  app.set("showStackError", true);
+/**
+ * Express configuration.
+ */
 
-  /** Declare public folder */
-  app.use(express.static(__dirname + "/../public"));
-  
-  /** Enable JSONP */
-  app.set("jsonp callback", true);
+app.set('port', process.env.PORT || 3000);
+app.set('views', path.join(__dirname, '../app/views'));
+app.set('view engine', 'jade');
+app.use(compress());
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(expressValidator());
+app.use(methodOverride());
+app.use(cookieParser());
+app.use(session({
+  resave: true,
+  saveUninitialized: true,
+  secret: secrets.sessionSecret,
+  store: new MongoStore({
+    url: secrets.db,
+    auto_reconnect: true
+  })
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(function(req, res, next) {
+  // CSRF protection.
+  if (_.contains(csrfExclude, req.path)) return next();
+  csrf(req, res, next);
+});
+app.use(function(req, res, next) {
+  // Make user object available in templates.
+  res.locals.user = req.user;
+  next();
+});
+app.use(function(req, res, next) {
+  // Remember original destination before login.
+  var path = req.path.split('/')[1];
+  if (/auth|login|logout|signup|fonts|favicon/i.test(path)) {
+    return next();
+  }
+  req.session.returnTo = req.path;
+  next();
+});
+app.use(express.static(path.join(__dirname, '../public'), { maxAge: week }));
 
-  app.use(express.Router());
+/**
+ * Setup routes
+ */
+routes.setup(app);
 
-  /** Setup routes */
-  routes.setup(app);
+/**
+ * 500 Error Handler.
+ */
 
-  /** Declare server */
-  var server = http.createServer(app);
+app.use(errorHandler());
 
-  /** Start app */
-  server.listen(app.get("port"), function() {
-    console.log("Express app listening on port " + app.get("port"));
-  });    
+/**
+ * Start Express server.
+ */
+app.listen(app.get('port'), function() {
+  console.log('Express server listening on port %d in %s mode', app.get('port'), app.get('env'));
+});
 
-  
-  module.exports = app;
-
-})();
+module.exports = app;
