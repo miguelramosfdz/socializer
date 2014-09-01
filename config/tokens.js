@@ -7,6 +7,11 @@ module.exports = (function() {
       apiSecret: process.env.TWITTER_API_SECRET,
       accessToken: process.env.TWITTER_ACCESS_TOKEN,
       accessSecret: process.env.TWITTER_ACCESS_SECRET 
+    },
+    Foursquare: {
+      clientId: process.env.FOURSQUARE_ID,
+      clientSecret: process.env.FOURSQUARE_SECRET,
+      redirectURI: process.env.FOURSQUARE_REDIRECT
     }
   };
 
