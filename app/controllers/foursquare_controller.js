@@ -32,7 +32,8 @@ module.exports = (function() {
         }
         else {
           tokens.Foursquare.oauth_token = accessToken;
-          
+          res.redirect('/foursquare/search');
+          res.end();
         }
       });
     },

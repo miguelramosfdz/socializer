@@ -12,7 +12,9 @@ define(['jquery','backbone', 'api'], function($, Backbone, API) {
       "</li>"
     ].join('')),
     
-    map: document.getElementById("checkins-map"),
+    map: null,
+
+    mapEl: document.getElementById("checkins-map"),
 
     mapOptions: {
       center: new google.maps.LatLng(-34.397, 150.644),
@@ -20,7 +22,7 @@ define(['jquery','backbone', 'api'], function($, Backbone, API) {
     },
 
     initializeMap: function() {
-      new google.maps.Map($scope.map, $scope.mapOptions);
+      $scope.map = new google.maps.Map($scope.mapEl, $scope.mapOptions);
     }
 
   };
@@ -32,15 +34,27 @@ define(['jquery','backbone', 'api'], function($, Backbone, API) {
     e.preventDefault();
 
     /**
+     * Initialize map
+     */
+    $scope.initializeMap();
+
+    /**
      * Search Foursquare for user's checkins
      */
     API.searchFoursquare({ email: this.username.value }, function(data) {
-      var checkins = data.response.checkins.items.map(function(checkin) {
-        var location = checkin.venue.location;
-        return $scope.template(checkin);
-      }).join('');
+      $('#checkins').html('');
 
-      $('#checkins').append(checkins);
+      data.response.checkins.items.forEach(function(checkin) {
+        var location = checkin.venue.location;
+        var latLng = new google.maps.LatLng(location.lat, location.lng);
+        var marker = new google.maps.Marker({
+            position: latLng,
+            title: checkin.venue.name
+        });
+        marker.setMap($scope.map);
+        $scope.map.setCenter(marker.getPosition());
+        $('#checkins').append($scope.template(checkin));
+      });
     });
   });
 
