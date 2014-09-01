@@ -6,12 +6,14 @@
     "start": "node config/server.js"
   },
   "dependencies": {
+    "body-parser": "*",
     "express": "4.x",
     "jade": "*",
-    "twit": "*",
-    "body-parser": "*",
+    "method-override": "*",
     "morgan": "*",
-    "method-override": "*"
+    "node-foursquare": "^0.2.1",
+    "restler": "^3.2.2",
+    "twit": "*"
   },
   "devDependencies": {
     "mocha": "*",
