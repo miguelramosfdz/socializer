@@ -1,25 +1,24 @@
-(function() {
-
+module.exports = (function() {
   "use strict";
 
-  var Twitter = require('twit');
+  var Twit = require('twit');
   var tokens = require('../../config/tokens');
 
-  var twitterClient = new Twitter({
-    consumer_key: tokens.Twitter.consumerKey,
-    consumer_secret: tokens.Twitter.consumerSecret,
+  var Twitter = new Twit({
+    consumer_key: tokens.Twitter.apiKey,
+    consumer_secret: tokens.Twitter.apiSecret,
     access_token: tokens.Twitter.accessToken,
     access_token_secret: tokens.Twitter.accessSecret
   });
 
-  module.exports = {
+  return {
 
     getSearch: function(req, res, next) {
       res.render('templates/twitter', { layout: 'index' });
     },
 
   	postSearch: function(req,res,next) {
-  		twitterClient.get('search/tweets', {
+  		Twitter.get('search/tweets', {
   			q: req.body.query,
   			geocode: req.body.geo,
   			count: 50
