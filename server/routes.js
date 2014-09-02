@@ -3,6 +3,8 @@
 exports.setup = function(app, passport) {
   "use strict";
 
+  var UserController = require('../app/controllers/user_controller');
+
   // Route for serving templates
   app.get('/partials/:type/:file', function(req, res) {
     res.render('partials/'+req.params.type+'/'+req.params.file);
@@ -27,6 +29,7 @@ exports.setup = function(app, passport) {
     });
 
   /* Route for sign-up */
+  app.get('/signup', UserController.getSignUp);
   app.post('/signup', passport.authenticate('local-signup', { failureRedirect: '/' }),
     function(req, res) {
       res.render('index', { user: req.user });
