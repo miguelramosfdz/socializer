@@ -2,18 +2,18 @@
  * Module dependencies.
  */
 var _ = require('lodash');
-var hedgehog = require('../.hedgehog.js');
 var path = require('path');
+var lusca = require('lusca');
+var logger = require('morgan');
 var express = require('express');
 var mongoose = require('mongoose');
 var passport = require('passport');
-var cookieParser = require('cookie-parser');
+var flash = require('connect-flash');
 var compress = require('compression');
-var session = require('express-session');
 var bodyParser = require('body-parser');
-var logger = require('morgan');
+var session = require('express-session');
 var errorHandler = require('errorhandler');
-var csrf = require('lusca').csrf();
+var cookieParser = require('cookie-parser');
 var methodOverride = require('method-override');
 var expressValidator = require('express-validator');
 var MongoStore = require('connect-mongo')({ session: session });
@@ -21,13 +21,10 @@ var MongoStore = require('connect-mongo')({ session: session });
 /**
  * Application dependencies
  */
+var db = require('./db');
 var routes = require('./routes');
-
-/**
- * API keys and Passport configuration.
- */
+var auth = require('./authentication');
 var Hedgehog = require('../.hedgehog.js');
-var passportConf = require('passport');
 
 /**
  * Create Express server.
@@ -39,10 +36,9 @@ var day = hour * 24;
 var week = day * 7;
 
 /**
- * CSRF whitelist.
+ * Set up authentication
  */
-
-var csrfExclude = ['/url1', '/url2'];
+auth.setup(passport);
 
 /**
  * Express configuration.
@@ -71,18 +67,39 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 /**
- * Enable CSRF protection
+ * Enable Lusca security
  */
-app.use(function(req, res, next) {
-  if (_.contains(csrfExclude, req.path)) return next();
-  csrf(req, res, next);
+app.use(lusca({
+    csrf: true,
+    csp: { /* ... */},
+    xframe: 'SAMEORIGIN',
+    p3p: 'ABCDEF',
+    hsts: {maxAge: 31536000, includeSubDomains: true},
+    xssProtection: true
+}));
+
+app.use(lusca.csrf());
+app.use(lusca.csp({ /* ... */}));
+app.use(lusca.xframe('SAMEORIGIN'));
+app.use(lusca.p3p('ABCDEF'));
+app.use(lusca.hsts({ maxAge: 31536000 }));
+app.use(lusca.xssProtection(true));
+
+/**
+ * Enable flash messages
+ */
+app.use(flash());
+app.use(function(req, res, next){
+    res.locals.success_messages = req.flash('success_messages');
+    res.locals.error_messages = req.flash('error_messages');
+    next();
 });
 
 /**
  * Add current_user(req.user) to response locals
  */
 app.use(function(req, res, next) {
-  res.locals.app_name = hedgehog.appName;
+  res.locals.app_name = Hedgehog.appName;
   res.locals.current_user = req.user;
   next();
 });
@@ -110,6 +127,11 @@ routes.setup(app, passport);
  * 500 Error Handler.
  */
 app.use(errorHandler());
+
+/**
+ * Setup database
+ */
+db.setup();
 
 /**
  * Start Express server.
