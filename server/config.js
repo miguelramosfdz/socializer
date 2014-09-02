@@ -14,10 +14,10 @@ exports = module.exports = (function() {
 			}
 		},
 		db: {
-			dev: 'mongodb://localhost/hogar-dev',
-			test: 'mongodb://localhost/hogar-test',
-			prod: 'mongodb://localhost/hogar-prod',
-			sessionStore: 'mongodb://localhost/hogar-session'
+			dev: 'mongodb://localhost/hedgehog-dev',
+			test: 'mongodb://localhost/hedgehog-test',
+			prod: 'mongodb://localhost/hedgehog-prod',
+			sessionStore: 'mongodb://localhost/hedgehog-session'
 		},
 		sessionSecret: process.env.SESSION_SECRET
 	};
