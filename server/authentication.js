@@ -17,6 +17,21 @@ exports = module.exports = (function() {
       }
     },
 
+    // route middleware to make sure a user is logged in
+    isLoggedIn: function(req, res, next) {
+      // if user is authenticated in the session, carry on
+      if (req.isAuthenticated()) return next();
+      res.redirect('/login');
+    },
+
+    isNotLoggedIn: function(req, res, next) {
+      if (req.isAuthenticated()) {
+        res.redirect('/');
+      } else {
+        next();
+      }
+    },
+
     setup: function(passport) {
       // used to serialize user
       passport.serializeUser(function(user, done) {
@@ -59,12 +74,12 @@ exports = module.exports = (function() {
       );
 
       passport.use('local-login', new LocalStrategy({
-          usernameField : 'username',
+          usernameField : 'email',
           passwordField : 'password',
           passReqToCallback : true
         },
-        function(req, username, password, done) {
-          User.findOne({ username:  username }, function(err, user) {
+        function(req, email, password, done) {
+          User.findOne({ email:  email }, function(err, user) {
             if (err)
               return done(err);
 

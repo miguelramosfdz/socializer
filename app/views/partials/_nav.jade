@@ -15,6 +15,10 @@ nav.navbar.navbar-default(role="navigation")
         - if (current_user)
           li
             a(href='/account') Account
+          li
+            a(href='/logout') Logout
         - else
-          li.navbar-right
+          li
+            a(href='/login') Log In
+          li
             a(href='/signup') Sign Up
