@@ -48,7 +48,7 @@ var csrfExclude = ['/url1', '/url2'];
  * Express configuration.
  */
 app.set('port', process.env.PORT || Hedgehog.port || 3000);
-app.use(express.static(path.join(__dirname, '../build'), { maxAge: week }));
+app.use(express.static(path.join(__dirname, '../public'), { maxAge: week }));
 app.set('views', path.join(__dirname, '../app/views'));
 app.set('view engine', 'jade');
 app.use(compress());
