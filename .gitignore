@@ -1,3 +1,5 @@
-.idea
+.DS_Store
 node_modules
-build
+public/libs
+public/scripts
+public/styles

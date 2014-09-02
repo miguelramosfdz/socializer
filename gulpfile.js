@@ -15,7 +15,7 @@ var sources = {
     all: './app/assets/styles/**/*.less',
     build: 'main.css',
     minified: 'main.min.css',
-    buildDirectory: 'build/styles'
+    buildDirectory: 'public/styles'
   },
   backend: [
     './app/controller/**/*.js',
@@ -23,9 +23,9 @@ var sources = {
     './config/**/*.js'
   ],
   build: [
-    './build/scripts/*.js',
-    './build/styles/*.css',
-    './build/views/**/*.html'
+    './public/scripts/*.js',
+    './public/styles/*.css',
+    './public/views/**/*.html'
   ]
 };
 
@@ -34,10 +34,10 @@ var clientScripts = function() {
     gulp.src([sources.js])
         .pipe(jsHint())
         .pipe(jsHint.reporter(stylish))
-        .pipe(gulp.dest('build/scripts'))
+        .pipe(gulp.dest('public/scripts'))
         .pipe(rename('main.min.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('build/scripts'));
+        .pipe(gulp.dest('public/scripts'));
 };
 
 
@@ -67,7 +67,7 @@ var watchTask = function() {
 var serverTask = function() {
   nodeMonitor({
     script: 'server/main.js',
-    ignore: ['./node_modules', './build'],
+    ignore: ['./node_modules', './public'],
     nodeArgs: ['--debug']
   });
 };
