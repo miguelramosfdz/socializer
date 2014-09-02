@@ -17,6 +17,14 @@ exports.setup = function(app, passport) {
     res.redirect('/login');
   };
 
+  var isNotLoggedIn = function(req, res, next) {
+    if (req.isAuthenticated()) {
+      res.redirect('/');
+    } else {
+      next();
+    }
+  };
+  
   /* Route for getting current user */
   app.get('/api/user', function(req, res) {
     res.send(req.isAuthenticated() ? { user: req.user } : { message: 'No user signed in' });
@@ -29,16 +37,7 @@ exports.setup = function(app, passport) {
     });
 
   /* Route for sign-up */
-  app.get('/signup', 
-    function(req, res, next) {
-      if (req.isAuthenticated()) {
-        res.redirect('/');
-      } else {
-        next();
-      }
-    },
-    UserController.getSignUp
-  );
+  app.get('/signup', isNotLoggedIn, UserController.getSignUp);
   app.post('/signup', passport.authenticate('local-signup', { failureRedirect: '/' }),
     function(req, res) {
       res.render('home', { user: req.user });
