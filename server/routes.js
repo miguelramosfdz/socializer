@@ -9,7 +9,7 @@ exports.setup = function(app, passport) {
   });
 
   // route middleware to make sure a user is logged in
-  this.isLoggedIn = function(req, res, next) {
+  var isLoggedIn = function(req, res, next) {
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated()) return next();
     res.send(401);
@@ -40,7 +40,7 @@ exports.setup = function(app, passport) {
 
   // Catch-all Route
   app.get('*', function(req, res){
-    res.render('index', { user: req.user });
+    res.render('home', { user: req.user });
   });
 
 };
