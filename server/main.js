@@ -8,7 +8,7 @@ var logger = require('morgan');
 var express = require('express');
 var mongoose = require('mongoose');
 var passport = require('passport');
-var flash = require('connect-flash');
+var flash = require('express-flash');
 var compress = require('compression');
 var bodyParser = require('body-parser');
 var session = require('express-session');
@@ -90,8 +90,8 @@ app.use(lusca.xssProtection(true));
  */
 app.use(flash());
 app.use(function(req, res, next){
-    res.locals.success_messages = req.flash('success_messages');
-    res.locals.error_messages = req.flash('error_messages');
+    res.locals.success_message = {};
+    res.locals.error_message = {};
     next();
 });
 

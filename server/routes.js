@@ -16,6 +16,10 @@ exports.setup = function(app, passport) {
     res.send(req.isAuthenticated() ? { user: req.user } : { message: 'No user signed in' });
   });
 
+  app.get('/account', Authenticate.isLoggedIn, UserController.getAccount);
+
+  app.post('/reset-password', Authenticate.isLoggedIn, UserController.resetPassword);
+
   /* Route for log-in */
   app.get('/login', Authenticate.isNotLoggedIn, UserController.getLogIn);
   app.post('/login', passport.authenticate('local-login', { failureRedirect: '/' }),

@@ -1,0 +1,25 @@
+extend ../layout
+
+block content
+  .profile
+    h1 User Profile
+
+    h3 Email: 
+    h3= current_user.email
+
+    .row 
+      h3.text-center Reset Password
+      .col-md-offset-4.col-md-4
+        form(role='form', method='POST', action='/reset-password')
+          input(type='hidden', name='_csrf', value=_csrf)
+          .form-group
+            label(for='current_password') Current Password
+            input.form-control(name='current_password', placeholder=' Current Password')
+          .form-group
+            label(for='password') New Password
+            input.form-control(name='password', placeholder=' New Password')
+          .form-group
+            label(for='password_confirmation') New Password Confirmation
+            input.form-control(name='password_confirmation', placeholder=' New Password Confirmation')
+          .form-group
+            button.btn.btn-default Reset Password
