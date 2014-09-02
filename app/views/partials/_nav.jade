@@ -1,19 +1,20 @@
-header.navbar-container
-    ul.navbar(ng-controller="NavCtrl")
-        li.navbar-item.brand
-            a(href="/") Hogar
-
-        li.navbar-dropdown.right
-            if !user
-                .navbar-item
-                    a(href='/login') Log In
-                .navbar-item
-                    a(href='/signup') Sign Up
-
-            else
-                .navbar-item
-                    a(href='/profile')= user.username
-                .navbar-item
-                    form(method='POST',action='/logout')
-                        input(type='hidden',name='_csrf',value=csrfFormToken)
-                        button Log Out
+nav.navbar.navbar-default(role="navigation")
+  div.container-fluid
+    div.nav-header
+      button.navbar-toggle.collapsed(type="button", data-toggle="collapse", data-target="#bs-example-navbar-collapse-1")
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      a.navbar-brand(href='/') Site Name
+    div.collapse.navbar-collapse#bs-example-navbar-collapse-1
+      ul.nav.navbar-nav
+        li
+          a(href='/about') About
+      ul.nav.navbar-nav.navbar-right
+        - if (current_user)
+          li
+            a(href='/account') Account
+        - else
+          li.navbar-right
+            a(href='/signup') Sign Up
