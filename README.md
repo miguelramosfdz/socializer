@@ -10,7 +10,6 @@ A NodeJS, RequireJS, BackboneJS, MongoDB boilerplate application
 * NodeJS (#obvz)
 * Bower
 
-
 ## Set Up
 
 1. Set Up Environment Variables
@@ -21,3 +20,13 @@ A NodeJS, RequireJS, BackboneJS, MongoDB boilerplate application
   - TWITTER_CONSUMER_KEY
   - TWITTER_CONSUMER_SECRET
   - TWITTER_CALLBACK_URL
+
+2. Run `npm install`
+
+3. Run `bower install`
+
+4. Edit `.hedgehog.js` to your heart's desire
+
+5. Run `gulp`
+
+6. Code!

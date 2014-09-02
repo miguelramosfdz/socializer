@@ -2,6 +2,7 @@
  * Module dependencies.
  */
 var _ = require('lodash');
+var hedgehog = require('../.hedgehog.js');
 var path = require('path');
 var express = require('express');
 var mongoose = require('mongoose');
@@ -81,6 +82,7 @@ app.use(function(req, res, next) {
  * Add current_user(req.user) to response locals
  */
 app.use(function(req, res, next) {
+  res.locals.app_name = hedgehog.appName;
   res.locals.current_user = req.user;
   next();
 });
