@@ -26,7 +26,7 @@ var routes = require('./routes');
 /**
  * API keys and Passport configuration.
  */
-var config = require('./config');
+var Hedgehog = require('../.hedgehog.js');
 var passportConf = require('passport');
 
 /**
@@ -47,7 +47,7 @@ var csrfExclude = ['/url1', '/url2'];
 /**
  * Express configuration.
  */
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || Hedgehog.port || 3000);
 app.use(express.static(path.join(__dirname, '../build'), { maxAge: week }));
 app.set('views', path.join(__dirname, '../app/views'));
 app.set('view engine', 'jade');
@@ -61,9 +61,9 @@ app.use(cookieParser());
 app.use(session({
   resave: true,
   saveUninitialized: true,
-  secret: config.sessionSecret,
+  secret: Hedgehog.sessionSecret,
   store: new MongoStore({
-    url: config.db.sessionStore,
+    url: Hedgehog.db.sessionStore,
     auto_reconnect: true
   })
 }));
