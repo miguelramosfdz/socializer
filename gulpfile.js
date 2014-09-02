@@ -9,12 +9,12 @@ var nodeMonitor = require('gulp-nodemon');
 var rename = require('gulp-rename');
 
 var sources = {
-  js: './client/scripts/**/*.js',
+  js: './app/assets/scripts/**/*.js',
   styles: {
-    main: './client/styles/main.less',
-    all: './client/styles/**/*.less',
-    build: 'hogar.css',
-    minified: 'hogar.min.css',
+    main: './app/assets/styles/main.less',
+    all: './app/assets/styles/**/*.less',
+    build: 'main.css',
+    minified: 'main.min.css',
     buildDirectory: 'build/styles'
   },
   backend: [
@@ -34,19 +34,18 @@ var clientScripts = function() {
     gulp.src([sources.js])
         .pipe(jsHint())
         .pipe(jsHint.reporter(stylish))
-        .pipe(concatinate('hogar.js'))
         .pipe(gulp.dest('build/scripts'))
-        .pipe(rename('hogar.min.js'))
+        .pipe(rename('main.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('build/scripts'));
 };
 
-// jshint server side javascript
+
 var serverScripts = function() {
     gulp.src(sources.backend)
         .pipe(jsHint())
         .pipe(jsHint.reporter(stylish))
-        .pipe(uglify())
+        .pipe(uglify());
 };
 
 // Build CSS from Less files
