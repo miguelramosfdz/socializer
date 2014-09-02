@@ -16,8 +16,10 @@ exports = module.exports = (function() {
 		db: {
 			dev: 'mongodb://localhost/hogar-dev',
 			test: 'mongodb://localhost/hogar-test',
-			prod: 'mongodb://localhost/hogar-prod'
-		}
+			prod: 'mongodb://localhost/hogar-prod',
+			sessionStore: 'mongodb://localhost/hogar-session'
+		},
+		sessionSecret: process.env.SESSION_SECRET
 	};
 
 })();
