@@ -4,8 +4,8 @@ block content
   .row
     h1.text-center Sign Up
     
-    form.col-md-offset-4.col-md-4(role="form")
-      input(type='hidden',name='_csrf',value=csrfFormToken)
+    form.col-md-offset-4.col-md-4(role="form", method='POST')
+      input(type='hidden', name='_csrf', value=_csrf)
       .form-group
         label(for="email")
         input.form-control(type="text", placeholder="Email", name="email")
