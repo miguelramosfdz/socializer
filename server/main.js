@@ -1,89 +1,119 @@
-/*jshint strict:false */
-(function() {
-  "use strict";
+/**
+ * Module dependencies.
+ */
+var _ = require('lodash');
+var path = require('path');
+var express = require('express');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var cookieParser = require('cookie-parser');
+var compress = require('compression');
+var session = require('express-session');
+var bodyParser = require('body-parser');
+var logger = require('morgan');
+var errorHandler = require('errorhandler');
+var csrf = require('lusca').csrf();
+var methodOverride = require('method-override');
+var expressValidator = require('express-validator');
+var MongoStore = require('connect-mongo')({ session: session });
 
-  // NPM module dependencies
-  var path = require('path');
-  var http = require('http');
-  var express = require('express');
-  var mongoose = require('mongoose');
-  var passport = require('passport');
-  var engines = require('consolidate');
-  var flash = require('connect-flash');
-  var config = require('./config');
-  var authentication = require('./authentication');
+/**
+ * Application dependencies
+ */
+var routes = require('./routes');
 
-  // Require Redis & declare store and client
-  var redis = require('redis');
-  var redisStore = require('connect-redis')(express);
-  var redisClient = redis.createClient();
+/**
+ * API keys and Passport configuration.
+ */
+var config = require('./config');
+var passportConf = require('passport');
 
-  // Declare server
-  var server = express();
+/**
+ * Create Express server.
+ */
+var app = express();
 
-  // Configure server for all environments
-  server.configure(function() {
+var hour = 3600000;
+var day = hour * 24;
+var week = day * 7;
 
-    server.set('port', process.env.PORT || 3000)
-      .set('views', path.join(__dirname, '../app/views'))
-      .set('view engine', 'jade')
-      .engine('jade', engines.jade)
-      .use(express.favicon())
-      .use(express.logger('dev'))
-      .use(express.query())
-      .use(express.urlencoded())
-      .use(express.json())
-      .set('jsonp callback', true)
-      .use(express.methodOverride())
-      .use(express.cookieParser())
+/**
+ * CSRF whitelist.
+ */
 
-      // Define session store
-      .use(express.session({
-        store: new redisStore({ client: redisClient }),
-        secret: process.env.BOILER_SECRET
-      }))
+var csrfExclude = ['/url1', '/url2'];
 
-      // Use passport session
-      .use(passport.initialize())
-      .use(passport.session())
+/**
+ * Express configuration.
+ */
+app.set('port', process.env.PORT || 3000);
+app.use(express.static(path.join(__dirname, '../build'), { maxAge: week }));
+app.set('views', path.join(__dirname, '../app/views'));
+app.set('view engine', 'jade');
+app.use(compress());
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(expressValidator());
+app.use(methodOverride());
+app.use(cookieParser());
+app.use(session({
+  resave: true,
+  saveUninitialized: true,
+  secret: config.sessionSecret,
+  store: new MongoStore({
+    url: config.db.sessionStore,
+    auto_reconnect: true
+  })
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
-      // Define CSRF Protection
-      .use(express.csrf({ value: authentication.csrf }) )
-      .use(authentication.csrfCookieToken)
-      .use(authentication.csrfFormToken)
-      .use(authentication.cors)
+/**
+ * Enable CSRF protection
+ */
+app.use(function(req, res, next) {
+  if (_.contains(csrfExclude, req.path)) return next();
+  csrf(req, res, next);
+});
 
-      .use(flash())
-      .use(express.static(path.join(__dirname, '../build')))
+/**
+ * Add current_user(req.user) to response locals
+ */
+app.use(function(req, res, next) {
+  res.locals.current_user = req.user;
+  next();
+});
 
-      // Utilize compress method for specified file types
-      .use(express.compress({
-        filter: function(req, res) {
-          return (/json|text|javascript|css/).test(res.getHeader('Content-Type'));
-        },
-        level: 9
-      }));
+/**
+ * Remember original destination before login.
+ */
+app.use(function(req, res, next) {
+  var path = req.path.split('/')[1];
 
-  });
-
-
-  // Development enviroment configuration
-  if ('development' == server.get('env')) {
-    server.use(express.errorHandler());
+  if (/auth|login|logout|signup|fonts|favicon/i.test(path)) {
+    return next();
   }
 
-  // Setup database
-  require('./db').setup(mongoose);
+  req.session.returnTo = req.path;
+  next();
+});
 
-  // Setup routes
-  require('./routes').setup(server, passport);
+/**
+ * Setup routes
+ */
+routes.setup(app, passport);
 
-  // Set up authentication
-  require('./authentication').setup(passport);
+/**
+ * 500 Error Handler.
+ */
+app.use(errorHandler());
 
-  // Start server
-  server.listen(server.get('port'), function(){
-    console.log('Express server listening on port ' + server.get('port'));
-  });
+/**
+ * Start Express server.
+ */
+app.listen(app.get('port'), function() {
+  console.log('Express server listening on port %d in %s mode', app.get('port'), app.get('env'));
+});
 
-})();
+module.exports = app;
