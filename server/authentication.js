@@ -5,20 +5,6 @@ exports = module.exports = (function() {
   var User = require('../app/models/User');
 
   return {
-    csrf: function(req) {
-      return (req.body && req.body._csrf) || (req.query && req.query._csrf) ||
-        (req.headers['x-csrf-token']) || (req.headers['x-xsrf-token']);
-    },
-
-    csrfFormToken: function(req, res, next) {
-      res.locals.csrfFormToken = req.csrfToken();
-      next();
-    },
-
-    csrfCookieToken: function ( req, res, next ) {
-      res.cookie("XSRF-TOKEN", req.csrfToken());
-      next();
-    },
 
     cors: function(req, res, next) {
       res.header('Access-Control-Allow-Origin', '*');
@@ -57,7 +43,7 @@ exports = module.exports = (function() {
             if (user)
               return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
 
-            if (req.body.password != req.body.passwordConfirmation)
+            if (req.body.password != req.body.password_confirmation)
               return done(null, false, req.flash('signupMessage', 'Password do not match.'));
 
             var newUser = new User();
