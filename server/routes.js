@@ -14,7 +14,7 @@ exports.setup = function(app, passport) {
   var isLoggedIn = function(req, res, next) {
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated()) return next();
-    res.send(401);
+    res.redirect('/login');
   };
 
   /* Route for getting current user */
@@ -25,20 +25,29 @@ exports.setup = function(app, passport) {
   /* Route for log-in */
   app.post('/login', passport.authenticate('local-login', { failureRedirect: '/' }),
     function(req, res) {
-      res.render('index', { user: req.user });
+      res.render('home', { user: req.user });
     });
 
   /* Route for sign-up */
-  app.get('/signup', UserController.getSignUp);
+  app.get('/signup', 
+    function(req, res, next) {
+      if (req.isAuthenticated()) {
+        res.redirect('/');
+      } else {
+        next();
+      }
+    },
+    UserController.getSignUp
+  );
   app.post('/signup', passport.authenticate('local-signup', { failureRedirect: '/' }),
     function(req, res) {
-      res.render('index', { user: req.user });
+      res.render('home', { user: req.user });
     });
 
   /* Route for log-out */
   app.post('/logout', function(req, res) {
     req.logout();
-    res.render('index', { user: req.user });
+    res.render('home', { user: req.user });
   });
 
   // Catch-all Route
