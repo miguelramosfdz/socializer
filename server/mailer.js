@@ -6,7 +6,6 @@ module.exports= (function() {
   /**
    * Create reusable transporter object using SMTP transport
    */
-  console.log(Hedgehog);
 
   var transporter = nodemailer.createTransport({
       service: Hedgehog.mailer.service,
