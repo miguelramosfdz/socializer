@@ -1,3 +1,6 @@
+#!/bin/bash
+set -ev
+
 export SESSION_SECRET='foobar'
 export FACEBOOK_APP_ID='fooApp'
 export FACEBOOK_APP_SECRET='fooAppSecret'
