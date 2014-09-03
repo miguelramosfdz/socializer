@@ -4,5 +4,17 @@ node_js:
   - 0.10
   - 0.11
 
+env:
+  - SESSION_SECRET='foobar'
+  - FACEBOOK_APP_ID='fooApp'
+  - FACEBOOK_APP_SECRET='fooAppSecret'
+  - FACEBOOK_CALLBACK_URL='fooCallbackUrl'
+  - TWITTER_CONSUMER_KEY='fooConsumserKey'
+  - TWITTER_CONSUMER_SECRET='fooConsumserSecret'
+  - TWITTER_CALLBACK_URL='fooCallbackUrl'
+  - MAILER_SERVICE='fooMailService'
+  - MAILER_USERNAME='fooMailUsername'
+  - MAILER_PASSWORD='fooMailPassword'
+  
 notifications:
   email: "cjponti@gmail.com"
