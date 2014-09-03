@@ -6,6 +6,8 @@ module.exports = (function() {
 
     appName: 'Hedgehog',
 
+    sessionSecret: process.env.SESSION_SECRET,
+
     oauth: {
       Facebook: {
         appId: process.env.FACEBOOK_APP_ID,
@@ -26,7 +28,11 @@ module.exports = (function() {
       sessionStore: 'mongodb://localhost/hedgehog-session'
     },
 
-    sessionSecret: process.env.SESSION_SECRET
+    mailer: {
+      service: process.env.MAILER_SERVICE,
+      user: process.env.MAILER_USERNAME,
+      password: process.env.MAILER_PASSWORD
+    }
   
   };
 
