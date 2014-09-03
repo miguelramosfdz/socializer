@@ -6,6 +6,8 @@ module.exports= (function() {
   /**
    * Create reusable transporter object using SMTP transport
    */
+  console.log(Hedgehog);
+
   var transporter = nodemailer.createTransport({
       service: Hedgehog.mailer.service,
       auth: {
@@ -19,22 +21,19 @@ module.exports= (function() {
     /**
      * Send mail with defined transport object
      */
-    sendMail: function() {
+    sendMail: function(email, subject, text) {
      transporter.sendMail({
-          from: 'Fred Foo ✔ <foo@blurdybloop.com>', // sender address
-          to: 'bar@blurdybloop.com, baz@blurdybloop.com', // list of receivers
-          subject: 'Hello ✔', // Subject line
-          text: 'Hello world ✔', // plaintext body
-          html: '<b>Hello world ✔</b>' // html body
+          from: 'cjponti@gmail.com', // sender address
+          to: email, // list of receivers
+          subject: subject, // Subject line
+          text: text, // plaintext body
+          html: html // html body
       }, function(error, info){
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Message sent: ' + info.response);
-        }
-      });   
+        if (error) return console.log(error);
+        console.log('Message sent: ' + info.response);
+      });
     }
 
   };
   
-});
+})();
