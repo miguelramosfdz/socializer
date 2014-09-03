@@ -7,6 +7,25 @@ block content
     h3 Email: 
     h3= current_user.email
 
+    - if (current_user.facebook.token || current_user.twitter.token || current_user.google.token)
+      .row
+        .col-md-8
+          h3 Connected Accounts
+          - if (current_user.facebook.token)
+            h4 Facebook
+            p= current_user.facebook.email
+
+    .row.text-center
+      h3.text-center Connect Accounts
+      - if (!current_user.facebook.token)
+        a.btn.btn-primary(href="/auth/facebook") 
+          span.fa.fa-facebook Facebook
+      - if (!current_user.twitter.token)
+        a.btn.btn-info(href="/auth/twitter") 
+          span.fa.fa-twitter Twitter
+      - if (!current_user.google.token)
+        a.btn.btn-danger(href="/auth/google")
+          span.fa.fa-google-plus Google+
     .row 
       h3.text-center Reset Password
       .col-md-offset-4.col-md-4

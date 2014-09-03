@@ -12,9 +12,37 @@ module.exports = (function() {
    * @type {mongoose.Schema}
    */
   var UserSchema = new mongoose.Schema({
-    email: { type: String, unique: true, required: true },
-    hashed_password: { type: String, required: true },
-    salt: { type: String, required: true }
+    email: { 
+      type: String, 
+      unique: true, 
+      required: true 
+    },
+    hashed_password: { 
+      type: String, 
+      required: true 
+    },
+    salt: { 
+      type: String, 
+      required: true 
+    },
+    facebook: {
+        id: String,
+        token: String,
+        email: String,
+        name: String
+    },
+    twitter: {
+        id: String,
+        token: String,
+        displayName: String,
+        username: String
+    },
+    google: {
+        id: String,
+        token: String,
+        email: String,
+        name: String
+    }
   });
 
   /**
