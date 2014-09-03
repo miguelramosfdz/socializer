@@ -5,7 +5,15 @@ exports = module.exports = (function() {
   var User = require('../app/models/User');
   var Mailer = require('./mailer');
   var UserEmails = require('../app/views/emails/user_emails');
+  var Hedgehog = require('../.hedgehog');
 
+  /**
+   * Passport Strategies
+   */
+  var GoogleStrategy = require('passport-google').Strategy;
+  var TwitterStrategy = require('passport-twitter').Strategy;
+  var FacebookStrategy = require('passport-facebook').Strategy;
+  
   return {
 
     cors: function(req, res, next) {
@@ -97,6 +105,87 @@ exports = module.exports = (function() {
           });
         })
       );
+
+      // Facebook
+      passport.use(new FacebookStrategy({
+          clientID: Hedgehog.oauth.Facebook.appId,
+          clientSecret: Hedgehog.oauth.Facebook.appSecret,
+          callbackURL: Hedgehog.oauth.Facebook.callbackURL,
+          /**
+           * Allows for passing in the req from our route, thus checking
+           * if a user is logged in or not.
+           */
+          passReqToCallback: true 
+        },
+        // facebook will send back the token and profile
+        function(req, token, refreshToken, profile, done) {
+          // asynchronous
+          process.nextTick(function() {
+            // check if the user is already logged in
+            if (!req.user) {
+
+                // find the user in the database based on their facebook id
+                User.findOne({ 'facebook.id' : profile.id }, function(err, user) {
+                    /**
+                     * If there is an error, such as an issue with connecting
+                     * to the database, return it.
+                     */
+                    if (err) return done(err);
+                    /**
+                     * If the user is found, then log them in
+                     */
+                    if (user) { 
+                      /**
+                       * User has been found so return that user.
+                       */
+                      return done(null, user); 
+                    } else {
+                        /**
+                         * If there is no user found with that Facebook id, 
+                         * create a new one.
+                         * @type {User}
+                         */
+                        var newUser = new User();
+
+                        // set all of the facebook information in our user model
+                        newUser.facebook.id = profile.id; // set the users facebook id                   
+                        newUser.facebook.token = token; // we will save the token that facebook provides to the user                    
+                        newUser.facebook.name = profile.name.givenName + ' ' + profile.name.familyName; // look at the passport user profile to see how names are returned
+                        newUser.facebook.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
+
+                        // save our user to the database
+                        newUser.save(function(err) {
+                            if (err)
+                                throw err;
+                            // if successful, return the new user
+                            return done(null, newUser);
+                        });
+                    }
+                });
+            } else {
+              /**
+               * User already exists and is logged in, so we only have to link 
+               * the accounts
+               */
+              var user = req.user; // pull the user out of the session
+
+              /**
+               * Add facebook credentials to user
+               */
+              user.facebook.id    = profile.id;
+              user.facebook.token = token;
+              user.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
+              user.facebook.email = profile.emails[0].value;
+
+              // save the user
+              user.save(function(err) {
+                  if (err)
+                      throw err;
+                  return done(null, user);
+              });
+            }
+          });
+      }));
 		}
 	};
 
