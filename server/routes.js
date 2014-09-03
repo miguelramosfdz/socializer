@@ -2,7 +2,7 @@
 
 exports.setup = function(app, passport) {
   "use strict";
-  
+
   var Authenticate = require('./authentication');
   var UserController = require('../app/controllers/user_controller');
 
