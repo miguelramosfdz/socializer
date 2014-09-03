@@ -1,11 +1,26 @@
+var sinon = require("sinon");
 var assert = require("assert");
-var mailer = require("../server/mailer");
+var Mailer = require("../server/mailer");
+var Hedgehog = require("../.hedgehog");
 
 describe('Mailer', function() {
-  describe('#indexOf()', function(){
-    it('should return -1 when the value is not present', function(){
-      assert.equal(-1, [1,2,3].indexOf(5));
-      assert.equal(-1, [1,2,3].indexOf(0));
+
+  describe('#sendMail', function(){
+    it('should pass sendMail correct params', function() {
+      Hedgehog.mailer.email = 'fooEmail';
+      Mailer.sendMailCallback = 'fooFunction';
+      Mailer.transporter.sendMail = sinon.spy();
+      Mailer.sendMail('foo@foo.com', 'fooSubject', 'fooText', 'fooHTML');
+      Mailer.transporter.sendMail.called.should.equal.true;
+      sinon.assert.calledWith(Mailer.transporter.sendMail, {
+        from: 'fooEmail',
+        to: 'foo@foo.com',
+        subject: 'fooSubject',
+        text: 'fooText',
+        html: 'fooHTML'
+      }, 'fooFunction');
     });
   });
+
+
 });

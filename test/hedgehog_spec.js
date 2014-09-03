@@ -95,14 +95,19 @@ describe("Hedgehog", function() {
       Hedgehog.mailer.service.should.not.equal(undefined);
     });
     it('should have production', function() {
-      Hedgehog.mailer.should.have.property('user');
-      Hedgehog.mailer.user.should.not.equal(null);
-      Hedgehog.mailer.user.should.not.equal(undefined);
+      Hedgehog.mailer.should.have.property('username');
+      Hedgehog.mailer.username.should.not.equal(null);
+      Hedgehog.mailer.username.should.not.equal(undefined);
     });
     it('should have sessionStore', function() {
       Hedgehog.mailer.should.have.property('password');
       Hedgehog.mailer.password.should.not.equal(null);
       Hedgehog.mailer.password.should.not.equal(undefined);
+    });
+    it('should have email', function() {
+      Hedgehog.mailer.should.have.property('email');
+      Hedgehog.mailer.email.should.not.equal(null);
+      Hedgehog.mailer.email.should.not.equal(undefined);
     });
   });
 

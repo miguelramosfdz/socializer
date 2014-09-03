@@ -29,8 +29,9 @@ module.exports = (function() {
     },
 
     mailer: {
+      email: process.env.MAILER_EMAIL,
       service: process.env.MAILER_SERVICE,
-      user: process.env.MAILER_USERNAME,
+      username: process.env.MAILER_USERNAME,
       password: process.env.MAILER_PASSWORD
     }
   

@@ -13,6 +13,7 @@ before_install:
   - export TWITTER_CONSUMER_SECRET=fooConsumserSecret
   - export TWITTER_CALLBACK_URL=fooCallbackUrl
   - export MAILER_SERVICE=fooMailService
+  - export MAILER_USERNAME=fooMailEmail
   - export MAILER_USERNAME=fooMailUsername
   - export MAILER_PASSWORD=fooMailPassword
 
