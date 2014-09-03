@@ -2,19 +2,20 @@ module.exports= (function() {
 
   var Hedgehog = require('../.hedgehog');
   var nodemailer = require('nodemailer');
+  var transport = {
+      service: Hedgehog.mailer.service,
+      auth: {
+          user: Hedgehog.mailer.username,
+          pass: Hedgehog.mailer.password
+      }
+  };
 
   var mailer =  {
 
     /**
      * Create reusable transporter object using SMTP transport
      */
-    transporter: nodemailer.createTransport({
-        service: Hedgehog.mailer.service,
-        auth: {
-            user: Hedgehog.mailer.username,
-            pass: Hedgehog.mailer.password
-        }
-    }),
+    transporter: nodemailer.createTransport(transport),
 
     /**
      * Send mail with defined transport object

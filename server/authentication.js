@@ -3,6 +3,8 @@ exports = module.exports = (function() {
 
   var LocalStrategy = require('passport-local').Strategy;
   var User = require('../app/models/User');
+  var Mailer = require('./mailer');
+  var UserEmails = require('../app/views/emails/user_emails');
 
   return {
 
@@ -67,6 +69,8 @@ exports = module.exports = (function() {
             newUser.set('password', req.body.password);
             newUser.save(function(err) {
               if (err) throw err;
+              var email = UserEmails.sign_up;
+              Mailer.sendMail(newUser.email, email.subject, email.text, email.html);
               return done(null, newUser);
             });
           });
