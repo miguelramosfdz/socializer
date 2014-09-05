@@ -48,35 +48,37 @@ exports.setup = function(app, passport) {
 
   // handle the callback after facebook has authenticated the user
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-    successRedirect : '/account',
-    failureRedirect : '/'
+    successRedirect: '/account',
+    failureRedirect: '/'
   }));
 
   // Twitter --------------------------------
 
   // send to twitter to do the authentication
-  app.get('/connect/twitter', passport.authorize('twitter', { 
+  app.get('/auth/twitter', passport.authenticate('twitter', { 
     scope: 'email' 
   }));
 
   // handle the callback after twitter has authorized the user
-  app.get('/connect/twitter/callback', passport.authorize('twitter', {
-    successRedirect : '/account',
-    failureRedirect : '/'
-  }));
+  app.get('/auth/twitter/callback', passport.authenticate('twitter', {
+    failureRedirect: '/'
+  }), function(req, res) {
+    res.redirect('/account');
+  });
 
 
   // Google ---------------------------------
   // send to google to do the authentication
-  app.get('/connect/google', passport.authorize('google', { 
-    scope: ['profile', 'email'] 
+  app.get('/auth/google', passport.authenticate('google', { 
+    scope: 'email profile'
   }));
 
   // the callback after google has authorized the user
-  app.get('/connect/google/callback', passport.authorize('google', {
-    successRedirect : '/account',
-    failureRedirect : '/'
-  }));
+  app.get('/auth/google/callback', passport.authenticate('google', { 
+    failureRedirect: '/login'
+  }), function(req, res) {
+    res.redirect('/');
+  });
 
   // Unlink accounts
   app.get('/unlink/local', Authenticate.isLoggedIn, function(req, res) {
@@ -119,5 +121,5 @@ exports.setup = function(app, passport) {
   app.get('*', function(req, res){
     res.render('home', { user: req.user });
   });
-  
+
 };

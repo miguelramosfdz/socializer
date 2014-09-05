@@ -10,10 +10,11 @@ exports = module.exports = (function() {
   /**
    * Passport Strategies
    */
-  var GoogleStrategy = require('passport-google').Strategy;
+  
   var TwitterStrategy = require('passport-twitter').Strategy;
   var FacebookStrategy = require('passport-facebook').Strategy;
-  
+  var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+
   return {
 
     cors: function(req, res, next) {
@@ -185,6 +186,112 @@ exports = module.exports = (function() {
               });
             }
           });
+      }));
+
+    // =========================================================================
+    // TWITTER =================================================================
+    // =========================================================================
+    passport.use(new TwitterStrategy({
+      consumerKey: Hedgehog.oauth.Twitter.consumerKey,
+      consumerSecret: Hedgehog.oauth.Twitter.consumerSecret,
+      callbackURL: Hedgehog.oauth.Twitter.callbackURL
+    },
+    function(req, token, tokenSecret, profile, done) {
+      process.nextTick(function() {
+        // check if the user is already logged in
+        if (!req.user) {
+          User.findOne({ 'twitter.id' : profile.id }, function(err, user) {
+            if (err)
+                return done(err);
+
+            if (user) {
+              // if there is a user id already but no token (user was linked at one point and then removed)
+              if (!user.twitter.token) {
+                user.twitter.token = token;
+                user.twitter.username = profile.username;
+                user.twitter.displayName = profile.displayName;
+                user.save(function(err) {
+                    if (err)
+                        throw err;
+                    return done(null, user);
+                });
+              }
+
+              return done(null, user); // user found, return that user
+            } else {
+              var newUser = new User();
+              newUser.twitter.id = profile.id;
+              newUser.twitter.token = token;
+              newUser.twitter.username = profile.username;
+              newUser.twitter.displayName = profile.displayName;
+
+              newUser.save(function(err) {
+                  if (err)
+                      throw err;
+                  return done(null, newUser);
+              });
+            }
+          });
+        } else {
+          console.log('meow');
+          var user = req.user;
+          user.twitter.id = profile.id;
+          user.twitter.token = token;
+          user.twitter.username = profile.username;
+          user.twitter.displayName = profile.displayName;
+
+          user.save(function(err) {
+            if (err)
+              throw err;
+            return done(null, user);
+          });
+        }
+      });
+    }));
+
+    // =========================================================================
+    // GOOGLE ==================================================================
+    // =========================================================================
+    passport.use(new GoogleStrategy({
+      clientID: Hedgehog.oauth.Google.clientId,
+      clientSecret: Hedgehog.oauth.Google.clientSecret,
+      callbackURL: Hedgehog.oauth.Google.callbackURL
+    },
+    function(accessToken, refreshToken, profile, done) {
+      process.nextTick(function() {
+        User.findOne({ 'google.email': profile.email }, function(err, user) {
+          if (err) return done(err);
+
+          if (user) {
+            // if there is a user id already but no token (user was linked at one point and then removed)
+            if (!user.google.token) {
+                user.google.token = accessToken;
+                user.google.name  = profile.displayName;
+                user.google.email = profile.emails[0].value; // pull the first email
+
+                user.save(function(err) {
+                    if (err)
+                        throw err;
+                    return done(null, user);
+                });
+              }
+
+              return done(null, user);
+            } else {
+              var newUser = new User();
+              newUser.google.id = profile.id;
+              newUser.google.token = accessToken;
+              newUser.google.name = profile.displayName;
+              newUser.google.email = profile.emails[0].value; // pull the first email
+
+              newUser.save(function(err) {
+                  if (err)
+                      throw err;
+                  return done(null, newUser);
+              });
+            }
+          });
+        });
       }));
 		}
 	};
