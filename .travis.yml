@@ -4,18 +4,23 @@ node_js:
   - 0.10
   - 0.11
 
-before_install:
-  - export SESSION_SECRET=foobar
-  - export FACEBOOK_APP_ID=fooApp
-  - export FACEBOOK_APP_SECRET=fooAppSecret
-  - export FACEBOOK_CALLBACK_URL=fooCallbackUrl
-  - export TWITTER_CONSUMER_KEY=fooConsumserKey
-  - export TWITTER_CONSUMER_SECRET=fooConsumserSecret
-  - export TWITTER_CALLBACK_URL=fooCallbackUrl
-  - export MAILER_SERVICE=fooMailService
-  - export MAILER_EMAIL=fooMailEmail
-  - export MAILER_USERNAME=fooMailUsername
-  - export MAILER_PASSWORD=fooMailPassword
+env:
+  global:
+    - SESSION_SECRET=foobar
+    - FACEBOOK_APP_ID=fooApp
+    - FACEBOOK_APP_SECRET=fooAppSecret
+    - FACEBOOK_CALLBACK_URL=fooCallbackUrl
+    - TWITTER_CONSUMER_KEY=fooConsumserKey
+    - TWITTER_CONSUMER_SECRET=fooConsumserSecret
+    - TWITTER_CALLBACK_URL=fooCallbackUrl
+    - GOOGLE_REALM=fooRealm
+    - GOOGLE_CLIENT_ID=fooClientId
+    - GOOGLE_CLIENT_SECRET=fooClientSecret
+    - GOOGLE_CALLBACK_URL=fooCallbackUrl
+    - MAILER_SERVICE=fooMailService
+    - MAILER_EMAIL=fooMailEmail
+    - MAILER_USERNAME=fooMailUsername
+    - MAILER_PASSWORD=fooMailPassword
 
 notifications:
   email: "cjponti@gmail.com"
