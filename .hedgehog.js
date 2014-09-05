@@ -18,6 +18,12 @@ module.exports = (function() {
         consumerKey: process.env.TWITTER_CONSUMER_KEY,
         consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
         callbackURL: process.env.TWITTER_CALLBACK_URL
+      },
+      Google: {
+        realm: process.env.GOOGLE_REALM,
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: process.env.GOOGLE_CALLBACK_URL
       }
     },
     
