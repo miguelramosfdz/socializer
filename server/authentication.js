@@ -253,7 +253,7 @@ exports = module.exports = (function() {
     // GOOGLE ==================================================================
     // =========================================================================
     passport.use(new GoogleStrategy({
-      clientID: Hedgehog.oauth.Google.clientId,
+      clientID: Hedgehog.oauth.Google.clientID,
       clientSecret: Hedgehog.oauth.Google.clientSecret,
       callbackURL: Hedgehog.oauth.Google.callbackURL
     },

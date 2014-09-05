@@ -63,6 +63,28 @@ describe("Hedgehog", function() {
         Hedgehog.oauth.Twitter.callbackURL.should.not.equal(undefined);
       });
     });
+    describe('Google', function() {
+      it('should have realm', function() {
+        Hedgehog.oauth.Google.should.have.property('realm');
+        Hedgehog.oauth.Google.realm.should.not.equal(null);
+        Hedgehog.oauth.Google.realm.should.not.equal(undefined);
+      });
+      it('should have clientID', function() {
+        Hedgehog.oauth.Google.should.have.property('clientID');
+        Hedgehog.oauth.Google.clientID.should.not.equal(null);
+        Hedgehog.oauth.Google.clientID.should.not.equal(undefined);
+      });
+      it('should have clientSecret', function() {
+        Hedgehog.oauth.Google.should.have.property('clientSecret');
+        Hedgehog.oauth.Google.clientSecret.should.not.equal(null);
+        Hedgehog.oauth.Google.clientSecret.should.not.equal(undefined);
+      });
+      it('should have callbackURL', function() {
+        Hedgehog.oauth.Google.should.have.property('callbackURL');
+        Hedgehog.oauth.Google.callbackURL.should.not.equal(null);
+        Hedgehog.oauth.Google.callbackURL.should.not.equal(undefined);
+      });
+    });
   });
   
   describe('db', function() {
