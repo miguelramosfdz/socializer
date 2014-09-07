@@ -7,10 +7,10 @@ block content
     h3 Email: 
     h3= current_user.email
 
-    - if (current_user.facebook.token || current_user.twitter.token || current_user.google.token)
-      .row
-        .col-md-8
-          h3 Connected Accounts
+    .row
+      .col-md-8
+        h3 Connected Accounts
+        - if (current_user.is_connected())
           - if (current_user.facebook.token)
             h4 Facebook
             p= current_user.facebook.email
@@ -27,7 +27,9 @@ block content
           - if (current_user.foursquare.token)
             h4 Foursquare
             p= current_user.foursquareName()
-
+        - else
+          p Not Connected
+          
     .row.text-center
       h3.text-center Connect Accounts
       - if (!current_user.facebook.token)

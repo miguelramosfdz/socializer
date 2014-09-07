@@ -85,6 +85,13 @@ module.exports = (function() {
       return url.resolve(profile.photo.prefix, '/img/user'+profile.photo.suffix);
     },
 
+    is_connected: function() {
+      return this.foursquare.token || 
+              this.facebook.token ||
+              this.google.token ||
+              this.twitter.token;
+    },
+
     /**
      * @desc Check password
      * @param {String} password
