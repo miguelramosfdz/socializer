@@ -85,6 +85,12 @@ module.exports = (function() {
       return url.resolve(profile.photo.prefix, '/img/user'+profile.photo.suffix);
     },
 
+    setFoursquareProfile: function(access_token, profile, callback) {
+      this.foursquare.token = access_token;
+      this.foursquare.profile = profile;
+      this.save(callback);
+    },
+
     is_connected: function() {
       return this.foursquare.token || 
               this.facebook.token ||
