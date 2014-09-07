@@ -3,6 +3,7 @@
 exports.setup = function(app, passport) {
   "use strict";
 
+  var TwitterOauth = require("./oauth/twitter")();
   var FoursquareOauth = require("./oauth/foursquare");
   var Authenticate = require("./authentication");
   var UserController = require("../app/controllers/user_controller");
@@ -48,18 +49,22 @@ exports.setup = function(app, passport) {
   }));
 
   // Twitter --------------------------------
+  app.get("/auth/twitter", Authenticate.isLoggedIn, TwitterOauth.get_request_token);
+  app.get("/auth/twitter/callback", Authenticate.isLoggedIn, TwitterOauth.get_access_token);
+  app.get("/auth/twitter/profile", Authenticate.isLoggedIn, TwitterOauth.get_profile);
+  
 
   // send to twitter to do the authentication
-  app.get("/auth/twitter", passport.authenticate("twitter", { 
-    scope: "email" 
-  }));
+  // app.get("/auth/twitter", passport.authenticate("twitter", { 
+  //   scope: "email" 
+  // }));
 
-  // handle the callback after twitter has authorized the user
-  app.get("/auth/twitter/callback", passport.authenticate("twitter", {
-    failureRedirect: "/"
-  }), function(req, res) {
-    res.redirect("/account");
-  });
+  // // handle the callback after twitter has authorized the user
+  // app.get("/auth/twitter/callback", passport.authenticate("twitter", {
+  //   failureRedirect: "/"
+  // }), function(req, res) {
+  //   res.redirect("/account");
+  // });
 
 
   // Google ---------------------------------
