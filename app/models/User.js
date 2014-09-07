@@ -98,6 +98,10 @@ module.exports = (function() {
       this.save(callback);
     },
 
+    getFoursquareParams: function() {
+      return '?oauth_token='+this.foursquare.token+'&v=20140714';
+    },
+
     is_connected: function() {
       return this.foursquare.token || 
               this.facebook.token ||
