@@ -85,6 +85,12 @@ module.exports = (function() {
       return url.resolve(profile.photo.prefix, '/img/user'+profile.photo.suffix);
     },
 
+    setFoursquareProfile: function(access_token, profile, callback) {
+      this.foursquare.token = access_token;
+      this.foursquare.profile = profile;
+      this.save(callback);
+    },
+
     is_connected: function() {
       return this.foursquare.token || 
               this.facebook.token ||
@@ -120,7 +126,6 @@ module.exports = (function() {
     encryptPassword: function(password) {
       if (!password || !this.salt) return '';
       var salt = new Buffer(this.salt, 'base64');
-      console.log(password);
       return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');
     }
 
