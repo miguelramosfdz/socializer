@@ -24,6 +24,11 @@ module.exports = (function() {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: process.env.GOOGLE_CALLBACK_URL
+      },
+      Foursquare: {
+        client_id: process.env.FOURSQUARE_CLIENT_ID,
+        client_secret: process.env.FOURSQUARE_CLIENT_SECRET,
+        callback_url: process.env.FOURSQUARE_CALLBACK_URL
       }
     },
     
