@@ -4,7 +4,7 @@ exports.setup = function(app, passport) {
   "use strict";
 
   var TwitterOauth = require("./oauth/twitter")();
-  var FoursquareOauth = require("./oauth/foursquare");
+  var FoursquareOauth = require("./oauth/foursquare")();
   var Authenticate = require("./authentication");
   var UserController = require("../app/controllers/user_controller");
 
@@ -80,6 +80,11 @@ exports.setup = function(app, passport) {
     res.redirect("/");
   });
 
+  // Foursquare -------------------------------
+  app.get("/auth/foursquare", Authenticate.isLoggedIn, FoursquareOauth.get_code);
+  app.get("/auth/foursquare/profile", Authenticate.isLoggedIn, FoursquareOauth.get_profile);
+  app.get("/auth/foursquare/callback", Authenticate.isLoggedIn, FoursquareOauth.get_access_token);
+
   // Unlink accounts
   app.get("/unlink/local", Authenticate.isLoggedIn, function(req, res) {
       var user = req.user;
@@ -90,24 +95,17 @@ exports.setup = function(app, passport) {
       });
   });
 
-  app.get("/auth/foursquare", Authenticate.isLoggedIn, FoursquareOauth.authenticate);
-  app.get("/auth/foursquare/profile", Authenticate.isLoggedIn, FoursquareOauth.getProfile);
-  app.get("/auth/foursquare/callback", Authenticate.isLoggedIn, FoursquareOauth.getRequestToken);
-
   // Facebook -------------------------------
-  app.get("/unlink/facebook", Authenticate.isLoggedIn, function(req, res) {
-      var user = req.user;
-      user.facebook.token = undefined;
-      user.save(function() {
-          res.redirect("/profile");
-      });
-  });
+  app.get("/unlink/facebook", Authenticate.isLoggedIn, UserController.unlinkFacebook);
 
   // Twitter --------------------------------
   app.get("/unlink/twitter", Authenticate.isLoggedIn, UserController.unlinkTwitter);
 
   // Google ---------------------------------
-  app.get("/unlink/google", Authenticate.isLoggedIn, UserController.unlinkTwitter);
+  app.get("/unlink/google", Authenticate.isLoggedIn, UserController.unlinkGoogle);
+
+  // Foursquare --------------------------------
+  app.get("/unlink/foursquare", Authenticate.isLoggedIn, UserController.unlinkFoursquare);
 
   /* Route for log-out */
   app.get("/logout", function(req, res) {
