@@ -17,6 +17,9 @@ env:
     - GOOGLE_CLIENT_ID=fooClientId
     - GOOGLE_CLIENT_SECRET=fooClientSecret
     - GOOGLE_CALLBACK_URL=fooCallbackUrl
+    - FOURSQUARE_CLIENT_ID=fooClientId
+    - FOURSQUARE_CLIENT_SECRET=fooClientSecret
+    - FOURSQUARE_CALLBACK_URL=fooCallbackUrl
     - MAILER_SERVICE=fooMailService
     - MAILER_EMAIL=fooMailEmail
     - MAILER_USERNAME=fooMailUsername
