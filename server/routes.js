@@ -7,6 +7,7 @@ exports.setup = function(app, passport) {
   var FoursquareOauth = require("./oauth/foursquare")();
   var Authenticate = require("./authentication");
   var UserController = require("../app/controllers/user_controller");
+  var FoursquareController = require("../app/controllers/foursquare_controller");
 
   // Route for serving templates
   app.get("/partials/:type/:file", function(req, res) {
@@ -92,6 +93,9 @@ exports.setup = function(app, passport) {
   // Foursquare --------------------------------
   app.get("/unlink/foursquare", Authenticate.isLoggedIn, UserController.unlinkFoursquare);
 
+  app.get("/foursquare", Authenticate.isLoggedIn, FoursquareController.get);
+  app.get("/foursquare/checkins", Authenticate.isLoggedIn, FoursquareController.getCheckins);
+  
   /* Route for log-out */
   app.get("/logout", function(req, res) {
     req.logout();
