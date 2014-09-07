@@ -13,53 +13,50 @@ block content
           div.panel-heading
             h3.panel-title Connected Accounts
           div.list-group
-            - if (current_user.is_connected())
-              //- Facebook
-              div.list-group-item
-                h4 Facebook
-                - if (current_user.facebook.token)
-                  p= current_user.facebook.email
-                  a.btn.btn-danger(href="/unlink/facebook") 
-                    span.fa.fa-facebook    Unlink Facebook
-                - else
-                  a.btn.btn-primary(href="/auth/facebook") 
-                    span.fa.fa-facebook    Connect Facebook
-              
-              //- Twitter
-              div.list-group-item
-                h4 Twitter
-                - if (current_user.twitter.token)
-                  p= current_user.twitter.profile.name
-                  a.btn.btn-danger(href="/unlink/twitter")
-                    span.fa.fa-twitter     Unlink Twitter
-                - else
-                  a.btn.btn-info(href="/auth/twitter")
-                    span.fa.fa-twitter     Connect Twitter
-              
-              //- Google
-              div.list-group-item
-                h4 Google
-                - if (current_user.google.token)
-                  p= current_user.google.email
-                  a.btn.btn-danger(href="/unlink/google") 
-                    span.fa.fa-google-plus     Unlink Google
-                - else
-                  a.btn.btn-danger(href="/auth/google")
-                    span.fa.fa-google-plus     Connect Google+
-              
-              //- Foursquare
-              div.list-group-item
-                h4 Foursquare
-                - if (current_user.foursquare.token)
-                  p= current_user.foursquareName()
-                  a.btn.btn-info(href="/unlink/foursquare") 
-                    i.fa.fa-foursquare     Unlink Foursquare
-                - else
-                  a.btn.btn-danger(href="/auth/foursquare")
-                    i.fa.fa-foursquare     Connect Foursquare
-            - else
-              p Not Connected
-
+            //- Facebook
+            div.list-group-item
+              h4 Facebook
+              - if (current_user.facebook.token)
+                p= current_user.facebook.email
+                a.btn.btn-danger(href="/unlink/facebook") 
+                  span.fa.fa-facebook    Unlink Facebook
+              - else
+                a.btn.btn-primary(href="/auth/facebook") 
+                  span.fa.fa-facebook    Connect Facebook
+            
+            //- Twitter
+            div.list-group-item
+              h4 Twitter
+              - if (current_user.twitter.token)
+                p= current_user.twitter.profile.name
+                a.btn.btn-danger(href="/unlink/twitter")
+                  span.fa.fa-twitter     Unlink Twitter
+              - else
+                a.btn.btn-info(href="/auth/twitter")
+                  span.fa.fa-twitter     Connect Twitter
+            
+            //- Google
+            div.list-group-item
+              h4 Google
+              - if (current_user.google.token)
+                p= current_user.google.email
+                a.btn.btn-danger(href="/unlink/google") 
+                  span.fa.fa-google-plus     Unlink Google
+              - else
+                a.btn.btn-danger(href="/auth/google")
+                  span.fa.fa-google-plus     Connect Google+
+            
+            //- Foursquare
+            div.list-group-item
+              h4 Foursquare
+              - if (current_user.foursquare.token)
+                p= current_user.foursquareName()
+                a.btn.btn-info(href="/unlink/foursquare") 
+                  i.fa.fa-foursquare     Unlink Foursquare
+              - else
+                a.btn.btn-danger(href="/auth/foursquare")
+                  i.fa.fa-foursquare     Connect Foursquare
+                  
     .row
       .col-md-offset-2.col-md-8
         div.panel.panel-default
