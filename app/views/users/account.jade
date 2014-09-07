@@ -20,6 +20,9 @@ block content
           - if (current_user.google.token)
             h4 Google
             p= current_user.google.email
+          - if (current_user.foursquare.token)
+            h4 Foursquare
+            p= current_user.foursquareName()
 
     .row.text-center
       h3.text-center Connect Accounts
@@ -32,6 +35,9 @@ block content
       - if (!current_user.google.token)
         a.btn.btn-danger(href="/auth/google")
           span.fa.fa-google-plus Google+
+      - if (!current_user.foursquare.token)
+        a.btn.btn-danger(href="/auth/foursquare")
+          span.fa.fa-google-plus Foursquare
     .row 
       h3.text-center Reset Password
       .col-md-offset-4.col-md-4
