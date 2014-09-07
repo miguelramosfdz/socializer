@@ -35,8 +35,10 @@ module.exports = (function() {
     twitter: {
         id: String,
         token: String,
+        tokenSecret: String,
         displayName: String,
-        username: String
+        username: String,
+        profile: Schema.Types.Mixed
     },
     google: {
         id: String,
