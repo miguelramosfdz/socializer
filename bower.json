@@ -20,9 +20,9 @@
     "tests"
   ],
   "dependencies": {
-    "font-awesome": "~4.0.3",
     "bootstrap": "~3.2.0",
     "backbone": "~1.1.2",
-    "requirejs": "~2.1.14"
+    "requirejs": "~2.1.14",
+    "fontawesome": "~4.2.0"
   }
 }
