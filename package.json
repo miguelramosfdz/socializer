@@ -32,7 +32,6 @@
     "passport-facebook": "^1.0.3",
     "passport-google-oauth": "^0.1.5",
     "passport-local": "^1.0.0",
-    "passport-twitter": "^1.0.2",
     "restler": "^3.2.2",
     "should": "^4.0.4",
     "sinon": "^1.10.3",
