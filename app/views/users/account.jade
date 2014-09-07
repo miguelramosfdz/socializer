@@ -17,6 +17,10 @@ block content
           - if (current_user.twitter.token)
             h4 Twitter
             p= current_user.twitter.username
+            - if (!current_user.twitter.profile)
+              a(href="/auth/twitter/profile") Get Twitter Profile
+            - else
+              p= current_user.twitter.profile.name
           - if (current_user.google.token)
             h4 Google
             p= current_user.google.email
