@@ -82,7 +82,6 @@ module.exports = (function() {
       user.foursquare.profile = undefined;
       user.save(unlinkCallback("Foursquare", req, res));
     }
-
   };
 
 })();

@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+	.row
+
+		form.col-md-offset-3.col-md-6#twitter-search(role="form")
+			
+			.form-group
+				label(for="query") Query
+				input.form-control(type='text', placeholder=" Search for ...", name="query")
+			
+			.form-group
+				label(for="location") Location
+				input.form-control(type='text', placeholder=" Where ...", name="location")
+			
+			.form-group
+				label(for="radius") Radius
+				input.form-control(type='text', placeholder=" Mile Radius ...", name="radius")
+			
+			.form-group
+				button.btn.btn-default Search
+
+	.row
+		.col-md-offset-3.col-md-6
+			ul.list-group#tweets

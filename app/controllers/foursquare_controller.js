@@ -26,7 +26,6 @@ module.exports = (function() {
       var oauth_token = tokens.Foursquare.oauth_token;
       if (oauth_token) {
         var url = base_uri+'users/search?email='+req.body.email;
-         
       } else {
         getAutorization(req, res, next);
       }
