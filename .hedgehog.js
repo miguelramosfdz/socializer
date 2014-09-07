@@ -23,9 +23,9 @@ module.exports = (function() {
         callbackURL: process.env.FACEBOOK_CALLBACK_URL
       },
       Twitter: {
-        consumerKey: process.env.TWITTER_CONSUMER_KEY,
-        consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-        callbackURL: process.env.TWITTER_CALLBACK_URL
+        consumer_key: process.env.TWITTER_CONSUMER_KEY,
+        consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+        callback_url: process.env.TWITTER_CALLBACK_URL
       },
       Google: {
         realm: process.env.GOOGLE_REALM,
