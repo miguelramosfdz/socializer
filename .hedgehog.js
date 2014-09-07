@@ -4,7 +4,7 @@ module.exports = (function() {
 
     port: 4000,
 
-    appName: "Hedgehog",
+    appName: "Socializer",
 
     social: {
       useFacebook: true,
@@ -40,10 +40,10 @@ module.exports = (function() {
     },
     
     db: {
-      test: 'mongodb://localhost/hedgehog-test',
-      development: 'mongodb://localhost/hedgehog-dev',
-      production: 'mongodb://localhost/hedgehog-prod',
-      sessionStore: 'mongodb://localhost/hedgehog-session'
+      test: 'mongodb://localhost/socializer-test',
+      development: 'mongodb://localhost/socializer-dev',
+      production: 'mongodb://localhost/socializer-prod',
+      sessionStore: 'mongodb://localhost/socializer-session'
     },
 
     mailer: {
