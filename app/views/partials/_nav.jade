@@ -9,6 +9,9 @@ nav.navbar.navbar-default(role="navigation")
       a.navbar-brand(href='/')= app_name
     div.collapse.navbar-collapse#bs-example-navbar-collapse-1
       ul.nav.navbar-nav
+        - if (current_user)
+          li
+            a(href='/foursquare') Foursquare
         li
           a(href='/about') About
       ul.nav.navbar-nav.navbar-right
