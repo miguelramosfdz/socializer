@@ -6,12 +6,13 @@ module.exports = (function() {
    */
   var mongoose = require('mongoose');
   var crypto = require('crypto');
-  
+  var Schema = mongoose.Schema;
+
   /**
    * @desc User Schema
    * @type {mongoose.Schema}
    */
-  var UserSchema = new mongoose.Schema({
+  var UserSchema = new Schema({
     email: { 
       type: String, 
       unique: true, 
@@ -42,6 +43,13 @@ module.exports = (function() {
         token: String,
         email: String,
         name: String
+    },
+    foursquare: {
+        id: String,
+        token: String,
+        email: String,
+        name: String,
+        profile: Schema.Types.Mixed
     }
   });
 
@@ -58,6 +66,22 @@ module.exports = (function() {
    * @type {mongoose.Schema.methods}
    */
   UserSchema.methods = {
+
+    /**
+     * @desc Get Foursquare first name and last name
+     * @return {String}
+     * @api public
+     */
+    foursquareName: function foursquareName() {
+      var profile = this.foursquare.profile;
+      return profile.firstName + " " + profile.lastName;
+    },
+
+    foursquarePhoto: function foursquarePhoto() {
+      var url = require('url');
+      var profile = this.foursquare.profile;
+      return url.resolve(profile.photo.prefix, '/img/user'+profile.photo.suffix);
+    },
 
     /**
      * @desc Check password
