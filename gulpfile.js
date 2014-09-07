@@ -34,9 +34,6 @@ var clientScripts = function() {
     gulp.src([sources.js])
         .pipe(jsHint())
         .pipe(jsHint.reporter(stylish))
-        .pipe(gulp.dest('public/scripts'))
-        .pipe(rename('main.min.js'))
-        .pipe(uglify())
         .pipe(gulp.dest('public/scripts'));
 };
 
