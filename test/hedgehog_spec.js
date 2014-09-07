@@ -85,6 +85,33 @@ describe("Hedgehog", function() {
         Hedgehog.oauth.Google.callbackURL.should.not.equal(undefined);
       });
     });
+    describe('Foursquare', function() {
+      var keys;
+
+      beforeEach(function() {
+        keys = Hedgehog.oauth.Foursquare;
+      });
+
+      afterEach(function() {
+        keys = null;
+      });
+      
+      it('should have client_id', function() {
+        keys.should.have.property('client_id');
+        keys.client_id.should.not.equal(null);
+        keys.client_id.should.not.equal(undefined);
+      });
+      it('should have client_secret', function() {
+        keys.should.have.property('client_secret');
+        keys.client_secret.should.not.equal(null);
+        keys.client_secret.should.not.equal(undefined);
+      });
+      it('should have callback_url', function() {
+        keys.should.have.property('callback_url');
+        keys.callback_url.should.not.equal(null);
+        keys.callback_url.should.not.equal(undefined);
+      });
+    });
   });
   
   describe('db', function() {
