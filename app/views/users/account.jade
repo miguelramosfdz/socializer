@@ -14,6 +14,7 @@ block content
           - if (current_user.facebook.token)
             h4 Facebook
             p= current_user.facebook.email
+            a.btn.btn-danger(href="/unlink/facebook") Unlink Facebook
           - if (current_user.twitter.token)
             h4 Twitter
             p= current_user.twitter.username
@@ -21,12 +22,15 @@ block content
               a(href="/auth/twitter/profile") Get Twitter Profile
             - else
               p= current_user.twitter.profile.name
+            a.btn.btn-danger(href="/unlink/twitter") Unlink Twitter
           - if (current_user.google.token)
             h4 Google
             p= current_user.google.email
+            a.btn.btn-danger(href="/unlink/google") Unlink Google
           - if (current_user.foursquare.token)
             h4 Foursquare
             p= current_user.foursquareName()
+            a.btn.btn-danger(href="/unlink/foursquare") Unlink Foursquare
         - else
           p Not Connected
           
