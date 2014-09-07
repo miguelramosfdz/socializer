@@ -8,7 +8,9 @@ module.exports = function() {
   
   self.request_token_url = "https://twitter.com/oauth/request_token";
   self.access_token_url = "https://twitter.com/oauth/access_token";
-
+  self.profile_url = "https://api.twitter.com/1.1/account/verify_credentials.json";
+  self.authorize_url = "https://twitter.com/oauth/authorize?oauth_token=";
+  
   /**
    * Twitter OAuth consumer
    * @type {oauth.OAuth}
@@ -29,27 +31,20 @@ module.exports = function() {
         req.flash("error", "Error getting Twitter request token.");
         res.redirect("/account");
       } else {
-        req.session.oauthRequestToken = oauthToken; // we will need these values in the oauthCallback so store them on the session.
-        req.session.oauthRequestTokenSecret = oauthTokenSecret;
+        self.oauthRequestToken = oauthToken;
+        self.oauthRequestTokenSecret = oauthTokenSecret;
 
-        /**
-         * keep track of the site id in the sesion for the callback.
-         */
-        req.session.siteId = req.params.siteId;
-        req.session.apiKey = req.params.apiKey;
-        req.session.siteToken = req.params.siteToken;
-
-        res.redirect("https://twitter.com/oauth/authorize?oauth_token="+req.session.oauthRequestToken);
+        res.redirect(self.authorize_url+self.oauthRequestToken);
       }
     });
   };
 
   self.get_access_token = function(req, res, next) {
     self.consumer.getOAuthAccessToken(
-      req.session.oauthRequestToken, 
-      req.session.oauthRequestTokenSecret, 
+      self.oauthRequestToken, 
+      self.oauthRequestTokenSecret, 
       req.query.oauth_verifier, 
-      function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
+      function(error, token, secret, results) {
         if (error) {
           req.flash("error", "Error getting Twitter access token.");
           res.redirect("/account");
@@ -57,43 +52,31 @@ module.exports = function() {
           /**
            * Clear req.session oauth values
            */
-          delete req.session.oauthRequestToken;
-          delete req.session.oauthRequestTokenSecret;
+          delete self.oauthRequestToken;
+          delete self.oauthRequestTokenSecret;
 
           /**
            * Save token and tokenSecret to user
            */
-          var user = req.user;
-          user.twitter.token = oauthAccessToken;
-          user.twitter.tokenSecret = oauthAccessTokenSecret;
-          user.save(function(err) {
-            if (err) {
-              return next(err);
+          self.consumer.get(
+            self.profile_url,
+            token,
+            secret,
+            function(err, data) {
+              req.user.setTwitterProfile(
+                token,
+                secret,
+                JSON.parse(data), function() {
+                if (err) {
+                  req.flash("error", "Twitter profile could not be saved.");
+                  res.redirect("/account");
+                }
+                req.flash("success", "Twitter account linked!");
+                res.redirect("/account");
+              });
             }
-            req.flash("success", "Twitter account linked!");
-            res.redirect("/account");
-          });
+          );
         }
-      }
-    );
-  };
-
-  self.get_profile = function(req, res, next) {
-    var user = req.user;
-    self.consumer.get(
-      "https://api.twitter.com/1.1/account/verify_credentials.json",
-      user.twitter.token,
-      user.twitter.tokenSecret,
-      function(err, data) {
-        user.twitter.profile = JSON.parse(data);
-        user.save(function() {
-          if (err) {
-            req.flash("error", "Twitter profile could not be saved.");
-            res.redirect("/account");
-          }
-          req.flash("success", "Twitter profile saved!");
-          res.redirect("/account");
-        });
       }
     );
   };
