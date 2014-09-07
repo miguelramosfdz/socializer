@@ -182,67 +182,6 @@ exports.setup = function(passport) {
   }));
 
 // =========================================================================
-// TWITTER =================================================================
-// =========================================================================
-// passport.use(new TwitterStrategy({
-//   consumerKey: Hedgehog.oauth.Twitter.consumerKey,
-//   consumerSecret: Hedgehog.oauth.Twitter.consumerSecret,
-//   callbackURL: Hedgehog.oauth.Twitter.callbackURL
-// },
-// function(req, token, tokenSecret, profile, done) {
-//   process.nextTick(function() {
-//     // check if the user is already logged in
-//     if (!req.user) {
-//       User.findOne({ 'twitter.id' : profile.id }, function(err, user) {
-//         if (err)
-//             return done(err);
-
-//         if (user) {
-//           // if there is a user id already but no token (user was linked at one point and then removed)
-//           if (!user.twitter.token) {
-//             user.twitter.token = token;
-//             user.twitter.username = profile.username;
-//             user.twitter.displayName = profile.displayName;
-//             user.save(function(err) {
-//                 if (err)
-//                     throw err;
-//                 return done(null, user);
-//             });
-//           }
-
-//           return done(null, user); // user found, return that user
-//         } else {
-//           var newUser = new User();
-//           newUser.twitter.id = profile.id;
-//           newUser.twitter.token = token;
-//           newUser.twitter.username = profile.username;
-//           newUser.twitter.displayName = profile.displayName;
-
-//           newUser.save(function(err) {
-//               if (err)
-//                   throw err;
-//               return done(null, newUser);
-//           });
-//         }
-//       });
-//     } else {
-//       console.log('meow');
-//       var user = req.user;
-//       user.twitter.id = profile.id;
-//       user.twitter.token = token;
-//       user.twitter.username = profile.username;
-//       user.twitter.displayName = profile.displayName;
-
-//       user.save(function(err) {
-//         if (err)
-//           throw err;
-//         return done(null, user);
-//       });
-//     }
-//   });
-// }));
-
-// =========================================================================
 // GOOGLE ==================================================================
 // =========================================================================
 passport.use(new GoogleStrategy({
