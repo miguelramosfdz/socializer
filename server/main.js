@@ -19,12 +19,17 @@ var expressValidator = require('express-validator');
 var MongoStore = require('connect-mongo')({ session: session });
 
 /**
+ * Set Hedgehog as global variable
+ * @type {Object}
+ */
+GLOBAL.Hedgehog = require('../.hedgehog.js');
+
+/**
  * Application dependencies
  */
 var db = require('./db');
 var routes = require('./routes');
 var auth = require('./authentication');
-var Hedgehog = require('../.hedgehog.js');
 
 /**
  * Create Express server.
