@@ -1,14 +1,26 @@
+/**
+ * Configure RequireJS
+ */
 requirejs.config({
-
-  baseUrl: 'lib',
+    
+  baseUrl: '/../scripts',
   
   paths: {
-    jquery: 'libs/jquery/dist/jquery.min.js',
-    bootstrap: 'libs/bootstrap/dist/js/bootstrap.min.js'
+    api: '/scripts/app/api_service',
+    jquery: '/libs/jquery/dist/jquery.min',
+    underscore: '/libs/underscore/underscore-min',
+    bootstrap: '/libs/bootstrap/dist/js/bootstrap.min',
+    backbone: '/libs/backbone/backbone'
   }
 
 });
 
-require([], function() {
-  
+/**
+ * Load application
+ */
+requirejs([
+    'app/main',
+    'app/foursquare_search'
+], function() {
+    console.log('App loaded.');
 });
