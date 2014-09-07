@@ -47,20 +47,20 @@ describe("Hedgehog", function() {
       });
     });
     describe("Twitter", function() {
-      it("should have consumerKey", function() {
-        Hedgehog.oauth.Twitter.should.have.property("consumerKey");
-        Hedgehog.oauth.Twitter.consumerKey.should.not.equal(null);
-        Hedgehog.oauth.Twitter.consumerKey.should.not.equal(undefined);
+      it("should have consumer_key", function() {
+        Hedgehog.oauth.Twitter.should.have.property("consumer_key");
+        Hedgehog.oauth.Twitter.consumer_key.should.not.equal(null);
+        Hedgehog.oauth.Twitter.consumer_key.should.not.equal(undefined);
       });
-      it("should have consumerSecret", function() {
-        Hedgehog.oauth.Twitter.should.have.property("consumerSecret");
-        Hedgehog.oauth.Twitter.consumerSecret.should.not.equal(null);
-        Hedgehog.oauth.Twitter.consumerSecret.should.not.equal(undefined);
+      it("should have consumer_secret", function() {
+        Hedgehog.oauth.Twitter.should.have.property("consumer_secret");
+        Hedgehog.oauth.Twitter.consumer_secret.should.not.equal(null);
+        Hedgehog.oauth.Twitter.consumer_secret.should.not.equal(undefined);
       });
-      it("should have callbackURL", function() {
-        Hedgehog.oauth.Twitter.should.have.property("callbackURL");
-        Hedgehog.oauth.Twitter.callbackURL.should.not.equal(null);
-        Hedgehog.oauth.Twitter.callbackURL.should.not.equal(undefined);
+      it("should have callback_url", function() {
+        Hedgehog.oauth.Twitter.should.have.property("callback_url");
+        Hedgehog.oauth.Twitter.callback_url.should.not.equal(null);
+        Hedgehog.oauth.Twitter.callback_url.should.not.equal(undefined);
       });
     });
     describe("Google", function() {
