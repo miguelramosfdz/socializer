@@ -85,6 +85,13 @@ module.exports = (function() {
       return url.resolve(profile.photo.prefix, '/img/user'+profile.photo.suffix);
     },
 
+    setTwitterProfile: function(token, secret, profile, callback) {
+      this.twitter.token = token;
+      this.twitter.tokenSecret = secret;
+      this.twitter.profile = profile;
+      this.save(callback);
+    },
+    
     setFoursquareProfile: function(access_token, profile, callback) {
       this.foursquare.token = access_token;
       this.foursquare.profile = profile;

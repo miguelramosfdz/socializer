@@ -6,7 +6,6 @@ var UserEmails = require('../app/views/emails/user_emails');
 /**
  * Passport Strategies
  */
-var TwitterStrategy = require('passport-twitter').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
