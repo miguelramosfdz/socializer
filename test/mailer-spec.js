@@ -1,5 +1,5 @@
+var expect = require("chai").expect;
 var sinon = require("sinon");
-var assert = require("assert");
 GLOBAL.Hedgehog = require("../.hedgehog");
 var Mailer = require("../server/mailer");
 
@@ -11,7 +11,7 @@ describe('Mailer', function() {
       Mailer.sendMailCallback = 'fooFunction';
       Mailer.transporter.sendMail = sinon.spy();
       Mailer.sendMail('foo@foo.com', 'fooSubject', 'fooText', 'fooHTML');
-      Mailer.transporter.sendMail.called.should.equal.true;
+      expect(Mailer.transporter.sendMail.called).to.equal(true);
       sinon.assert.calledWith(Mailer.transporter.sendMail, {
         from: 'fooEmail',
         to: 'foo@foo.com',

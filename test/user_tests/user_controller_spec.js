@@ -1,7 +1,6 @@
 /* jshint strict:true */
 
 var assert = require("assert");
-var should = require("should");
 var sinon = require("sinon");
 var expect = require("chai").expect;
 
