@@ -13,7 +13,6 @@ module.exports = (function() {
       useFoursquare: true
     },
 
-
     sessionSecret: process.env.SESSION_SECRET,
 
     oauth: {
