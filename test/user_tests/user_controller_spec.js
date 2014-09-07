@@ -3,7 +3,7 @@
 var assert = require("assert");
 var should = require("should");
 var sinon = require("sinon");
-var User = require("../../app/models/User");
+var expect = require("chai").expect;
 
 describe("UserController", function() {
   "use strict";
@@ -11,7 +11,7 @@ describe("UserController", function() {
   var req, user, UserController;
 
   beforeEach(function() {
-    user = new User();
+    user = require('../fixtures/user');
     user.save = sinon.spy();
     req = {
       user: user
@@ -20,36 +20,38 @@ describe("UserController", function() {
   });
 
   afterEach(function() {
+    user = null;
+    req = null;
     UserController = null;
   });
 
-   // unlinkFacebook: function(req, res) {
-   //    var user = req.user;
-   //    user.facebook.token = undefined;
-   //    user.save(function() {
-   //       res.redirect("/profile");
-   //    });
-   //  },
+  describe("#unlinkGoogle", function() {
+    it("should set google token to undefined", function() {
+      UserController.unlinkGoogle(req);
+      expect(user.google.token).to.equal(undefined);
+    });
+  });
 
-    // unlinkGoogle: function(req, res) {
-    //   var user = req.user;
-    //   user.google.token = undefined;
-    //   user.save(function() {
-    //      res.redirect("/profile");
-    //   });
-    // },
+  describe("#unlinkFacebook", function() {
+    it("should set facebook token to undefined", function() {
+      UserController.unlinkFacebook(req);
+      expect(user.facebook.token).to.equal(undefined);
+    });
+  });
 
-    // unlinkFoursquare: function(req, res) {
-    //   var user = req.user;
-    //   user.foursquare.token = undefined;
-    //   user.save(function() {
-    //      res.redirect("/profile");
-    //   });
-    // }
-  describe("#unlinkTwitter", function() {
-    it("should set foursquare token to undefined", function() {
+  describe("#unlinkFoursquare", function() {
+    it("should set foursquare token and profile to undefined", function() {
       UserController.unlinkFoursquare(req);
-      user.foursquare.token.should.eq(undefined);
+      expect(user.foursquare.token).to.equal(undefined);
+      expect(user.foursquare.profile).to.equal(undefined);
+    });
+  });
+
+  describe("#unlinkTwitter", function() {
+    it("should set twitter token to undefined", function() {
+      UserController.unlinkTwitter(req);
+      expect(user.twitter.token).to.equal(undefined);
+      expect(user.twitter.profile).to.equal(undefined);
     });
   });
 

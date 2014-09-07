@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node server/main.js",
-    "test": "mocha test"
+    "test": "mocha --recursive"
   },
   "dependencies": {
     "assert": "^1.1.2",
@@ -39,7 +39,7 @@
     "twit": "*"
   },
   "devDependencies": {
-    "chai": "*",
+    "chai": "^1.9.1",
     "gulp": "^3.8.7",
     "gulp-concat": "^2.3.4",
     "gulp-jshint": "^1.8.4",

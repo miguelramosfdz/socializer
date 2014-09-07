@@ -60,6 +60,7 @@ module.exports = (function() {
     unlinkTwitter: function(req, res) {
       var user = req.user;
       user.twitter.token = undefined;
+      user.twitter.profile = undefined;
       user.save(unlinkCallback("Twitter", req, res));
     },
 
@@ -78,9 +79,10 @@ module.exports = (function() {
     unlinkFoursquare: function(req, res) {
       var user = req.user;
       user.foursquare.token = undefined;
+      user.foursquare.profile = undefined;
       user.save(unlinkCallback("Foursquare", req, res));
     }
-    
+
   };
 
 })();
