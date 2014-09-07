@@ -1,7 +1,7 @@
 var sinon = require("sinon");
 var assert = require("assert");
+GLOBAL.Hedgehog = require("../.hedgehog");
 var Mailer = require("../server/mailer");
-var Hedgehog = require("../.hedgehog");
 
 describe('Mailer', function() {
 
