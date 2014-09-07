@@ -4,7 +4,15 @@ module.exports = (function() {
 
     port: 4000,
 
-    appName: 'Hedgehog',
+    appName: "Hedgehog",
+
+    social: {
+      useFacebook: true,
+      useTwitter: true,
+      useGoogle: true,
+      useFoursquare: true
+    },
+
 
     sessionSecret: process.env.SESSION_SECRET,
 
