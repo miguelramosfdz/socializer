@@ -1,6 +1,8 @@
 module.exports = (function() {
   'use strict';
 
+  var REST = require('restler');
+
   /**
    * Module dependencies.
    */
@@ -75,6 +77,22 @@ module.exports = (function() {
    * @type {mongoose.Schema.methods}
    */
   UserSchema.methods = {
+
+    GithubApi: function() {
+      var user = this;
+      
+      return {
+        get: function(path, callback) {
+          REST.get([
+            "https://api.github.com/", path,
+            "?access_token=", user.github.token
+            ].join("")).on("complete", callback);
+        },
+        post: function(path, options) {
+
+        }
+      }
+    },
 
     /**
      * @desc Get Foursquare first name and last name
