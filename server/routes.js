@@ -101,9 +101,10 @@ exports.setup = function(app, passport) {
   app.get("/foursquare/checkins", Authenticate.isLoggedIn, FoursquareController.getCheckins);
   
   // Github API --------------------------------------------------------
-  app.get("/github", Authenticate.isLoggedIn, GithubController.get);
   app.get("/github/issues", Authenticate.isLoggedIn, GithubController.getIssues);
-
+  app.get("/github/rate_limit", Authenticate.isLoggedIn, GithubController.getRateLimit);
+  app.get("/views/github", Authenticate.isLoggedIn, GithubController.get);
+  
   /* Route for log-out */
   app.get("/logout", function(req, res) {
     req.logout();
