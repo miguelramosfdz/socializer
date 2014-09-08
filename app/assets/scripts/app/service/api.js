@@ -3,6 +3,10 @@ define(['jquery'], function($) {
 
   return {
 
+    getView: function(view, callback) {
+      $.get("/views/"+view, callback);
+    },
+
     /**
      * Search twitter based on query
      * @param {Object} options
