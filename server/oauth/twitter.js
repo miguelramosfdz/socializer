@@ -11,6 +11,10 @@ module.exports = function() {
   self.profile_url = "https://api.twitter.com/1.1/account/verify_credentials.json";
   self.authorize_url = "https://twitter.com/oauth/authorize?oauth_token=";
   
+  self.app_id = Hedgehog.oauth.Twitter.consumer_key;
+  self.app_secret = Hedgehog.oauth.Twitter.consumer_secret;
+  self.callback_url = Hedgehog.oauth.Twitter.callback_url;
+  
   /**
    * Twitter OAuth consumer
    * @type {oauth.OAuth}
@@ -18,10 +22,10 @@ module.exports = function() {
   self.consumer = new oauth.OAuth(
     self.request_token_url,
     self.access_token_url,
-    Hedgehog.oauth.Twitter.consumer_key,
-    Hedgehog.oauth.Twitter.consumer_secret,
+    self.app_id,
+    self.app_secret,
     "1.0A",
-    Hedgehog.oauth.Twitter.callback_url,
+    self.callback_url,
     "HMAC-SHA1"
   );
 
