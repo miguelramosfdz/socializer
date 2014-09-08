@@ -6,22 +6,22 @@ define([
   var AppRouter = Backbone.Router.extend({
     
     routes: {
-      'github': 'github',
+      'github/issues': 'githubIssues',
       'github/rate_limit': 'githubRateLimit',
  
       // Default - catch all
       '*actions': 'defaultAction'
     },
 
-    github: function() {
-      require(["app/views/github"], function(GithubPage) {
-        GithubPage.render();
+    githubIssues: function() {
+      require(["app/views/github/issues"], function(GithubIssues) {
+        GithubIssues.render();
       });
     },
 
     githubRateLimit: function() {
-      require(["app/views/github/rate_limit"], function(GithubPage) {
-        GithubPage.render();
+      require(["app/views/github/rate_limit"], function(GithubRateLimit) {
+        GithubRateLimit.render();
       });
     }
 
@@ -29,7 +29,11 @@ define([
  
   var initialize = function(options){
     var router = new AppRouter(options);
-    Backbone.history.start();
+    Backbone.history.start({
+      pushState: true,
+      hashChange: false,
+      root: "/"
+    });
   };
  
   return {
