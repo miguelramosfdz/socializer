@@ -7,6 +7,7 @@ define([
     
     routes: {
       'github': 'github',
+      'github/rate_limit': 'githubRateLimit',
  
       // Default - catch all
       '*actions': 'defaultAction'
@@ -16,7 +17,14 @@ define([
       require(["app/views/github"], function(GithubPage) {
         GithubPage.render();
       });
+    },
+
+    githubRateLimit: function() {
+      require(["app/views/github/rate_limit"], function(GithubPage) {
+        GithubPage.render();
+      });
     }
+
   });
  
   var initialize = function(options){
