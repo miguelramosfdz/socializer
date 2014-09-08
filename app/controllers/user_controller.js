@@ -81,6 +81,12 @@ module.exports = (function() {
       user.foursquare.token = undefined;
       user.foursquare.profile = undefined;
       user.save(unlinkCallback("Foursquare", req, res));
+    },
+
+    unlinkGithub: function(req, res) {
+      var user = req.user;
+      user.github.token = undefined;
+      user.save(unlinkCallback("Github", req, res));
     }
   };
 
