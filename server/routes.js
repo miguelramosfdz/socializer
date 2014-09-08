@@ -5,6 +5,8 @@ exports.setup = function(app, passport) {
 
   var TwitterOauth = require("./oauth/twitter")();
   var FoursquareOauth = require("./oauth/foursquare")();
+  var GithubOauth = require("./oauth/github")();
+
   var Authenticate = require("./authentication");
   var UserController = require("../app/controllers/user_controller");
   var FoursquareController = require("../app/controllers/foursquare_controller");
@@ -52,7 +54,8 @@ exports.setup = function(app, passport) {
   // Twitter --------------------------------
   app.get("/auth/twitter", Authenticate.isLoggedIn, TwitterOauth.get_request_token);
   app.get("/auth/twitter/callback", Authenticate.isLoggedIn, TwitterOauth.get_access_token);
-
+  app.get("/unlink/twitter", Authenticate.isLoggedIn, UserController.unlinkTwitter);
+  
   // Google ---------------------------------
   // send to google to do the authentication
   app.get("/auth/google", passport.authenticate("google", { 
@@ -66,10 +69,15 @@ exports.setup = function(app, passport) {
     res.redirect("/");
   });
 
+  // Github -------------------------------
+  app.get("/auth/github", Authenticate.isLoggedIn, GithubOauth.get_code);
+  app.get("/auth/github/callback", Authenticate.isLoggedIn, GithubOauth.get_access_token);
+  app.get("/unlink/github", Authenticate.isLoggedIn, UserController.unlinkGithub);
+
   // Foursquare -------------------------------
   app.get("/auth/foursquare", Authenticate.isLoggedIn, FoursquareOauth.get_code);
-  app.get("/auth/foursquare/profile", Authenticate.isLoggedIn, FoursquareOauth.get_profile);
   app.get("/auth/foursquare/callback", Authenticate.isLoggedIn, FoursquareOauth.get_access_token);
+  app.get("/unlink/foursquare", Authenticate.isLoggedIn, UserController.unlinkFoursquare);
 
   // Unlink accounts
   app.get("/unlink/local", Authenticate.isLoggedIn, function(req, res) {
@@ -81,18 +89,13 @@ exports.setup = function(app, passport) {
       });
   });
 
-  // Facebook -------------------------------
+  // Facebook --------------------------------------------------------------
   app.get("/unlink/facebook", Authenticate.isLoggedIn, UserController.unlinkFacebook);
 
-  // Twitter --------------------------------
-  app.get("/unlink/twitter", Authenticate.isLoggedIn, UserController.unlinkTwitter);
-
-  // Google ---------------------------------
+  // Google ----------------------------------------------------------------
   app.get("/unlink/google", Authenticate.isLoggedIn, UserController.unlinkGoogle);
-
-  // Foursquare --------------------------------
-  app.get("/unlink/foursquare", Authenticate.isLoggedIn, UserController.unlinkFoursquare);
-
+  
+  // Foursquare API --------------------------------------------------------
   app.get("/foursquare", Authenticate.isLoggedIn, FoursquareController.get);
   app.get("/foursquare/checkins", Authenticate.isLoggedIn, FoursquareController.getCheckins);
   
