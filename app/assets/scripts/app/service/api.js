@@ -29,14 +29,18 @@ define(['jquery'], function($) {
      * @param  {Function} callback
      */
     getCheckins: function(options, callback) {
-      $.get('/foursquare/checkins', options, callback);
+      $.get('/api/foursquare/checkins', options, callback);
     },
 
     /**
      * Get Github Issues
      */
     getGithubIssues: function(options, callback) {
-      $.get('/github/issues', options || {}, callback);
+      $.get('/api/github/issues', options || {}, callback);
+    },
+
+    getGithubIssue: function(id, options, callback) {
+      $.get('/api/github/issue/'+id, options || {}, callback);
     }
   };
 

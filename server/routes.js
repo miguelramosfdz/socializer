@@ -97,11 +97,10 @@ exports.setup = function(app, passport) {
   app.get("/unlink/google", Authenticate.isLoggedIn, UserController.unlinkGoogle);
   
   // Foursquare API --------------------------------------------------------
-  app.get("/foursquare", Authenticate.isLoggedIn, FoursquareController.get);
-  app.get("/foursquare/checkins", Authenticate.isLoggedIn, FoursquareController.getCheckins);
+  app.get("/api/foursquare/checkins", Authenticate.isLoggedIn, FoursquareController.getCheckins);
   
   // Github API --------------------------------------------------------
-  app.get("/github/issues", Authenticate.isLoggedIn, GithubController.getIssues);
+  app.get("/api/github/issues", Authenticate.isLoggedIn, GithubController.getIssues);
   app.get("/views/github/rate_limit", Authenticate.isLoggedIn, GithubController.getRateLimit);
   app.get("/views/github", Authenticate.isLoggedIn, GithubController.get);
   
