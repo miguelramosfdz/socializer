@@ -6,7 +6,7 @@ define([
   "app/collection/issues"
 ], function($, _, Backbone, API, Issues) {
   
-  var GithubView = Backbone.View.extend({
+  var IssuesView = Backbone.View.extend({
 
     el: '#content',
 
@@ -38,5 +38,5 @@ define([
 
   });
 
-  return new GithubView();
+  return new IssuesView();
 });
