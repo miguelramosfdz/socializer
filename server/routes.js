@@ -102,7 +102,7 @@ exports.setup = function(app, passport) {
   
   // Github API --------------------------------------------------------
   app.get("/github/issues", Authenticate.isLoggedIn, GithubController.getIssues);
-  app.get("/github/rate_limit", Authenticate.isLoggedIn, GithubController.getRateLimit);
+  app.get("/views/github/rate_limit", Authenticate.isLoggedIn, GithubController.getRateLimit);
   app.get("/views/github", Authenticate.isLoggedIn, GithubController.get);
   
   /* Route for log-out */
