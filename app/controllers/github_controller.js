@@ -18,7 +18,9 @@ module.exports = (function() {
 
     getRateLimit: function(req, res, nex) {
       req.user.GithubApi().get("rate_limit", function(data) {
-        res.json(data);
+        res.render("social/github/rate_limit", { 
+          data: data.resources
+        });
       });
     }
 
