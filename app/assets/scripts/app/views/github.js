@@ -8,16 +8,22 @@ define([
   
   var GithubView = Backbone.View.extend({
 
-    el: '#github-issues',
+    el: '#content',
 
     collection: Issues,
 
     render: function() {
       var self = this;
+
+      API.getView("github", function(html) {
+        self.$el.html(html);
+      });
+
       API.getGithubIssues(null, function(issues) {
         _.each(issues, function(issue) {
           self.collection.add(issue);
         });
+        
         /**
          * Show total amount of issues
          */
@@ -26,7 +32,7 @@ define([
         /**
          * Render issues grouped by repository
          */
-        self.$el.html(self.collection.renderIssues());
+        $("#github-issues").html(self.collection.renderIssues());
       });
     }
 
