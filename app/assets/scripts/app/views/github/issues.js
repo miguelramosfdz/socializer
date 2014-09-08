@@ -3,7 +3,7 @@ define([
   "underscore",
   "backbone",
   "api",
-  "app/collection/issues"
+  "app/collection/github/issues"
 ], function($, _, Backbone, API, Issues) {
   
   var IssuesView = Backbone.View.extend({

@@ -2,7 +2,7 @@ define([
   "jquery",
   "underscore",
   "backbone",
-  "app/model/issue"
+  "app/model/github/issue"
 ],function($, _, Backbone, Issue) {
 
   var Issues = Backbone.Collection.extend({

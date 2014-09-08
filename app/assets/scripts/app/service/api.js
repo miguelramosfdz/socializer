@@ -39,8 +39,8 @@ define(['jquery'], function($) {
       $.get('/api/github/issues', options || {}, callback);
     },
 
-    getGithubIssue: function(id, options, callback) {
-      $.get('/api/github/issue/'+id, options || {}, callback);
+    getGithubIssue: function(issue, callback) {
+      $.get('/api/github/issue/', { url: issue.get('url') }, callback);
     }
   };
 

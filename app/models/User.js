@@ -82,16 +82,22 @@ module.exports = (function() {
       var user = this;
       
       return {
-        get: function(path, callback) {
-          REST.get([
+        get: function(path, callback, needBase) {
+          if (needBase) {
+            REST.get([
             "https://api.github.com/", path,
             "?access_token=", user.github.token
             ].join("")).on("complete", callback);
+          } else {
+            REST.get([
+              path, "?access_token=", user.github.token
+            ].join("")).on("complete", callback);
+          }
         },
         post: function(path, options) {
 
         }
-      }
+      };
     },
 
     /**
