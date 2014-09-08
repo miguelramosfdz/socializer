@@ -6,11 +6,18 @@ define([
   var AppRouter = Backbone.Router.extend({
     
     routes: {
+      'foursquare': 'foursquare',
       'github/issues': 'githubIssues',
       'github/rate_limit': 'githubRateLimit',
  
       // Default - catch all
       '*actions': 'defaultAction'
+    },
+
+    foursquareMap: function() {
+      require(["app/views/foursquare/checkins"], function(CheckinsView) {
+        CheckinsView.render();
+      });
     },
 
     githubIssues: function() {
