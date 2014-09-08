@@ -36,6 +36,11 @@ module.exports = (function() {
         client_id: process.env.FOURSQUARE_CLIENT_ID,
         client_secret: process.env.FOURSQUARE_CLIENT_SECRET,
         callback_url: process.env.FOURSQUARE_CALLBACK_URL
+      },
+      Github: {
+        client_id: process.env.GITHUB_APP_ID,
+        client_secret: process.env.GITHUB_APP_SECRET,
+        callback_url: process.env.GITHUB_CALLBACK_URL
       }
     },
     
