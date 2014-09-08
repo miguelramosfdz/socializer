@@ -6,7 +6,7 @@ requirejs.config({
   baseUrl: '/../scripts',
   
   paths: {
-    api: '/scripts/app/api_service',
+    api: '/scripts/app/service/api',
     jquery: '/libs/jquery/dist/jquery.min',
     underscore: '/libs/underscore/underscore-min',
     bootstrap: '/libs/bootstrap/dist/js/bootstrap.min',
@@ -20,8 +20,10 @@ requirejs.config({
  */
 requirejs([
     'app/main',
+    'app/router',
     'app/foursquare_search'
-], function() {
+], function(Main, Router, FoursquareSearch) {
+  Router.initialize();
   $('.container').height($(window).height());
   console.log('App loaded.');
 });
