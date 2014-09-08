@@ -2,8 +2,12 @@ extends ../layout
 
 block content
   .row
-    .col-md-offset-1.col-md-10
-      #checkins-map
+    
+    .col-md-6
+      div.panel.panel-default
+        div.panel-heading
+          h3.panel-title.text-center Checkins
+        ul.list-group#checkins
 
-    .col-md-offset-1.col-md-10
-      ul.list-group#checkins
+    .col-md-6.checkins
+      #checkins-map
