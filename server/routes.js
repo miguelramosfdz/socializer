@@ -10,7 +10,8 @@ exports.setup = function(app, passport) {
   var Authenticate = require("./authentication");
   var UserController = require("../app/controllers/user_controller");
   var FoursquareController = require("../app/controllers/foursquare_controller");
-
+  var GithubController = require("../app/controllers/github_controller");
+  
   // Route for serving templates
   app.get("/partials/:type/:file", function(req, res) {
     res.render("partials/"+req.params.type+"/"+req.params.file);
@@ -99,6 +100,10 @@ exports.setup = function(app, passport) {
   app.get("/foursquare", Authenticate.isLoggedIn, FoursquareController.get);
   app.get("/foursquare/checkins", Authenticate.isLoggedIn, FoursquareController.getCheckins);
   
+  // Github API --------------------------------------------------------
+  app.get("/github", Authenticate.isLoggedIn, GithubController.get);
+  app.get("/github/issues", Authenticate.isLoggedIn, GithubController.getIssues);
+
   /* Route for log-out */
   app.get("/logout", function(req, res) {
     req.logout();
