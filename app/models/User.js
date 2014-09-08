@@ -52,7 +52,14 @@ module.exports = (function() {
         email: String,
         name: String,
         profile: Schema.Types.Mixed
-    }
+    },
+    github: {
+      id: String,
+      token: String,
+      email: String,
+      name: String,
+      profile: Schema.Types.Mixed
+    },
   });
 
   /**
@@ -100,6 +107,12 @@ module.exports = (function() {
 
     getFoursquareParams: function() {
       return '?oauth_token='+this.foursquare.token+'&v=20140714';
+    },
+
+    setGithubProfile: function(token, profile, callback) {
+      this.github.token = token;
+      this.github.profile = profile;
+      this.save(callback);
     },
 
     is_connected: function() {
