@@ -1,18 +1,13 @@
 define([
   "jquery",
   "underscore",
-  "backbone"
-],function($, _, Backbone) {
+  "backbone",
+  "app/views/github/issue"
+],function($, _, Backbone, IssueView) {
 
   var Issue = Backbone.Model.extend({
 
-    tpl: _.template([
-      "<li class='list-group-item'>",
-        "<h4>",
-          "<a href='<%= html_url %>'><%= title %></a>",
-        "</h4>",
-      "</li>"
-    ].join("")),
+    view: IssueView,
 
     constructor: function(data, foo) {
       data.repo = data.repository.full_name;
@@ -20,7 +15,7 @@ define([
     },
 
     render: function() {
-      return this.tpl(this.attributes);
+      return this.view.render(this);
     }
 
   });

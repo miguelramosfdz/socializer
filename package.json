@@ -30,7 +30,8 @@
     "passport-facebook": "^1.0.3",
     "passport-google-oauth": "^0.1.5",
     "passport-local": "^1.0.0",
-    "restler": "^3.2.2"
+    "restler": "^3.2.2",
+    "underscore": "^1.7.0"
   },
   "devDependencies": {
     "chai": "^1.9.1",
