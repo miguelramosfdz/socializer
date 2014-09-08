@@ -19,10 +19,8 @@ requirejs.config({
  * Load application
  */
 requirejs([
-    'app/main',
-    'app/router',
-    'app/foursquare_search'
-], function(Main, Router, FoursquareSearch) {
+  'app/router'
+], function(Router) {
   Router.initialize();
   $('.container').height($(window).height());
   console.log('App loaded.');
