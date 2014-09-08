@@ -22,5 +22,6 @@ requirejs([
     'app/main',
     'app/foursquare_search'
 ], function() {
-    console.log('App loaded.');
+  $('.container').height($(window).height());
+  console.log('App loaded.');
 });
