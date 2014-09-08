@@ -1,0 +1,27 @@
+.row
+  .page-header
+    h1 
+      i.fa.fa-github     
+      |      Rate Limit
+
+  .panel.panel-default
+    .panel-heading
+      h3 Core
+    .panel-body
+      h4 
+        | Limit:    
+        small= data.core.limit
+      h4
+        | Remaining:     
+        small= data.core.remaining
+
+  .panel.panel-default
+    .panel-heading
+      h3 Search
+    .panel-body
+      h4 
+        | Limit:    
+        small= data.search.limit
+      h4
+        | Remaining:     
+        small= data.search.remaining
