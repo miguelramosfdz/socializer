@@ -50,12 +50,30 @@ block content
             div.list-group-item
               h4 Foursquare
               - if (current_user.foursquare.token)
-                p= current_user.foursquareName()
+                p
+                  b Name:    
+                  = current_user.foursquareName()
                 a.btn.btn-info(href="/unlink/foursquare") 
                   i.fa.fa-foursquare     Unlink Foursquare
               - else
                 a.btn.btn-danger(href="/auth/foursquare")
                   i.fa.fa-foursquare     Connect Foursquare
+
+            //- Github
+            div.list-group-item
+              h4 Github
+              - if (current_user.github.token)
+                p 
+                  b Name:    
+                  = current_user.github.profile.name
+                p
+                  b Login:    
+                  = current_user.github.profile.login
+                a.btn.btn-info(href="/unlink/github") 
+                  i.fa.fa-github     Unlink Github
+              - else
+                a.btn.btn-danger(href="/auth/github")
+                  i.fa.fa-github     Connect Github
                   
     .row
       .col-md-offset-2.col-md-8
