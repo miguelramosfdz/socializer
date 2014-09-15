@@ -1,118 +1,80 @@
 /* jshint strict:true */
 
-exports.setup = function(app, passport) {
+exports.setup = function(app) {
   "use strict";
 
-  var TwitterOauth = require("./oauth/twitter")();
-  var FoursquareOauth = require("./oauth/foursquare")();
-  var GithubOauth = require("./oauth/github")();
-
-  var Authenticate = require("./authentication");
-  var UserController = require("../app/controllers/user_controller");
-  var FoursquareController = require("../app/controllers/foursquare_controller");
-  var GithubController = require("../app/controllers/github_controller");
+  /**
+   * Oauth Strategies
+   */
+  var TwitterOauth = Sentinal.strategies.Twitter();
+  var GithubOauth = Sentinal.strategies.Github();
+  var FoursquareOauth = Sentinal.strategies.Foursquare();
+  var FacebookOauth = Sentinal.strategies.Facebook();
+  var GoogleOauth = Sentinal.strategies.Google();
   
-  // Route for serving templates
-  app.get("/partials/:type/:file", function(req, res) {
-    res.render("partials/"+req.params.type+"/"+req.params.file);
-  });
+  /**
+   * Controllers
+   */
+  var AppController = require("../app/controllers/app_controller");
+  var ApiController = require("../app/controllers/api_controller");
+  var UserController = require("../app/controllers/user_controller");
+  
+  // User --------------------------------------------------------------
+  app.get("/account", Sentinal.isLoggedIn, UserController.getAccount);
+  app.get("/account/delete", Sentinal.isLoggedIn, UserController.deleteAccount);
+  app.post("/reset-password", Sentinal.isLoggedIn, UserController.resetPassword);
+  
+  // Log Out
+  app.get("/logout", UserController.logOut);
 
-  /* Route for getting current user */
-  app.get("/api/user", function(req, res) {
-    res.send(req.isAuthenticated() ? { user: req.user } : { message: "No user signed in" });
-  });
+  // Local Log In -------------------------------
+  app.get("/login", Sentinal.isNotLoggedIn, UserController.getLogIn);
+  app.post("/login", Sentinal.isNotLoggedIn, UserController.logIn);
 
-  app.get("/account", Authenticate.isLoggedIn, UserController.getAccount);
+  // Local Sign Up
+  app.get("/signup", Sentinal.isNotLoggedIn, UserController.getSignUp);
+  app.post("/signup", Sentinal.isNotLoggedIn, UserController.signUp);
 
-  app.post("/reset-password", Authenticate.isLoggedIn, UserController.resetPassword);
+  // Facebook ---------------------------------
+  app.get("/auth/facebook", FacebookOauth.authorize);
+  app.get("/auth/facebook/callback", 
+    FacebookOauth.authorize_callback(UserController.linkFacebook));
+  app.get("/unlink/facebook", Sentinal.isLoggedIn, UserController.unlinkFacebook);
 
-  /* Route for log-in */
-  app.get("/login", Authenticate.isNotLoggedIn, UserController.getLogIn);
-  app.post("/login", passport.authenticate("local-login", { 
-    successRedirect: "/account",
-    failureRedirect: "/" 
-  }));
-
-  /* Route for sign-up */
-  app.get("/signup", Authenticate.isNotLoggedIn, UserController.getSignUp);
-  app.post("/signup", passport.authenticate("local-signup", { 
-    successRedirect: "/account",
-    failureRedirect: "/" 
-  }));
-
-  // facebook -------------------------------
-  // send to facebook to do the authentication
-  app.get("/auth/facebook", passport.authenticate("facebook", { 
-    scope: "email" 
-  }));
-
-  // handle the callback after facebook has authenticated the user
-  app.get("/auth/facebook/callback", passport.authenticate("facebook", {
-    successRedirect: "/account",
-    failureRedirect: "/"
-  }));
+  // Google ---------------------------------
+  app.get("/auth/google", GoogleOauth.authorize);
+  app.get("/auth/google/callback", GoogleOauth.authorize_callback(UserController.linkGoogle));
+  app.get("/unlink/google", Sentinal.isLoggedIn, UserController.unlinkGoogle);
 
   // Twitter --------------------------------
-  app.get("/auth/twitter", Authenticate.isLoggedIn, TwitterOauth.get_request_token);
-  app.get("/auth/twitter/callback", Authenticate.isLoggedIn, TwitterOauth.get_access_token);
-  app.get("/unlink/twitter", Authenticate.isLoggedIn, UserController.unlinkTwitter);
-  
-  // Google ---------------------------------
-  // send to google to do the authentication
-  app.get("/auth/google", passport.authenticate("google", { 
-    scope: "email profile"
-  }));
-
-  // the callback after google has authorized the user
-  app.get("/auth/google/callback", passport.authenticate("google", { 
-    failureRedirect: "/login"
-  }), function(req, res) {
-    res.redirect("/");
-  });
-
-  // Github -------------------------------
-  app.get("/auth/github", Authenticate.isLoggedIn, GithubOauth.get_code);
-  app.get("/auth/github/callback", Authenticate.isLoggedIn, GithubOauth.get_access_token);
-  app.get("/unlink/github", Authenticate.isLoggedIn, UserController.unlinkGithub);
+  app.get("/auth/twitter", Sentinal.isLoggedIn, TwitterOauth.authorize);
+  app.get("/auth/twitter/callback", 
+    Sentinal.isLoggedIn, 
+    TwitterOauth.authorizeCallback(UserController.linkTwitter));
+  app.get("/unlink/twitter", Sentinal.isLoggedIn, UserController.unlinkTwitter);
 
   // Foursquare -------------------------------
-  app.get("/auth/foursquare", Authenticate.isLoggedIn, FoursquareOauth.get_code);
-  app.get("/auth/foursquare/callback", Authenticate.isLoggedIn, FoursquareOauth.get_access_token);
-  app.get("/unlink/foursquare", Authenticate.isLoggedIn, UserController.unlinkFoursquare);
+  app.get("/auth/foursquare", Sentinal.isLoggedIn, FoursquareOauth.authorize);
+  app.get("/auth/foursquare/callback", 
+    Sentinal.isLoggedIn,
+    FoursquareOauth.authorize_callback(UserController.linkFoursquare));
+  app.get("/unlink/foursquare", Sentinal.isLoggedIn, UserController.unlinkFoursquare);
 
-  // Unlink accounts
-  app.get("/unlink/local", Authenticate.isLoggedIn, function(req, res) {
-      var user = req.user;
-      user.local.email    = undefined;
-      user.local.password = undefined;
-      user.save(function() {
-          res.redirect("/profile");
-      });
-  });
+  // Github -------------------------------
+  app.get("/auth/github", Sentinal.isLoggedIn, GithubOauth.authorize);
+  app.get("/auth/github/callback", 
+    Sentinal.isLoggedIn,
+    GithubOauth.authorizeCallback(UserController.linkGithub));
+  app.get("/unlink/github", Sentinal.isLoggedIn, UserController.unlinkGithub);
 
-  // Facebook --------------------------------------------------------------
-  app.get("/unlink/facebook", Authenticate.isLoggedIn, UserController.unlinkFacebook);
+  // API -------------------------------
+  app.get("/api/me", ApiController.getMe);
 
-  // Google ----------------------------------------------------------------
-  app.get("/unlink/google", Authenticate.isLoggedIn, UserController.unlinkGoogle);
+  // App Routes
+  app.get("*", AppController.getCatchAll);
+  app.get("/about", AppController.getAbout);
+  app.get("/templates/:type/:file", AppController.getPartial);
   
-  // Foursquare API --------------------------------------------------------
-  app.get("/api/foursquare/checkins", Authenticate.isLoggedIn, FoursquareController.getCheckins);
   
-  // Github API --------------------------------------------------------
-  app.get("/api/github/issues", Authenticate.isLoggedIn, GithubController.getIssues);
-  app.get("/views/github/rate_limit", Authenticate.isLoggedIn, GithubController.getRateLimit);
-  app.get("/views/github", Authenticate.isLoggedIn, GithubController.get);
-  
-  /* Route for log-out */
-  app.get("/logout", function(req, res) {
-    req.logout();
-    res.redirect("/");
-  });
-
-  // Catch-all Route
-  app.get("*", function(req, res){
-    res.render("home", { user: req.user });
-  });
 
 };

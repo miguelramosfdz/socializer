@@ -3,7 +3,7 @@ Hedgehog
 
 ![hedgehog](app/assets/images/hedgehog.png)
 
-A NodeJS, RequireJS, BackboneJS, MongoDB boilerplate application
+A NodeJS, ExpressJS, BackboneJS, MongoDB, & Browserify boilerplate application
 
 ## Requirements
 
@@ -13,28 +13,27 @@ A NodeJS, RequireJS, BackboneJS, MongoDB boilerplate application
 ## Set Up
 
 1. Set Up Environment Variables
+
   - SESSION_SECRET
 
+  - BASE_URL
+  
   For Facebook API:
   - FACEBOOK_APP_ID
   - FACEBOOK_APP_SECRET
-  - FACEBOOK_CALLBACK_URL
 
   For Twitter API:
   - TWITTER_CONSUMER_KEY
   - TWITTER_CONSUMER_SECRET
-  - TWITTER_CALLBACK_URL
   
   For Google API:
   - GOOGLE_REALM
   - GOOGLE_CLIENT_ID
   - GOOGLE_CLIENT_SECRET
-  - GOOGLE_CALLBACK_URL
 
   For Foursquare API:
   - FOURSQUARE_CLIENT_ID
   - FOURSQUARE_CLIENT_SECRET
-  - FOURSQUARE_CALLBACK_URL
 
   For NodeMailer:
   - MAILER_SERVICE

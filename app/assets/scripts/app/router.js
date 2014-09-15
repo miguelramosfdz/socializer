@@ -1,49 +1,44 @@
-define([
-  'jquery',
-  'underscore',
-  'backbone'
-], function ($, _, Backbone) {
-  var AppRouter = Backbone.Router.extend({
-    
-    routes: {
-      'foursquare': 'foursquare',
-      'github/issues': 'githubIssues',
-      'github/rate_limit': 'githubRateLimit',
- 
-      // Default - catch all
-      '*actions': 'defaultAction'
-    },
+window.$ = require("jquery");
+window._ = require("underscore");
+window.Backbone = require("backbone");
+Backbone.$ = $;
 
-    foursquareMap: function() {
-      require(["app/views/foursquare/checkins"], function(CheckinsView) {
-        CheckinsView.render();
-      });
-    },
+var FoursquareController = require("./foursquare/routes");
 
-    githubIssues: function() {
-      require(["app/views/github/issues"], function(GithubIssues) {
-        GithubIssues.render();
-      });
-    },
+var AppRouter = Backbone.Router.extend({
+  
+  routes: {
+    "foursquare": "foursquare",
+    "github/issues": "githubIssues",
+    "github/rate_limit": "githubRateLimit",
 
-    githubRateLimit: function() {
-      require(["app/views/github/rate_limit"], function(GithubRateLimit) {
-        GithubRateLimit.render();
-      });
-    }
+    // Default - catch all
+    "*actions": "defaultAction"
+  },
 
-  });
- 
-  var initialize = function(options){
-    var router = new AppRouter(options);
-    Backbone.history.start({
-      pushState: true,
-      hashChange: false,
-      root: "/"
+  foursquare: FoursquareController.checkinsRoute,
+
+  githubIssues: function() {
+    require(["app/views/github/issues"], function(GithubIssues) {
+      GithubIssues.render();
     });
-  };
- 
-  return {
-    initialize: initialize
-  };
+  },
+
+  githubRateLimit: function() {
+    require(["app/views/github/rate_limit"], function(GithubRateLimit) {
+      GithubRateLimit.render();
+    });
+  }
+
 });
+
+var initialize = function(){
+  var router = new AppRouter();
+  Backbone.history.start({
+    pushState: true
+  });
+};
+
+module.exports = {
+  initialize: initialize
+};

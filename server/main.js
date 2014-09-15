@@ -7,16 +7,19 @@ var lusca = require('lusca');
 var logger = require('morgan');
 var express = require('express');
 var mongoose = require('mongoose');
-var passport = require('passport');
 var flash = require('express-flash');
 var compress = require('compression');
 var bodyParser = require('body-parser');
-var session = require('express-session');
 var errorHandler = require('errorhandler');
 var cookieParser = require('cookie-parser');
 var methodOverride = require('method-override');
-var expressValidator = require('express-validator');
-var MongoStore = require('connect-mongo')({ session: session });
+var express_session = require('express-session');
+var express_validator = require('express-validator');
+var MongoStore = require('connect-mongo')(express_session);
+
+var hour = 3600000;
+var day = hour * 24;
+var week = day * 7;
 
 /**
  * Set Hedgehog as global variable
@@ -25,25 +28,40 @@ var MongoStore = require('connect-mongo')({ session: session });
 GLOBAL.Hedgehog = require('../.hedgehog.js');
 
 /**
+ * Set Sentinal as global variable
+ * @type {Object}
+ */
+GLOBAL.Sentinal = require('./sentinal/sentinal');
+
+/**
+ * Set App as global variable
+ * @type {Object}
+ */
+GLOBAL.App = {};
+
+/**
+ * Set up  global user model
+ * @type {User}
+ */
+GLOBAL.App.User = require('../app/models/User');
+
+
+/**
+ * Set up global mailer
+ * @type {Mailer}
+ */
+GLOBAL.App.Mailer = require('./mailer');
+
+/**
  * Application dependencies
  */
 var db = require('./db');
 var routes = require('./routes');
-var auth = require('./authentication');
 
 /**
  * Create Express server.
  */
 var app = express();
-
-var hour = 3600000;
-var day = hour * 24;
-var week = day * 7;
-
-/**
- * Set up authentication
- */
-auth.setup(passport);
 
 /**
  * Express configuration.
@@ -56,20 +74,66 @@ app.use(compress());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(expressValidator());
+app.use(express_validator());
 app.use(methodOverride());
 app.use(cookieParser());
-app.use(session({
+
+app.use(express_session({
   resave: true,
   saveUninitialized: true,
   secret: Hedgehog.sessionSecret,
   store: new MongoStore({
-    url: Hedgehog.db.sessionStore,
-    auto_reconnect: true
+    db: Hedgehog.db.session_store,
   })
 }));
-app.use(passport.initialize());
-app.use(passport.session());
+
+/**
+ * Set up Sentinal
+ */
+app.use(Sentinal.initialize());
+
+app.use(Sentinal.logger.deserialize_user(function(id, done) {
+  App.User.findOne({ _id: id }).exec(function(err, user) {
+    if (err) 
+      return done(new Error("Error connecting to database"));
+
+    if (!user)
+      return done(new Error("Invalid id."));
+
+    return done(null, user);
+  });
+}));
+
+// TODO Pull out and place into Sentinal
+app.use(function(req, res, next) {
+  console.log("Time: " + Date.now());
+
+  var getObjLength = function(obj) {
+    return Object.keys(obj).length;
+  };
+
+  var logObj = function(name, obj) {
+    console.log(name+": " + JSON.stringify(obj));
+  };
+
+  if (getObjLength(req.params)) {
+    logObj("Params", req.params);
+  }
+
+  if (getObjLength(req.body)) {
+    logObj("Body", req.body);
+  }
+
+  if (getObjLength(req.query)) {
+    logObj("Query", req.query);
+  }
+
+  for (var i = 0; i < 2; i++) {
+    console.log("");
+  }
+
+  next();
+});
 
 /**
  * Enable Lusca security
@@ -126,7 +190,7 @@ app.use(function(req, res, next) {
 /**
  * Setup routes
  */
-routes.setup(app, passport);
+routes.setup(app);
 
 /**
  * 500 Error Handler.

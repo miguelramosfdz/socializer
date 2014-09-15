@@ -7,9 +7,15 @@ var jsHint = require('gulp-jshint');
 var concatinate = require('gulp-concat');
 var nodeMonitor = require('gulp-nodemon');
 var rename = require('gulp-rename');
+var browserify = require('browserify');
+var del = require('del');
+var source = require('vinyl-source-stream');
 
 var sources = {
-  js: './app/assets/scripts/**/*.js',
+  js: {
+    dir: './app/assets/scripts/**/*.js',
+    main: './app/assets/scripts/main.js'
+  },
   styles: {
     main: './app/assets/styles/main.less',
     all: './app/assets/styles/**/*.less',
@@ -29,12 +35,25 @@ var sources = {
   ]
 };
 
-// jshint, concat, and minify client side javascript
-var clientScripts = function() {
-    gulp.src([sources.js])
-        .pipe(jsHint())
-        .pipe(jsHint.reporter(stylish))
-        .pipe(gulp.dest('public/scripts'));
+gulp.task('clean-scripts', function(done) {
+  del(['./public/scripts'], done);
+});
+
+gulp.task('clean-styles', function(done) {
+  del(['./public/styles'], done);
+});
+
+gulp.task("jshint", function() {
+  gulp.src(sources.js.dir)
+      .pipe(jsHint())
+      .pipe(jsHint.reporter(stylish));
+});
+
+var browserifyClient = function() {
+  browserify(sources.js.main)
+      .bundle()
+      .pipe(source('bundle.js'))
+      .pipe(gulp.dest('public/scripts'));
 };
 
 
@@ -55,25 +74,45 @@ var stylesTask = function() {
 
 // Watch for file changes
 var watchTask = function() {
-  gulp.src(sources.styles.all).pipe(watch(stylesTask));
-  gulp.src(sources.js).pipe(watch(clientScripts));
-  gulp.src(sources.backend).pipe(watch(serverScripts));
+  gulp.src(sources.styles.all).pipe(watch({
+    glob: sources.styles.all
+  }, function() {
+    gulp.start('less');
+  }));
+
+  gulp.src(sources.js.dir).pipe(watch({
+    glob: 'app/assets/scripts/**/*.js'
+  }, function() {
+    gulp.start('scripts');
+  }));
+
+  gulp.src(sources.backend).pipe(watch({
+    glob: sources.backend 
+  }, function() {
+    gulp.start('lint-backend');
+  }));
+
 };
 
 // Start Express server with nodemon
 var serverTask = function() {
   nodeMonitor({
     script: 'server/main.js',
-    ignore: ['./node_modules', './public'],
+    ignore: [
+      './.git/',
+      './node_modules', 
+      './public/',
+      './app/assets'
+    ],
     nodeArgs: ['--debug']
   });
 };
 
 // Define Tasks
-gulp.task('scripts', clientScripts);
-gulp.task('lint-backend', serverScripts);
-gulp.task('less', stylesTask);
 gulp.task('watch', watchTask);
 gulp.task('server', serverTask);
+gulp.task('lint-backend', serverScripts);
 gulp.task('build', [ 'less', 'scripts' ]);
-gulp.task('default', ['lint-backend', 'watch', 'build', 'server']);
+gulp.task('less', ['clean-styles'], stylesTask);
+gulp.task('scripts', ['clean-scripts'], browserifyClient);
+gulp.task('default', ['lint-backend', 'watch', 'build' ]);

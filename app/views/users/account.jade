@@ -17,7 +17,12 @@ block content
             div.list-group-item
               h4 Facebook
               - if (current_user.facebook.token)
-                p= current_user.facebook.email
+                p
+                  b Name:    
+                  = current_user.facebook.profile.name
+                p
+                  b Email:    
+                  = current_user.facebook.profile.email
                 a.btn.btn-danger(href="/unlink/facebook") 
                   span.fa.fa-facebook    Unlink Facebook
               - else
@@ -28,9 +33,19 @@ block content
             div.list-group-item
               h4 Twitter
               - if (current_user.twitter.token)
-                p= current_user.twitter.profile.name
-                a.btn.btn-danger(href="/unlink/twitter")
-                  span.fa.fa-twitter     Unlink Twitter
+                .row
+                  .col-md-4
+                    img(src=current_user.twitterPhoto())
+                  .col-md-4
+                    p 
+                      b Name:   
+                      = current_user.twitter.profile.name
+                    p
+                      b Screenname:       
+                      = current_user.twitter.profile.screen_name
+                  .col-md-4
+                    a.btn.btn-danger(href="/unlink/twitter")
+                      span.fa.fa-twitter     Unlink Twitter
               - else
                 a.btn.btn-info(href="/auth/twitter")
                   span.fa.fa-twitter     Connect Twitter
@@ -39,9 +54,19 @@ block content
             div.list-group-item
               h4 Google
               - if (current_user.google.token)
-                p= current_user.google.email
-                a.btn.btn-danger(href="/unlink/google") 
-                  span.fa.fa-google-plus     Unlink Google
+                .row
+                  .col-md-4
+                    img.social_pic(src=current_user.googlePhoto())
+                  .col-md-4
+                    p
+                      b Name:   
+                      = current_user.google.profile.displayName
+                    p
+                      b Email:   
+                      = current_user.google.email
+                  .col-md-4
+                    a.btn.btn-danger(href="/unlink/google") 
+                      span.fa.fa-google-plus     Unlink Google
               - else
                 a.btn.btn-danger(href="/auth/google")
                   span.fa.fa-google-plus     Connect Google+
@@ -50,11 +75,16 @@ block content
             div.list-group-item
               h4 Foursquare
               - if (current_user.foursquare.token)
-                p
-                  b Name:    
-                  = current_user.foursquareName()
-                a.btn.btn-info(href="/unlink/foursquare") 
-                  i.fa.fa-foursquare     Unlink Foursquare
+                .row
+                  .col-md-4
+                    img(src=current_user.foursquarePhoto())
+                  .col-md-4  
+                    p
+                      b Name:    
+                      = current_user.foursquareName()
+                  .col-md-4
+                    a.btn.btn-info(href="/unlink/foursquare") 
+                      i.fa.fa-foursquare     Unlink Foursquare
               - else
                 a.btn.btn-danger(href="/auth/foursquare")
                   i.fa.fa-foursquare     Connect Foursquare
@@ -63,14 +93,19 @@ block content
             div.list-group-item
               h4 Github
               - if (current_user.github.token)
-                p 
-                  b Name:    
-                  = current_user.github.profile.name
-                p
-                  b Login:    
-                  = current_user.github.profile.login
-                a.btn.btn-info(href="/unlink/github") 
-                  i.fa.fa-github     Unlink Github
+                .row
+                  .col-md-4
+                    img(src=current_user.github.profile.avatar_url)
+                  .col-md-4
+                    p 
+                      b Name:    
+                      = current_user.github.profile.name
+                    p
+                      b Login:    
+                      = current_user.github.profile.login
+                  .col-md-4
+                    a.btn.btn-info(href="/unlink/github") 
+                      i.fa.fa-github     Unlink Github
               - else
                 a.btn.btn-danger(href="/auth/github")
                   i.fa.fa-github     Connect Github
@@ -94,4 +129,8 @@ block content
                 input.form-control(name='password_confirmation', placeholder=' New Password Confirmation')
               .form-group
                 button.btn.btn-default Reset Password
+    
+    .row.text-center
+      a.btn.btn-danger.col-md-offset-2.col-md-8.col-sm-12(href="/account/delete") Delete Account
+
     

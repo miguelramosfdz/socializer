@@ -5,12 +5,6 @@ module.exports = (function() {
 
   return {
 
-    get: function(req, res, next) {
-      if (req.user.github.token) {
-        res.render('social/github');
-      }
-    },
-
     getIssues: function(req, res, next) {
       req.user.GithubApi().get("issues", function(data) {
         res.json(data);

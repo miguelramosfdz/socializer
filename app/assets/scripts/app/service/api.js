@@ -1,7 +1,7 @@
-define(['jquery'], function($) {
+(function() {
   "use strict";
 
-  return {
+  module.exports = {
 
     getView: function(view, callback) {
       $.get("/views/"+view, callback);
@@ -44,4 +44,4 @@ define(['jquery'], function($) {
     }
   };
 
-});
+})();

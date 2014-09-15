@@ -1,8 +1,8 @@
 module.exports = (function() {
 
   var User = require("../../app/models/User");
-  
-  return new User({
+
+  var user = new User({
     email: 'foo@foo.com',
     hashed_password: 'QWERTY',
     salt: 'ABCD',
@@ -35,5 +35,10 @@ module.exports = (function() {
       profile: null
     }
   });
+
+  return {
+    model: User,
+    instance: user
+  };
 
 })();

@@ -1,0 +1,45 @@
+describe('ApiController', function() {
+  "use strict";
+
+  var req, res, user, ApiController;
+
+  GLOBAL.App = {};
+  var sinon = require("sinon");
+  var expect = require("chai").expect;
+  var HttpFixtures = require('../fixtures/http');
+
+  beforeEach(function() {
+    ApiController = require("../../app/controllers/api_controller");
+    req = HttpFixtures.req();
+    res = HttpFixtures.res();
+  });
+
+  describe('#getMe', function() {
+    it('should return 400 if req not authenticated', function() {
+      req.isAuthenticated.returns(false);
+      ApiController.getMe(req, res);
+      expect(res.status.called).to.equal(true);
+      expect(res.status.args[0][0]).to.equal(401);
+    });
+    it('should return send correct json if user not authenticated', function() {
+      req.isAuthenticated.returns(false);
+      ApiController.getMe(req, res);
+      expect(res.json.called).to.equal(true);
+      expect(res.json.args[0][0].message).to.equal("No user signed in.");
+    });
+    it('should return 200 if req is authenticated', function() {
+      req.isAuthenticated.returns(true);
+      ApiController.getMe(req, res);
+      expect(res.status.called).to.equal(true);
+      expect(res.status.args[0][0]).to.equal(200);
+    });
+    it('should return send correct json if user not authenticated', function() {
+      req.isAuthenticated.returns(true);
+      req.user = "foo";
+      ApiController.getMe(req, res);
+      expect(res.json.called).to.equal(true);
+      expect(res.json.args[0][0].user).to.equal("foo");
+    });
+  });
+
+});

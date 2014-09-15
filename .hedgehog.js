@@ -1,63 +1,70 @@
 module.exports = (function() {
 
-  return {
+  var config =  {};
 
-    port: 4000,
+  config.port = 4000;
 
-    appName: "Socializer",
+  config.appName = "Socializer";
 
-    social: {
-      useFacebook: true,
-      useTwitter: true,
-      useGoogle: true,
-      useFoursquare: true
-    },
+  config.session_ttl = process.env.SESSION_TTL;
+  config.sessionSecret = process.env.SESSION_SECRET;
 
-    sessionSecret: process.env.SESSION_SECRET,
+  config.baseUrl = process.env.BASE_URL || "http://127.0.0.1";
 
-    oauth: {
-      Facebook: {
-        appId: process.env.FACEBOOK_APP_ID,
-        appSecret: process.env.FACEBOOK_APP_SECRET,
-        callbackURL: process.env.FACEBOOK_CALLBACK_URL
-      },
-      Twitter: {
-        consumer_key: process.env.TWITTER_CONSUMER_KEY,
-        consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-        callback_url: process.env.TWITTER_CALLBACK_URL
-      },
-      Google: {
-        realm: process.env.GOOGLE_REALM,
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: process.env.GOOGLE_CALLBACK_URL
-      },
-      Foursquare: {
-        client_id: process.env.FOURSQUARE_CLIENT_ID,
-        client_secret: process.env.FOURSQUARE_CLIENT_SECRET,
-        callback_url: process.env.FOURSQUARE_CALLBACK_URL
-      },
-      Github: {
-        client_id: process.env.GITHUB_APP_ID,
-        client_secret: process.env.GITHUB_APP_SECRET,
-        callback_url: process.env.GITHUB_CALLBACK_URL
-      }
-    },
-    
-    db: {
-      test: 'mongodb://localhost/socializer-test',
-      development: 'mongodb://localhost/socializer-dev',
-      production: 'mongodb://localhost/socializer-prod',
-      sessionStore: 'mongodb://localhost/socializer-session'
-    },
-
-    mailer: {
-      email: process.env.MAILER_EMAIL,
-      service: process.env.MAILER_SERVICE,
-      username: process.env.MAILER_USERNAME,
-      password: process.env.MAILER_PASSWORD
-    }
-  
+  config.buildCallBackURL = function(service) {
+    return config.baseUrl+":"+config.port+"/auth/"+service+"/callback";
   };
+
+  config.social = {
+    useFacebook: true,
+    useTwitter: true,
+    useGoogle: true,
+    useFoursquare: true
+  };
+
+  config.oauth = {
+    Facebook: {
+      app_id: process.env.FACEBOOK_APP_ID,
+      app_secret: process.env.FACEBOOK_APP_SECRET,
+      callback_url: config.buildCallBackURL("facebook")
+    },
+    Twitter: {
+      consumer_key: process.env.TWITTER_CONSUMER_KEY,
+      consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+      callback_url: config.buildCallBackURL("twitter")
+    },
+    Google: {
+      realm: process.env.GOOGLE_REALM,
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      client_secret: process.env.GOOGLE_CLIENT_SECRET,
+      redirect_uri: config.buildCallBackURL("google")
+    },
+    Foursquare: {
+      client_id: process.env.FOURSQUARE_CLIENT_ID,
+      client_secret: process.env.FOURSQUARE_CLIENT_SECRET,
+      callback_url: config.buildCallBackURL("foursquare")
+    },
+    Github: {
+      client_id: process.env.GITHUB_APP_ID,
+      client_secret: process.env.GITHUB_APP_SECRET,
+      callback_url: config.buildCallBackURL("github")
+    }
+  };
+    
+  config.db = {
+    test: 'mongodb://localhost/socializer-test',
+    development: 'mongodb://localhost/socializer-dev',
+    production: 'mongodb://localhost/socializer-prod',
+    session_store: 'socializer-session'
+  };
+
+  config.mailer = {
+    email: process.env.MAILER_EMAIL,
+    service: process.env.MAILER_SERVICE,
+    username: process.env.MAILER_USERNAME,
+    password: process.env.MAILER_PASSWORD
+  };
+
+  return config;
 
 })();
