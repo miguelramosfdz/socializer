@@ -6,4 +6,4 @@ var CheckinsCollection = Backbone.Collection.extend({
 
 });
 
-module.exports = CheckinsCollection;
+module.exports = new CheckinsCollection();
