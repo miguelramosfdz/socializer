@@ -23,7 +23,7 @@
     mapEl: document.getElementById("checkins-map"),
 
     initializeMap: function() {
-      $scope.map = new google.maps.Map($scope.mapEl, {
+      this.map = new google.maps.Map(this.mapEl, {
         center: new google.maps.LatLng(-34.397, 150.644),
         zoom: 8
       });
