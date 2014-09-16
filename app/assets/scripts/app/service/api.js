@@ -4,7 +4,17 @@
   module.exports = {
 
     getView: function(view, callback) {
-      $.get("/views/"+view, callback);
+      var defer = new jQuery.Deferred();
+
+      $.get("/templates/"+view)
+        .success(function(data) {
+          defer.resolve(data);
+        })
+        .error(function(data) {
+          defer.reject(data);
+        });
+
+      return defer.promise();
     },
 
     /**
@@ -28,8 +38,18 @@
      * @param  {Object}   options
      * @param  {Function} callback
      */
-    getCheckins: function(options, callback) {
-      $.get('/api/foursquare/checkins', options, callback);
+    getCheckins: function(callback) {
+      var defer = new jQuery.Deferred();
+
+      $.get('/api/foursquare/checkins')
+        .success(function(data) {
+          defer.resolve(data);
+        })
+        .error(function(data) {
+          defer.reject(data);
+        });
+
+      return defer.promise();
     },
 
     /**
