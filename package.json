@@ -4,9 +4,10 @@
   "private": true,
   "main": "server/main.js",
   "scripts": {
+    "test": "mocha --recursive",
     "start": "node server/main.js",
-    "bundle": "browserify app/assets/scripts/main.js -o public/scripts/bundle.js",
-    "test": "mocha --recursive"
+    "build-dev": "browserify -e app/assets/scripts/main.js -t reactify -o public/scripts/bundle.dev.js -d",
+    "build-min": "browserify -e app/assets/scripts/main.js -t reactify -t uglifyify -o public/scripts/bundle.min.js"
   },
   "dependencies": {
     "async": "^0.9.0",
@@ -30,10 +31,12 @@
     "morgan": "*",
     "nodemailer": "^1.2.1",
     "oauth": "^0.9.12",
+    "react": "^0.11.2",
     "restler": "^3.2.2",
     "underscore": "^1.7.0"
   },
   "devDependencies": {
+    "browserify": "^5.11.2",
     "chai": "^1.9.1",
     "del": "^0.1.3",
     "gulp": "^3.8.7",
@@ -48,10 +51,12 @@
     "jshint-stylish": "^0.4.0",
     "matchdep": "~0.3.0",
     "mocha": "^1.21.4",
+    "reactify": "^0.14.0",
     "request": "*",
     "should": "^4.0.4",
     "sinon": "^1.10.3",
     "supertest": "^0.13.0",
+    "uglifyify": "^2.5.0",
     "vinyl-source-stream": "^1.0.0"
   }
 }
