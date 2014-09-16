@@ -1,61 +1,49 @@
 (function() {
   "use strict";
-
-  var Checkins = require("../collection/checkins");
+  
+  var Map = require("./map");
+  var CheckinView = require("./checkin");
   var API = require("../../service/api");
-
+  var Checkins = require("../collection/checkins");
+  
   var CheckinsView = Backbone.View.extend({
     
     el: "#content",
 
     collection: Checkins,
 
-    template: _.template([
-        "<li class='list-group-item'>",
-          "<div class='row'>",
-            "<div class='col-md-offset-3 col-md-6'>",
-              "<%= venue.name %> in <%= venue.location.city %>, <%= venue.location.country %>",
-            "</div>",
-          "</div>",
-        "</li>"
-      ].join('')),
-
-    mapEl: document.getElementById("checkins-map"),
-
-    initializeMap: function() {
-      this.map = new google.maps.Map(this.mapEl, {
-        center: new google.maps.LatLng(-34.397, 150.644),
-        zoom: 8
-      });
-    },
-
     render: function() {
       var self = this;
-
-      /**
-       * Initialize map
-       */
-      this.initializeMap();
+      var MapView = new Map();
+      
+      $("#content").append("<div id='checkins'></div>");
 
       /**
        * Search Foursquare for user's checkins
        */
-      API.getCheckins(function(data) {
-        $('#checkins').html('');
+      API.getCheckins()
+        .done(function(data) {
+          $('#checkins').html('');
+          var checkins = data.response.checkins.items;
+          self.collection.add(checkins);
 
-        data.response.checkins.items.forEach(function(checkin) {
-          self.collection.add(checkin);
-          var location = checkin.venue.location;
-          var latLng = new google.maps.LatLng(location.lat, location.lng);
-          var marker = new google.maps.Marker({
-              position: latLng,
-              title: checkin.venue.name
+          _.each(self.collection.models, function(checkin) {
+            var venue = checkin.get("venue");
+            var view = new CheckinView({ model: checkin });
+            var location = venue.location;
+            var latLng = new google.maps.LatLng(location.lat, location.lng);
+            var marker = new google.maps.Marker({
+                position: latLng,
+                title: venue.name
+            });
+            marker.setMap(MapView.map);
+            MapView.map.setCenter(marker.getPosition());
+            $('#checkins').append(view.render());
           });
-          marker.setMap($scope.map);
-          $scope.map.setCenter(marker.getPosition());
-          $('#checkins').append($scope.template(checkin));
+        })
+        .fail(function(data) {
+          console.log("Error:", data);
         });
-      });
     }
 
   });
