@@ -6,8 +6,8 @@ exports = module.exports = (function() {
 	 */
   var AppController = function() {};
 
-  AppController.prototype.getPartial = function(req, res, next) {
-    res.render("partials/"+req.params.type+"/"+req.params.file);
+  AppController.prototype.getTemplate = function(req, res, next) {
+    res.render("templates/"+req.params.template);
   };
 
   AppController.prototype.getAbout = function(req, res, next) {
