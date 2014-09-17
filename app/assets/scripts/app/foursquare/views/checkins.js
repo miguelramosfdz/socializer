@@ -1,8 +1,6 @@
 (function() {
   "use strict";
   
-  var MapView;
-  var Map = require("./map");
   var CheckinView = require("./checkin");
   var API = require("../../service/api");
   var Checkins = require("../collection/checkins");
@@ -10,6 +8,10 @@
   var CheckinsView = Backbone.View.extend({
     
     el: "#content",
+
+    tagName: 'div',
+
+    id: 'checkins',
 
     collection: Checkins,
 
@@ -19,6 +21,7 @@
 
     onMouseover: function(e) {
       var checkin_id, checkin, marker;
+      var MapView = App.Foursquare.views.Map;
       checkin_id = e.currentTarget.dataset.id;
 
       /**
@@ -32,11 +35,8 @@
       });
     },
 
-    render: function() {
+    initialize: function() {
       var self = this;
-      MapView = new Map();
-      
-      $("#content").append("<div id='checkins'></div>");
 
       /**
        * Search Foursquare for user's checkins
@@ -50,7 +50,7 @@
           _.each(self.collection.models, function(checkin) {
             var venue = checkin.get("venue");
             var view = new CheckinView({ model: checkin });
-            MapView.createMarker({
+            App.Foursquare.views.Map.createMarker({
               id: checkin.get("id"),
               location: venue.location,
               content: venue.name
@@ -65,6 +65,6 @@
 
   });
   
-  module.exports = new CheckinsView();
+  module.exports = CheckinsView;
 
 })();
