@@ -3,6 +3,7 @@
  */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var REST = require("restler");
 
 /**
  * @desc User Schema
@@ -69,27 +70,46 @@ UserSchema.virtual('password').set(function(password) {
  */
 UserSchema.methods = {
   
-    GithubApi: function() {
-      var user = this;
-      
-      return {
-        get: function(path, callback, needBase) {
-          if (needBase) {
-            REST.get([
-            "https://api.github.com/", path,
-            "?access_token=", user.github.token
-            ].join("")).on("complete", callback);
-          } else {
-            REST.get([
-              path, "?access_token=", user.github.token
-            ].join("")).on("complete", callback);
-          }
-        },
-        post: function(path, options) {
-
+  GithubApi: function() {
+    var user = this;
+    
+    return {
+      get: function(path, callback, needBase) {
+        if (needBase) {
+          REST.get([
+          "https://api.github.com/", path,
+          "?access_token=", user.github.token
+          ].join("")).on("complete", callback);
+        } else {
+          REST.get([
+            path, "?access_token=", user.github.token
+          ].join("")).on("complete", callback);
         }
-      };
-    },
+      },
+      post: function(path, options) {
+
+      }
+    };
+  },
+
+  FoursquareApi: function() {
+    var user = this;
+
+    return {
+      get: function(path, callback) {
+        REST.get('https://api.foursquare.com/v2/'+path, {
+          query: {
+            oauth_token: user.foursquare.token,
+            v: "20140806"
+          }
+        }).on("complete", callback);
+      },
+      post: function(path, options) {
+
+      } 
+    };
+  },
+
   /**
    * @desc Get user's Foursquare profile first name and last name
    * @return {String}
