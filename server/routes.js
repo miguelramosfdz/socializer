@@ -19,6 +19,7 @@ exports.setup = function(app) {
   var ApiController = require("../app/controllers/api_controller");
   var UserController = require("../app/controllers/user_controller");
   var FoursquareController = require("../app/controllers/foursquare_controller");
+  var GithubController = require("../app/controllers/github_controller");
 
   // User --------------------------------------------------------------
   app.get("/account", Sentinal.isLoggedIn, UserController.getAccount);
@@ -72,6 +73,7 @@ exports.setup = function(app) {
   app.get("/api/me", ApiController.getMe);
 
   app.get('/api/foursquare/checkins', FoursquareController.getCheckins);
+  app.get("/api/github/issues", GithubController.getIssues);
 
   // App Routes
   app.get("*", AppController.getCatchAll);
