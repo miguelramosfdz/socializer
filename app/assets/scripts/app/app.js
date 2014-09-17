@@ -6,6 +6,8 @@ var App = Backbone.Model.extend({
 
   models: {},
 
+  currentView: null,
+  
   Router: require("./router")
 
 });

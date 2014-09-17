@@ -5,6 +5,7 @@ module.exports = (function() {
     checkinsRoute: function() {
       var MainView = require("./views/main");
       MainView.render();
+      App.currentView = MainView;
     }
 
   };
