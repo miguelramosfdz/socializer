@@ -4,13 +4,15 @@ module.exports = (function() {
   
   return {
    
-    getCheckins: function(req, res, next) {      
-      REST.get([
-        'https://api.foursquare.com/v2/users/self/checkins',
-        req.user.getFoursquareParams()
-      ].join('')).on('complete', function(data, response) {
-        res.status(200).json(data);
-      }); 
+    getCheckins: function(req, res, next) {
+      req.user.FoursquareApi()
+        .get("users/self/checkins", function(data, response) {
+          if (data.meta.code === 400) {
+            res.status(400).json({ message: data.meta.errorDetail });
+          } else {
+            res.status(200).json(data);  
+          }
+        });
     },
 
     postSearch: function(req, res, next) {
