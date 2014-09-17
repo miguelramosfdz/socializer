@@ -17,15 +17,6 @@ describe("AppController", function() {
 		res = null;
 	});
 
-	describe("#getPartial", function() {
-		it("should call res.render with correct string", function() {
-			req.params.type = "foo";
-			req.params.file = "bar";
-			AppController.getPartial(req, res);
-			expect(res.render.calledWith("partials/foo/bar")).to.equal(true);
-		});
-	});
-
 	describe("#getAbout", function() {
     it("should call res.render with correct string", function() {
       AppController.getAbout(req, res);
