@@ -1,13 +1,11 @@
-module.exports = (function() {
+"use strict";
 
-  return {
+module.exports = {
     
-    checkinsRoute: function() {
-      var MainView = require("./views/main");
-      MainView.render();
-      App.currentView = MainView;
-    }
+  checkinsRoute: function() {
+    var MainView = require("./views/main");
+    MainView.render();
+    App.setCurrentView(MainView);
+  }
 
-  };
-
-})();
+};
