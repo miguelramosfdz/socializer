@@ -6,13 +6,10 @@ module.exports = (function() {
 
     className: 'list-group-item',
 
-    template: _.template([
-      "<div class='row'>",
-        "<div class='col-md-offset-3 col-md-6'>",
-          "<%= venue.name %> in <%= venue.location.city %>, <%= venue.location.country %>",
-        "</div>",
-      "</div>"
-    ].join('')),
+    template: _.template(
+      "<h4><%= venue.name %></h4>"+
+      "<%= venue.location.city %>, <%= venue.location.country %>"
+    ),
 
     initialize: function() {
       _.bindAll(this, 'render');
