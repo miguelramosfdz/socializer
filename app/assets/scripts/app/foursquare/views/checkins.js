@@ -35,7 +35,7 @@
       });
     },
 
-    initialize: function() {
+    render: function() {
       var self = this;
 
       /**
@@ -57,6 +57,8 @@
             });
             $('#checkins').append(view.render());
           });
+
+          App.Foursquare.views.Map.fitToBounds();
         })
         .fail(function(data) {
           console.log("Error:", data);

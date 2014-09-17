@@ -23,10 +23,22 @@ module.exports = (function() {
         marker.getMap().panTo(marker.getPosition());
         marker.info.open(marker.getMap(), marker);
       });
-
-      self.map.setCenter(marker.getPosition());
         
       self.markers[options.id] = marker;
+
+      return self;
+    },
+
+    fitToBounds: function() {
+      var self = this;
+      var bounds = new google.maps.LatLngBounds();
+      
+      Object.keys(self.markers).forEach(function(m) {
+        var marker = self.markers[m];
+        bounds.extend(marker.getPosition());
+      });
+
+      self.map.fitBounds(bounds);
 
       return self;
     },
@@ -52,7 +64,7 @@ module.exports = (function() {
       return this;
     },
 
-    initialize: function() {
+    render: function() {
       this.map = new google.maps.Map($("#map")[0], {
         center: new google.maps.LatLng(-34.397, 150.644),
         zoom: 6
