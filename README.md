@@ -5,48 +5,28 @@ Socialize
 
 An application that brings together all your social accounts
 
-## Requirements
+## Built With...
 
 * NodeJS (#obvz)
-* Bower
 
-## Set Up
+* ExpressJS
 
-1. Set Up Environment Variables
+* MongoDB
 
-  - SESSION_SECRET
+* Browserify
 
-  - BASE_URL
-  
-  For Facebook API:
-  - FACEBOOK_APP_ID
-  - FACEBOOK_APP_SECRET
+* Backbone
 
-  For Twitter API:
-  - TWITTER_CONSUMER_KEY
-  - TWITTER_CONSUMER_SECRET
-  
-  For Google API:
-  - GOOGLE_REALM
-  - GOOGLE_CLIENT_ID
-  - GOOGLE_CLIENT_SECRET
+* Underscore
 
-  For Foursquare API:
-  - FOURSQUARE_CLIENT_ID
-  - FOURSQUARE_CLIENT_SECRET
+* Google Maps
 
-  For NodeMailer:
-  - MAILER_SERVICE
-  - MAILER_EMAIL
-  - MAILER_USERNAME
-  - MAILER_PASSWORD
-  
-2. Run `npm install`
+## Apis..
 
-3. Run `bower install`
+* Foursquare
 
-4. Edit `.hedgehog.js` to your heart's desire
+* Github
 
-5. Run `gulp`
+* Google
 
-6. Code!
+* Facebook
