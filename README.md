@@ -1,9 +1,9 @@
-Hedgehog
+Socialize
 ========
 
-![hedgehog](app/assets/images/hedgehog.png)
+![socialize](http://media.giphy.com/media/bVhovKpr7wWs/giphy.gif)
 
-A NodeJS, ExpressJS, BackboneJS, MongoDB, & Browserify boilerplate application
+An application that brings together all your social accounts
 
 ## Requirements
 
