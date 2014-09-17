@@ -3,3 +3,4 @@ node_modules
 public/libs
 public/scripts
 public/styles
+app/controllers/fixtures
