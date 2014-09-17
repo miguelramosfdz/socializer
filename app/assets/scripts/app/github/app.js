@@ -1,8 +1,8 @@
 "use strict";
 
 module.exports = {
-    
-  checkinsRoute: function() {
+
+  issues: function() {
     var MainView = require("./views/main");
     MainView.render();
     App.setCurrentView(MainView);

@@ -1,18 +1,12 @@
-define([
-  "jquery",
-  "underscore",
-  "backbone"
-],function($, _, Backbone) {
+"use strict";
 
-  var Issue = Backbone.Model.extend({
+var Issue = Backbone.Model.extend({
 
-    constructor: function(data, foo) {
-      data.repo = data.repository.full_name;
-      Backbone.Model.apply(this, [data, foo]);
-    }
-
-  });
-
-  return Issue;
+  constructor: function(data, foo) {
+    data.repo = data.repository.full_name;
+    Backbone.Model.apply(this, [data, foo]);
+  }
 
 });
+
+module.exports = Issue;

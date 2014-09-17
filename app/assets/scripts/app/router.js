@@ -4,6 +4,7 @@ window.Backbone = require("backbone");
 Backbone.$ = $;
 
 var Foursquare = require("./foursquare/routes");
+var Github = require("./github/app");
 
 var AppRouter = Backbone.Router.extend({
   
@@ -18,11 +19,7 @@ var AppRouter = Backbone.Router.extend({
 
   foursquare: Foursquare.checkinsRoute,
 
-  githubIssues: function() {
-    require(["app/views/github/issues"], function(GithubIssues) {
-      GithubIssues.render();
-    });
-  },
+  githubIssues: Github.issues,
 
   githubRateLimit: function() {
     require(["app/views/github/rate_limit"], function(GithubRateLimit) {
