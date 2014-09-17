@@ -11,14 +11,15 @@ exports.setup = function(app) {
   var FoursquareOauth = Sentinal.strategies.Foursquare();
   var FacebookOauth = Sentinal.strategies.Facebook();
   var GoogleOauth = Sentinal.strategies.Google();
-  
+
   /**
    * Controllers
    */
   var AppController = require("../app/controllers/app_controller");
   var ApiController = require("../app/controllers/api_controller");
   var UserController = require("../app/controllers/user_controller");
-  
+  var FoursquareController = require("../app/controllers/foursquare_controller");
+
   // User --------------------------------------------------------------
   app.get("/account", Sentinal.isLoggedIn, UserController.getAccount);
   app.get("/account/delete", Sentinal.isLoggedIn, UserController.deleteAccount);
@@ -70,11 +71,10 @@ exports.setup = function(app) {
   // API -------------------------------
   app.get("/api/me", ApiController.getMe);
 
+  app.get('/api/foursquare/checkins', FoursquareController.getCheckins);
+
   // App Routes
   app.get("*", AppController.getCatchAll);
   app.get("/about", AppController.getAbout);
-  app.get("/templates/:type/:file", AppController.getPartial);
-  
-  
 
 };
