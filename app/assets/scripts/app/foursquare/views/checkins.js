@@ -1,6 +1,7 @@
 (function() {
   "use strict";
   
+  var MapView;
   var Map = require("./map");
   var CheckinView = require("./checkin");
   var API = require("../../service/api");
@@ -12,9 +13,28 @@
 
     collection: Checkins,
 
+    events: {
+      "mouseover .list-group-item": "onMouseover"
+    },
+
+    onMouseover: function(e) {
+      var checkin_id, checkin, marker;
+      checkin_id = e.currentTarget.dataset.id;
+
+      /**
+       * Close any open info windows
+       */
+      MapView.closeWindows(function() {
+        /**
+         * Open info window and center map
+         */
+        MapView.openWindow(checkin_id);
+      });
+    },
+
     render: function() {
       var self = this;
-      var MapView = new Map();
+      MapView = new Map();
       
       $("#content").append("<div id='checkins'></div>");
 
@@ -30,14 +50,11 @@
           _.each(self.collection.models, function(checkin) {
             var venue = checkin.get("venue");
             var view = new CheckinView({ model: checkin });
-            var location = venue.location;
-            var latLng = new google.maps.LatLng(location.lat, location.lng);
-            var marker = new google.maps.Marker({
-                position: latLng,
-                title: venue.name
+            MapView.createMarker({
+              id: checkin.get("id"),
+              location: venue.location,
+              content: venue.name
             });
-            marker.setMap(MapView.map);
-            MapView.map.setCenter(marker.getPosition());
             $('#checkins').append(view.render());
           });
         })
