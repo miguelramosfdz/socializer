@@ -3,7 +3,7 @@ window._ = require("underscore");
 window.Backbone = require("backbone");
 Backbone.$ = $;
 
-var FoursquareController = require("./foursquare/routes");
+var Foursquare = require("./foursquare/routes");
 
 var AppRouter = Backbone.Router.extend({
   
@@ -16,7 +16,7 @@ var AppRouter = Backbone.Router.extend({
     "*actions": "defaultAction"
   },
 
-  foursquare: FoursquareController.checkinsRoute,
+  foursquare: Foursquare.checkinsRoute,
 
   githubIssues: function() {
     require(["app/views/github/issues"], function(GithubIssues) {
