@@ -9,8 +9,6 @@ var App = Backbone.Model.extend({
   models: {},
 
   currentView: null,
-  
-  Router: require("./router"),
 
   API: require("./service/api"),
 
@@ -28,6 +26,14 @@ var App = Backbone.Model.extend({
     }
     console.log('Setting currentView to: '+view.viewId);
     this.currentView = view;
+  },
+
+  start: function() {
+    var AppRouter = require("./router");
+    this.Router = new AppRouter();
+    Backbone.history.start({
+      pushState: true
+    });
   }
 
 });
