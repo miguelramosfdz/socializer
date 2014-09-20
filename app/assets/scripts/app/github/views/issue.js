@@ -2,16 +2,28 @@
 
 var IssueView = Backbone.View.extend({
 
-  template: _.template(
-    "<li class='list-group-item'>"+
-      "<h4>"+
-        "<a id='<%= id %>'><%= title %></a>"+
-      "</h4>"+
-    "</li>"
+  tagName: 'li',
+
+  className: 'list-group-item',
+
+  template: _.template( 
+    "<h4>"+
+      "<a data-id='<%= id %>' data-toggle='modal' data-target='#basicModal'>"+
+          "<%= title %>"+
+      "</a>"+
+    "</h4>"
   ),
 
-  render: function() {
+  events: {
+    'click .list-group-item': 'onIssueClick'
+  },
 
+  onIssueClick: function() {
+    
+  },
+
+  render: function() {
+    
   }
 
 });
