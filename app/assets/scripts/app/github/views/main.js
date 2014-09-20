@@ -1,5 +1,8 @@
 "use strict";
 
+var ReposView = require("./repos");
+var IssuesView = require("./issues");
+
 var MainView = Backbone.View.extend({
 
   viewId: 'githubMainView',
@@ -13,7 +16,9 @@ var MainView = Backbone.View.extend({
 
   initialize: function() {
     App.resetAppView(this.template());
-    var IssuesView = require("./issues");
+    
+    ReposView.render();
+
     IssuesView.render();
   }
 
