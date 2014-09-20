@@ -9,6 +9,10 @@ module.exports = {
       view: {}
     };
     
+    /**
+     * Set app collections
+     * @type {Backbone.Collection}
+     */
     App.Github.collection.Repos = require('./collection/repos');
     App.Github.collection.Issues = require("./collection/issues");
     
