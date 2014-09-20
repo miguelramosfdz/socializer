@@ -10,6 +10,6 @@ var AppModel = require("./app/app");
 window.App = new AppModel();
 
 /**
- * Initialize App.Router
+ * Start App
  */
-App.Router.initialize();
+App.start();
