@@ -1,7 +1,5 @@
 "use strict";
 
-var MainView = require("./views/main");
-
 module.exports = {
 
   initialize: function() {
@@ -12,7 +10,7 @@ module.exports = {
     };
     
     App.Github.collection.Repos = require('./collection/repos');
-    App.Github.collection = require("./collection/issues");
+    App.Github.collection.Issues = require("./collection/issues");
     
     /**
      * Fetch current user's repos
@@ -22,6 +20,7 @@ module.exports = {
     /**
      * Render main view of Github application
      */
+    var MainView = require("./views/main");
     MainView.render();
 
     /**
