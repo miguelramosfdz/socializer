@@ -1,3 +1,5 @@
+"use strict";
+
 window.$ = require("jquery");
 window._ = require("underscore");
 window.Backbone = require("backbone");
@@ -10,6 +12,7 @@ var AppRouter = Backbone.Router.extend({
   
   routes: {
     "foursquare": "foursquare",
+    "github": "github",
     "github/issues": "githubIssues",
     "github/rate_limit": "githubRateLimit",
 
@@ -19,23 +22,10 @@ var AppRouter = Backbone.Router.extend({
 
   foursquare: Foursquare.checkinsRoute,
 
-  githubIssues: Github.issues,
-
-  githubRateLimit: function() {
-    require(["app/views/github/rate_limit"], function(GithubRateLimit) {
-      GithubRateLimit.render();
-    });
-  }
+  github: Github.initialize,
+  
+  githubIssues: Github.issues
 
 });
 
-var initialize = function(){
-  var router = new AppRouter();
-  Backbone.history.start({
-    pushState: true
-  });
-};
-
-module.exports = {
-  initialize: initialize
-};
+module.exports = AppRouter;
