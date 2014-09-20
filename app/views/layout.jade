@@ -3,12 +3,12 @@ html
   head
     include partials/_head
   body
-    .container
+    .container-fluid
       include partials/_nav
 
       include partials/flash
 
-      #content
+      #content.container-fluid
         block content
 
     include partials/_foot
