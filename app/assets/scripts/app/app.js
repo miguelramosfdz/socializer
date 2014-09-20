@@ -35,6 +35,7 @@ var App = Backbone.Model.extend({
   },
 
   start: function() {
+    var App = this;
     var AppRouter = require("./router");
 
     this.Router = new AppRouter();
@@ -42,6 +43,11 @@ var App = Backbone.Model.extend({
     Backbone.history.start({
       pushState: true
     });
+
+    App.API.get("me")
+           .then(function(data) {
+              App.User = data;
+           });
 
     $(window.document).on("click", "a[href]:not([data-bypass])", function(e) {
         var href = { prop: $(this).prop("href"), attr: $(this).attr("href") };
