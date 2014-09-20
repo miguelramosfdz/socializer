@@ -18,13 +18,19 @@ var App = Backbone.Model.extend({
 
   setCurrentView: function(view) {
     if (this.currentView) {
-      console.log('Destroy view:'+view.viewId);
       var currentView = this.currentView;
-      currentView.collection.unbind();
+
+      /**
+       * Unbind collection of currentView
+       */
+      if (currentView.collection) {
+        currentView.collection.unbind();  
+      }
+      
       currentView.remove();
       currentView.unbind();
     }
-    console.log('Setting currentView to: '+view.viewId);
+
     this.currentView = view;
   },
 
