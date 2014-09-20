@@ -1,11 +1,27 @@
 "use strict";
 
-var Repos = require("../collection/repos");
-
 var ReposView = Backbone.View.extend({
 
-  collection: Repos,
+  tagName: "ul",
+
+  className: "list-group",
+
+  template: _.template(
+    '<li class="list-group-item">'+
+      '<%= name %>'+
+    '</li>'
+  ),
+
+  collection: App.Github.collection.Repos,
+
+  initialize: function() {
+
+  },
+
+  render: function() {
+
+  }
 
 });
 
-return new ReposView();
+module.exports = new ReposView();
