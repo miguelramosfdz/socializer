@@ -1,25 +1,17 @@
-define([
-  "jquery",
-  "underscore",
-  "backbone",
-  "api",
-  "app/collection/issues"
-], function($, _, Backbone, API, Issues) {
+"use strict";
 
-  var RateLimit = Backbone.View.extend({
+var RateLimit = Backbone.View.extend({
 
-    el: "#content",
+  el: "#content",
 
-    render: function() {
-      var self = this;
-      API.getView("github/rate_limit", function(html) {
-        self.$el.html(html);
-      });
-    }
-
-  });
-
-
-  return new RateLimit();
+  render: function() {
+    var self = this;
+    App.API.getView("github/rate_limit", function(html) {
+      self.$el.html(html);
+    });
+  }
 
 });
+
+
+module.exports = new RateLimit();
