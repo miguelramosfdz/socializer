@@ -1,11 +1,8 @@
 "use strict";
 
-var Repos = require("../collection/repos");
-var IssueView = require("./issue");
-
 var RepoIssuesView = Backbone.View.extend({
   
-  collection: Repos,
+  collection: App.Github.collection.Repos,
 
   template: _.template(
     "<div class='panel panel-default>"+
