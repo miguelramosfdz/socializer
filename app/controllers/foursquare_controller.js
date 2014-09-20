@@ -13,7 +13,6 @@ module.exports = {
           }
         });        
     } else {
-      console.log("meow");
       var json = require("./fixtures/foursquare_checkins");
       res.status(200).json(json);
     }
