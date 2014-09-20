@@ -20,9 +20,14 @@ module.exports = {
   },
 
   getRepos: function(req, res) {
-    req.user.GithubApi().get("/user/repos", function(data) {
-      res.status(200).json(data);
-    }, false);
+    if (process.env.NODE_ENV !== 'development') {
+      req.user.GithubApi().get("user/repos", function(data) {
+        res.status(200).json(data);
+      });
+    } else {
+      var json = require('./fixtures/github_repos');
+      res.status(200).json(json);
+    }
   },
 
   getRateLimit: function(req, res) {
