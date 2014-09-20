@@ -2,7 +2,6 @@
 
 var Issues = require("../collection/issues");
 var ReposView = require("./repos");
-var IssueView = require("./issue");
 
 var IssuesView = Backbone.View.extend({
 
@@ -31,19 +30,7 @@ var IssuesView = Backbone.View.extend({
 
     self.collection.load(function(issues) {
       var repos = self.collection.groupBy('repo');
-
       self.updateIssuesCount(issues.length);
-
-      /**
-       * Render issues grouped by repository
-       */
-      $("#github-issues").append(Object.keys(repos).map(function(repo) {
-        return ReposView.template({
-          name: repo,
-          repos: repos[repo],
-          tpl: IssueView.template
-        });
-      }).join(""));
     });
   }
 
