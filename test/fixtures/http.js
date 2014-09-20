@@ -1,8 +1,11 @@
+"use strict";
+
 var sinon = require('sinon');
 
 exports.req = function() {
   var req = {};
   req.params = {};
+  req.user = require("./user").instance;
   req.flash = sinon.spy();
   req.logout = sinon.spy();
   req.isAuthenticated = sinon.stub();

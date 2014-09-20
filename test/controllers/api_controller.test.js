@@ -35,10 +35,9 @@ describe('ApiController', function() {
     });
     it('should return send correct json if user not authenticated', function() {
       req.isAuthenticated.returns(true);
-      req.user = "foo";
       ApiController.getMe(req, res);
       expect(res.json.called).to.equal(true);
-      expect(res.json.args[0][0].user).to.equal("foo");
+      expect(res.json.args[0][0].email).to.equal("foo@foo.com");
     });
   });
 
