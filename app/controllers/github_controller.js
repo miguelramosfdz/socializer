@@ -19,6 +19,12 @@ module.exports = {
     }, false);
   },
 
+  getRepos: function(req, res) {
+    req.user.GithubApi().get("/user/repos", function(data) {
+      res.status(200).json(data);
+    }, false);
+  },
+
   getRateLimit: function(req, res) {
     req.user.GithubApi().get("rate_limit", function(data) {
       res.render("social/github/rate_limit", { 
