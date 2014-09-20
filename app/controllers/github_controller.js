@@ -19,6 +19,17 @@ module.exports = {
     }, false);
   },
 
+  getRepos: function(req, res) {
+    if (process.env.NODE_ENV !== 'development') {
+      req.user.GithubApi().get("user/repos", function(data) {
+        res.status(200).json(data);
+      });
+    } else {
+      var json = require('./fixtures/github_repos');
+      res.status(200).json(json);
+    }
+  },
+
   getRateLimit: function(req, res) {
     req.user.GithubApi().get("rate_limit", function(data) {
       res.render("social/github/rate_limit", { 

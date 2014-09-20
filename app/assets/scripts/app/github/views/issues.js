@@ -1,11 +1,8 @@
 "use strict";
 
-var Issues = require("../collection/issues");
-var ReposView = require("./repos");
-
 var IssuesView = Backbone.View.extend({
 
-  collection: Issues,
+  collection: App.Github.collection.Issues,
 
   template: _.template(
     "<div class='row'>"+
@@ -29,7 +26,6 @@ var IssuesView = Backbone.View.extend({
     $('#githubView #issues').html(this.template());
 
     self.collection.load(function(issues) {
-      var repos = self.collection.groupBy('repo');
       self.updateIssuesCount(issues.length);
     });
   }

@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Module dependencies.
  */
@@ -74,17 +76,12 @@ UserSchema.methods = {
     var user = this;
     
     return {
-      get: function(path, callback, needBase) {
-        if (needBase) {
-          REST.get([
-          "https://api.github.com/", path,
-          "?access_token=", user.github.token
-          ].join("")).on("complete", callback);
-        } else {
-          REST.get([
-            path, "?access_token=", user.github.token
-          ].join("")).on("complete", callback);
-        }
+      get: function(path, callback) {
+        REST.get("https://api.github.com/"+path, {
+          query: {
+            access_token: user.github.token
+          }
+        }).on("complete", callback);
       },
       post: function(path, options) {
 
@@ -126,7 +123,6 @@ UserSchema.methods = {
    * @api public
    */
   foursquarePhoto: function() {
-    var url = require('url');
     var profile = this.foursquare.profile;
     return profile.photo.prefix+'original'+profile.photo.suffix;
   },

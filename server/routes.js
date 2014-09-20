@@ -74,6 +74,7 @@ exports.setup = function(app) {
 
   app.get('/api/foursquare/checkins', FoursquareController.getCheckins);
   app.get("/api/github/issues", GithubController.getIssues);
+  app.get("/api/github/repos", GithubController.getRepos);
 
   // App Routes
   app.get("*", AppController.getCatchAll);

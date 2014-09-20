@@ -3,8 +3,27 @@
 
   module.exports = {
 
-    getView: function(view, callback) {
-      var defer = new jQuery.Deferred();
+    /**
+     * Perform get request on api
+     * @param  {String} url 
+     * @param  {Function} callback
+     */
+    get: function(url) {
+      var defer = new $.Deferred();
+
+      $.get('/api/'+url)
+        .success(function(data) {
+          defer.resolve(data);
+        })
+        .error(function(data) {
+          defer.reject(data);
+        });
+
+      return defer.promise();
+    },
+
+    getView: function(view) {
+      var defer = new $.Deferred();
 
       $.get("/templates/"+view)
         .success(function(data) {
@@ -34,12 +53,10 @@
     },
 
     /**
-     * Search Foursquare
-     * @param  {Object}   options
-     * @param  {Function} callback
+     * Get Foursquare checkins
      */
-    getCheckins: function(callback) {
-      var defer = new jQuery.Deferred();
+    getCheckins: function() {
+      var defer = new $.Deferred();
 
       $.get('/api/foursquare/checkins')
         .success(function(data) {

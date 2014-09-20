@@ -18,17 +18,24 @@ var App = Backbone.Model.extend({
 
   setCurrentView: function(view) {
     if (this.currentView) {
-      console.log('Destroy view:'+view.viewId);
       var currentView = this.currentView;
-      currentView.collection.unbind();
+
+      /**
+       * Unbind collection of currentView
+       */
+      if (currentView.collection) {
+        currentView.collection.unbind();  
+      }
+      
       currentView.remove();
       currentView.unbind();
     }
-    console.log('Setting currentView to: '+view.viewId);
+
     this.currentView = view;
   },
 
   start: function() {
+    var App = this;
     var AppRouter = require("./router");
 
     this.Router = new AppRouter();
@@ -36,6 +43,11 @@ var App = Backbone.Model.extend({
     Backbone.history.start({
       pushState: true
     });
+
+    App.API.get("me")
+           .then(function(data) {
+              App.User = data;
+           });
 
     $(window.document).on("click", "a[href]:not([data-bypass])", function(e) {
         var href = { prop: $(this).prop("href"), attr: $(this).attr("href") };
