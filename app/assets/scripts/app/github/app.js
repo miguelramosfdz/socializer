@@ -12,7 +12,7 @@ module.exports = {
     };
     
     App.Github.collection.Repos = require('./collection/repos');
-    App.Github.collection = require("../collection/issues");
+    App.Github.collection = require("./collection/issues");
     
     /**
      * Fetch current user's repos
