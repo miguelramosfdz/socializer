@@ -9,8 +9,14 @@ var MainView = Backbone.View.extend({
 
   template: _.template(
     "<div class='row github' id='githubView'>"+
-      "<div class='col-sm-5' id='repos'></div>"+
-      "<div class='col-sm-7' id='issues'></div>"+
+      "<div class='col-sm-offset-2 col-sm-8'>"+
+        '<div class="panel panel-default">'+
+          '<div class="panel-heading">'+
+            '<h2>Repos</h2>'+
+          '</div>'+
+          '<div id="repos"></div>'+
+        '</div>'+
+      "</div>"+
     "</div>"
   ),
 
@@ -19,7 +25,7 @@ var MainView = Backbone.View.extend({
     
     ReposView.render();
 
-    IssuesView.render();
+    // IssuesView.render();
   }
 
 });
